@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Monitoring and Incident Response Lab - Portfolio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        hr {
+            border: 0;
+            height: 1px;
+            background: #ccc;
+            margin: 20px 0;
+        }
+        pre {
+            background: #eee;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto; /* Allows horizontal scrolling for long lines */
+        }
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            color: #c7254e; /* Example for inline code */
+        }
+        pre code {
+            color: #333; /* Resets color for block code */
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block; /* Ensures images are on their own line */
+            margin: 15px 0; /* Adds some space above/below images */
+            border: 1px solid #ddd; /* Optional: adds a subtle border to images */
+            border-radius: 4px; /* Optional: rounds image corners */
+        }
+        .diagram-container {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Project Overview: Security Monitoring and Incident Response Lab</h1>
+
+        <p>This project involved setting up a security monitoring and incident response lab environment. The goal was to establish a functional security operations framework utilizing open-source tools for threat detection, incident management, and automated response.</p>
+
+        <p>The workflow encompassed the following stages:</p>
+        <ol>
+            <li><strong>Environment Setup:</strong> Establishing a virtualized network with a Windows 10 endpoint acting as a source of security events, a dedicated server for security tools, and an analyst workstation.</li>
+            <li><strong>Wazuh Deployment:</strong> Installing and configuring Wazuh as the core Extended Detection and Response (XDR)/Endpoint Detection and Response (EDR) platform for security event collection and analysis.</li>
+            <li><strong>Agent Deployment:</strong> Deploying a Wazuh agent to the Windows 10 endpoint to forward security logs and events to the Wazuh Manager.</li>
+            <li><strong>Integration:</strong> Configuring integrations between Wazuh, theHive for incident management, and Shuffle for Security Orchestration, Automation, and Response (SOAR) capabilities.</li>
+            <li><strong>Monitoring and Analysis:</strong> Using the Analyst PC to monitor the dashboards of each platform and analyze security events.</li>
+        </ol>
+
+        <hr>
+
+        <h2>Lab Network Setup</h2>
+        <p>The lab's network was configured as follows:</p>
+
+        <div class="diagram-container">
+<pre><code>
++-------------------+     +-------------------+     +-------------------+     +---------------------+
+| Windows 10 Endpoint | --> |       Wazuh       | --> |      theHive      | --> |       Shuffle       |
+| (Security Events)   |     |     (XDR/EDR)     |     | (Incident Mgmt)   |     |        (SOAR)       |
++-------------------+     +-------------------+     +-------------------+     +---------------------+
+                                       ^
+                                       |
+                                       +-------------------+
+                                       |    Analyst PC     |
+                                       | (Monitoring &     |
+                                       |    Analysis)      |
+                                       +-------------------+
+</code></pre>
+        </div>
+
+        <h3>Diagram:</h3>
+        <img src="0diagram.png" alt="Network diagram illustrating the lab's security setup. It shows a Windows 10 Endpoint sending data to Wazuh, which then integrates with theHive and Shuffle. An Analyst PC also monitors Wazuh.">
+
+        <hr>
+
+        <h2>Installing Wazuh</h2>
+        <p>Let's begin by installing <strong>Wazuh</strong>, the XDR/EDR platform, to establish core security monitoring and detection capabilities. The installation was performed using the official Wazuh script:</p>
+        <pre><code>curl -sO https://packages.wazuh.com/4.12/wazuh-install.sh && sudo bash ./wazuh-install.sh -a</code></pre>
+        <img src="1installing-wazuh.png" alt="Screenshot showing the terminal output of the Wazuh installation script being executed, displaying download and installation progress.">
+
+        <p>To access the Wazuh dashboard, I first confirmed the IP address of the Wazuh service. The output of the <code>ifconfig</code> command revealed <code>192.168.10.11</code> as the assigned IP, which was then used for web interface access.</p>
+        <img src="2ip.png" alt="Cropped screenshot of the 'ifconfig' command output, highlighting the IP address 192.168.10.11.">
+        <img src="3wazuh.png" alt="Screenshot of the Wazuh dashboard login screen.">
+
+        <p>With Wazuh installed, the next step is to deploy an agent to the Windows 10 endpoint. As seen here, the dashboard currently shows no registered agents, prompting the "Deploy new agent" action to begin monitoring the endpoint.</p>
+        <img src="4deploy-wazuh-agent.png" alt="Screenshot of the Wazuh dashboard's Agents section, showing no registered agents and highlighting the 'Deploy new agent' button.">
+
+        <hr>
+
+        <h2>Configuring Agent Deployment</h2>
+        <p>To deploy the Wazuh agent to the Windows 10 endpoint, the server address <code>192.168.10.11</code> was assigned. An agent name, <code>myLab</code>, was also provided during this configuration step to uniquely identify the endpoint within Wazuh.</p>
+        <img src="5deploy-agent.png" alt="Screenshot of the Wazuh dashboard's agent deployment configuration, showing the server address set to 192.168.10.11 and agent name as 'myLab'.">
+
+        <hr>
+
+        <h2>Agent Deployment Commands</h2>
+        <p>The Wazuh dashboard provides the specific <strong>PowerShell</strong> commands to download and install the agent on the Windows 10 endpoint. This includes the <code>Invoke-WebRequest</code> command to retrieve the installer and <code>msiexec.exe</code> for silent installation, ensuring the agent connects to the Wazuh Manager at <code>192.168.10.11</code> and is named <code>myLab</code>. Following this, <code>NET START WazuhSvc</code> starts the agent service.</p>
+        <pre><code class="language-powershell">Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.7.2-1.msi -OutFile C:\wazuh-agent-4.7.2-1.msi
+msiexec.exe /i C:\wazuh-agent-4.7.2-1.msi /quiet SERVERIP="192.168.10.11" AGENTNAME="myLab"
+NET START WazuhSvc</code></pre>
+        <img src="6-deploying-command.png" alt="Screenshot displaying the PowerShell commands provided by the Wazuh dashboard for deploying the agent on a Windows endpoint.">
+    </div>
+</body>
+</html>

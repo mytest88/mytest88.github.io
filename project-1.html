@@ -172,7 +172,7 @@
                   alt="Image 1"
                   class="constrained-image"
                   id="image-1"
-                  onclick="showOriginal(this.id)"
+                  onclick="showOriginal(this)"
                 />
               </div>
               <h3 class="project-details__content-title">Subheading 2</h3>
@@ -186,7 +186,7 @@
                   alt="Image 2"
                   class="constrained-image"
                   id="image-2"
-                  onclick="showOriginal(this.id)"
+                  onclick="showOriginal(this)"
                 />
               </div>
               <h3 class="project-details__content-title">Subheading 3</h3>
@@ -200,7 +200,7 @@
                   alt="Image 3"
                   class="constrained-image"
                   id="image-3"
-                  onclick="showOriginal(this.id)"
+                  onclick="showOriginal(this)"
                 />
               </div>
               <h3 class="project-details__content-title">Subheading 4</h3>
@@ -214,7 +214,7 @@
                   alt="Image 4"
                   class="constrained-image"
                   id="image-4"
-                  onclick="showOriginal(this.id)"
+                  onclick="showOriginal(this)"
                 />
               </div>
               <h3 class="project-details__content-title">Subheading 5</h3>
@@ -228,7 +228,7 @@
                   alt="Image 5"
                   class="constrained-image"
                   id="image-5"
-                  onclick="showOriginal(this.id)"
+                  onclick="showOriginal(this)"
                 />
               </div>
               <h3 class="project-details__content-title">Subheading 6</h3>
@@ -242,7 +242,7 @@
                   alt="Image 6"
                   class="constrained-image"
                   id="image-6"
-                  onclick="showOriginal(this.id)"
+                  onclick="showOriginal(this)"
                 />
               </div>
               <h3 class="project-details__content-title">Subheading 7</h3>
@@ -256,7 +256,7 @@
                   alt="Image 7"
                   class="constrained-image"
                   id="image-7"
-                  onclick="showOriginal(this.id)"
+                  onclick="showOriginal(this)"
                 />
               </div>
               <h3 class="project-details__content-title">Subheading 8</h3>
@@ -270,7 +270,7 @@
                   alt="Image 8"
                   class="constrained-image"
                   id="image-8"
-                  onclick="showOriginal(this.id)"
+                  onclick="showOriginal(this)"
                 />
               </div>
               <h3 class="project-details__content-title">Subheading 9</h3>
@@ -284,7 +284,7 @@
                   alt="Image 9"
                   class="constrained-image"
                   id="image-9"
-                  onclick="showOriginal(this.id)"
+                  onclick="showOriginal(this)"
                 />
               </div>
             </div>
@@ -346,6 +346,7 @@
             </p>
           </div>
         </div>
+
         <div class="main-footer__lower">
           &copy; Copyright 2021. Made by
           <a rel="noreferrer" target="_blank" href="https://rammaheshwari.com">Ram Maheshwari</a>
@@ -361,7 +362,7 @@
       const modal = document.getElementById("image-modal");
       const modalImg = document.getElementById("modal-img");
 
-      modal.style.display = "none"; // Hide the modal initially
+      modal.style.display = "none";
 
       images.forEach(img => {
         img.onload = () => {
@@ -369,11 +370,10 @@
             img.classList.add('larger');
           }
         };
-        img.onclick = () => showOriginal(img.id);
       });
 
-      function showOriginal(imgId) {
-        const img = document.getElementById(imgId);
+      function showOriginal(clickedImage) {
+        const img = clickedImage;
         modalImg.src = img.src;
         modal.style.display = "flex";
       }

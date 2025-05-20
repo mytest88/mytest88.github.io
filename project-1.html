@@ -358,8 +358,10 @@
     </div>
     <script>
       const images = document.querySelectorAll('.constrained-image');
-      const modal = document.getElementById("image-modal"); //Declare modal
-      const modalImg = document.getElementById("modal-img"); //Declare modalImg
+      const modal = document.getElementById("image-modal");
+      const modalImg = document.getElementById("modal-img");
+
+      modal.style.display = "none"; // Hide the modal initially
 
       images.forEach(img => {
         img.onload = () => {

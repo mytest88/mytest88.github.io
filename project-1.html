@@ -15,11 +15,17 @@
         display: block;
         width: 100%;
         height: auto;
+        cursor: pointer; /* Add a pointer cursor on hover */
+        transition: transform 0.2s ease;
       }
 
       .constrained-image.larger {
         max-width: 1890px;
         max-height: 1100px;
+      }
+
+      .constrained-image:hover {
+        transform: scale(1.03);
       }
 
       .project-details__img-cont {
@@ -38,13 +44,16 @@
         height: 100%; /* Full height */
         overflow: auto; /* Enable scroll if needed */
         background-color: rgba(0, 0, 0, 0.9); /* Black with opacity */
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
 
       /* Modal Content (image) */
       .modal-content {
-        margin: auto;
+        /* margin: auto; */
         display: block;
-        width: 80%;
+        /* width: 80%; */
         max-width: 90%;
         max-height: 90%;
       }
@@ -194,6 +203,90 @@
                   onclick="showOriginal(this.id)"
                 />
               </div>
+              <h3 class="project-details__content-title">Subheading 4</h3>
+              <p class="project-details__desc-para">
+                Explanation for subheading 4 goes here. You can provide details about a specific aspect of your project, a challenge you faced, or a feature you implemented. Lorem ipsum dolor sit amet,
+                consectetur adipiscing elit.
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/png/image-4.png"
+                  alt="Image 4"
+                  class="constrained-image"
+                  id="image-4"
+                  onclick="showOriginal(this.id)"
+                />
+              </div>
+              <h3 class="project-details__content-title">Subheading 5</h3>
+              <p class="project-details__desc-para">
+                Explanation for subheading 5 goes here. You can provide details about a specific aspect of your project, a challenge you faced, or a feature you implemented. Lorem ipsum dolor sit amet,
+                consectetur adipiscing elit.
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/png/image-5.png"
+                  alt="Image 5"
+                  class="constrained-image"
+                  id="image-5"
+                  onclick="showOriginal(this.id)"
+                />
+              </div>
+              <h3 class="project-details__content-title">Subheading 6</h3>
+              <p class="project-details__desc-para">
+                Explanation for subheading 6 goes here.  You can provide details about a specific aspect of your project, a challenge you faced, or a feature you implemented.  Lorem ipsum dolor sit amet,
+                consectetur adipiscing elit.
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/png/image-6.png"
+                  alt="Image 6"
+                  class="constrained-image"
+                  id="image-6"
+                  onclick="showOriginal(this.id)"
+                />
+              </div>
+              <h3 class="project-details__content-title">Subheading 7</h3>
+              <p class="project-details__desc-para">
+                Explanation for subheading 7 goes here.  You can provide details about a specific aspect of your project, a challenge you faced, or a feature you implemented.  Lorem ipsum dolor sit amet,
+                consectetur adipiscing elit.
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/png/image-7.png"
+                  alt="Image 7"
+                  class="constrained-image"
+                  id="image-7"
+                  onclick="showOriginal(this.id)"
+                />
+              </div>
+              <h3 class="project-details__content-title">Subheading 8</h3>
+              <p class="project-details__desc-para">
+                Explanation for subheading 8 goes here.  You can provide details about a specific aspect of your project, a challenge you faced, or a feature you implemented.  Lorem ipsum dolor sit amet,
+                consectetur adipiscing elit.
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/png/image-8.png"
+                  alt="Image 8"
+                  class="constrained-image"
+                  id="image-8"
+                  onclick="showOriginal(this.id)"
+                />
+              </div>
+              <h3 class="project-details__content-title">Subheading 9</h3>
+              <p class="project-details__desc-para">
+                Explanation for subheading 9 goes here.  You can provide details about a specific aspect of your project, a challenge you faced, or a feature you implemented.  Lorem ipsum dolor sit amet,
+                consectetur adipiscing elit.
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/png/image-9.png"
+                  alt="Image 9"
+                  class="constrained-image"
+                  id="image-9"
+                  onclick="showOriginal(this.id)"
+                />
+              </div>
             </div>
             <div class="project-details__tools-used">
               <h3 class="project-details__content-title">Tools Used</h3>
@@ -272,6 +365,7 @@
             img.classList.add('larger');
           }
         };
+        img.onclick = () => showOriginal(img.id);
       });
 
       function showOriginal(imgId) {
@@ -279,7 +373,7 @@
         const modalImg = document.getElementById("modal-img");
         const img = document.getElementById(imgId);
 
-        modal.style.display = "block";
+        modal.style.display = "flex";
         modalImg.src = img.src;
       }
 

@@ -15,12 +15,16 @@
         display: block;
         width: 100%;
         height: auto;
-        max-width: 1890px; /* Maximum width */
-        max-height: 1100px; /* Maximum height */
       }
+
+      .constrained-image.larger {
+        max-width: 1890px;
+        max-height: 1100px;
+      }
+
       .project-details__img-cont {
         margin-bottom: 2rem;
-        text-align: center; /* Center the image */
+        text-align: center;
       }
     </style>
   </head>
@@ -197,6 +201,16 @@
         </div>
       </div>
     </footer>
-    <script src="./index.js"></script>
+    <script>
+      const images = document.querySelectorAll('.constrained-image');
+
+      images.forEach(img => {
+        img.onload = () => {
+          if (img.naturalWidth > 1890 || img.naturalHeight > 1100) {
+            img.classList.add('larger');
+          }
+        };
+      });
+    </script>
   </body>
 </html>

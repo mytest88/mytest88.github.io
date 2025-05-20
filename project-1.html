@@ -26,6 +26,46 @@
         margin-bottom: 2rem;
         text-align: center;
       }
+
+      /* The Modal (background) */
+      .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1000; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgba(0, 0, 0, 0.9); /* Black with opacity */
+      }
+
+      /* Modal Content (image) */
+      .modal-content {
+        margin: auto;
+        display: block;
+        width: 80%;
+        max-width: 90%;
+        max-height: 90%;
+      }
+
+      /* Close Button */
+      .close {
+        position: absolute;
+        top: 15px;
+        right: 35px;
+        color: #f1f1f1;
+        font-size: 40px;
+        font-weight: bold;
+        transition: color 0.3s;
+        cursor: pointer;
+      }
+
+      .close:hover,
+      .close:focus {
+        color: #bbb;
+        text-decoration: none;
+      }
     </style>
   </head>
   <body>
@@ -118,7 +158,13 @@
                 consectetur adipiscing elit.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/png/image-1.png" alt="Image 1" class="constrained-image" />
+                <img
+                  src="./assets/png/image-1.png"
+                  alt="Image 1"
+                  class="constrained-image"
+                  id="image-1"
+                  onclick="showOriginal(this.id)"
+                />
               </div>
               <h3 class="project-details__content-title">Subheading 2</h3>
               <p class="project-details__desc-para">
@@ -126,7 +172,13 @@
                 labore et dolore magna aliqua.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/png/image-2.png" alt="Image 2" class="constrained-image" />
+                <img
+                  src="./assets/png/image-2.png"
+                  alt="Image 2"
+                  class="constrained-image"
+                  id="image-2"
+                  onclick="showOriginal(this.id)"
+                />
               </div>
               <h3 class="project-details__content-title">Subheading 3</h3>
               <p class="project-details__desc-para">
@@ -134,7 +186,13 @@
                 ea commodo consequat.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/png/image-3.png" alt="Image 3" class="constrained-image" />
+                <img
+                  src="./assets/png/image-3.png"
+                  alt="Image 3"
+                  class="constrained-image"
+                  id="image-3"
+                  onclick="showOriginal(this.id)"
+                />
               </div>
             </div>
             <div class="project-details__tools-used">
@@ -201,6 +259,10 @@
         </div>
       </div>
     </footer>
+    <div id="image-modal" class="modal">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <img id="modal-img" class="modal-content" />
+    </div>
     <script>
       const images = document.querySelectorAll('.constrained-image');
 
@@ -211,6 +273,20 @@
           }
         };
       });
+
+      function showOriginal(imgId) {
+        const modal = document.getElementById("image-modal");
+        const modalImg = document.getElementById("modal-img");
+        const img = document.getElementById(imgId);
+
+        modal.style.display = "block";
+        modalImg.src = img.src;
+      }
+
+      function closeModal() {
+        const modal = document.getElementById("image-modal");
+        modal.style.display = "none";
+      }
     </script>
   </body>
 </html>

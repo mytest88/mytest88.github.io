@@ -6,15 +6,76 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Case Study of Project 1</title>
     <meta name="description" content="Case study page of Project" />
-
     <link rel="stylesheet" href="css/style.css" />
-
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap" rel="stylesheet" />
+    <style>
+      .constrained-image {
+        display: block;
+        width: 100%;
+        height: auto;
+        cursor: pointer; /* Add a pointer cursor on hover */
+        transition: transform 0.2s ease;
+      }
+
+      .constrained-image.larger {
+        max-width: 1890px;
+        max-height: 1100px;
+      }
+
+      .constrained-image:hover {
+        transform: scale(1.03);
+      }
+
+      .project-details__img-cont {
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+
+      /* The Modal (background) */
+      .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1000; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgba(0, 0, 0, 0.9); /* Black with opacity */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* Modal Content (image) */
+      .modal-content {
+        /* margin: auto; */
+        display: block;
+        /* width: 80%; */
+        max-width: 90%;
+        max-height: 90%;
+      }
+
+      /* Close Button */
+      .close {
+        position: absolute;
+        top: 15px;
+        right: 35px;
+        color: #f1f1f1;
+        font-size: 40px;
+        font-weight: bold;
+        transition: color 0.3s;
+        cursor: pointer;
+      }
+
+      .close:hover,
+      .close:focus {
+        color: #bbb;
+        text-decoration: none;
+      }
+    </style>
   </head>
   <body>
     <header class="header">
@@ -22,11 +83,7 @@
         <div class="header__logo-container">
           <a href="./index.html">
             <div class="header__logo-img-cont">
-              <img
-                src="./assets/png/john-doe.png"
-                alt="Ram Maheshwari Logo Image"
-                class="header__logo-img"
-              />
+              <img src="./assets/png/john-doe.png" alt="Ram Maheshwari Logo Image" class="header__logo-img" />
             </div>
             <span class="header__logo-sub">John Doe</span>
           </a>
@@ -49,16 +106,8 @@
             </li>
           </ul>
           <div class="header__main-ham-menu-cont">
-            <img
-              src="./assets/svg/ham-menu.svg"
-              alt="hamburger menu"
-              class="header__main-ham-menu"
-            />
-            <img
-              src="./assets/svg/ham-menu-close.svg"
-              alt="hamburger menu close"
-              class="header__main-ham-menu-close d-none"
-            />
+            <img src="./assets/svg/ham-menu.svg" alt="hamburger menu" class="header__main-ham-menu" />
+            <img src="./assets/svg/ham-menu-close.svg" alt="hamburger menu close" class="header__main-ham-menu-close d-none" />
           </div>
         </div>
       </div>
@@ -68,15 +117,12 @@
             <li class="header__sm-menu-link">
               <a href="./index.html"> Home </a>
             </li>
-
             <li class="header__sm-menu-link">
               <a href="./index.html#about"> About </a>
             </li>
-
             <li class="header__sm-menu-link">
               <a href="./index.html#projects"> Projects </a>
             </li>
-
             <li class="header__sm-menu-link">
               <a href="./index.html#contact"> Contact </a>
             </li>
@@ -89,9 +135,7 @@
         <h1 class="heading-primary">Project 1</h1>
         <div class="project-cs-hero__info">
           <p class="text-primary">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos
-            in numquam incidunt earum quaerat cum fuga, atque similique natus
-            nobis sit.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos in numquam incidunt earum quaerat cum fuga, atque similique natus nobis sit.
           </p>
         </div>
         <div class="project-cs-hero__cta">
@@ -103,38 +147,25 @@
       <div class="main-container">
         <div class="project-details__content">
           <div class="project-details__showcase-img-cont">
-            <img
-              src="./assets/jpeg/project-mockup-example.jpeg"
-              alt="Project Image"
-              class="project-details__showcase-img"
-            />
+            <img src="./assets/jpeg/project-mockup-example.jpeg" alt="Project Image" class="project-details__showcase-img" />
           </div>
           <div class="project-details__content-main">
             <div class="project-details__desc">
               <h3 class="project-details__content-title">Project Overview</h3>
               <p class="project-details__desc-para">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque
-                alias tenetur minus quaerat aliquid, aut provident blanditiis,
-                deleniti aspernatur ipsam eaque veniam voluptatem corporis vitae
-                mollitia laborum corrupti ullam rem. Lorem ipsum dolor sit amet
-                consectetur adipisicing elit. Neque alias tenetur minus quaerat
-                aliquid, aut provident blanditiis, deleniti aspernatur ipsam
-                eaque veniam voluptatem corporis vitae mollitia laborum corrupti
-                ullam rem?
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque alias tenetur minus quaerat aliquid, aut provident blanditiis, deleniti aspernatur ipsam eaque veniam voluptatem corporis vitae
+                mollitia laborum corrupti ullam rem. Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque alias tenetur minus quaerat aliquid, aut provident blanditiis, deleniti aspernatur ipsam
+                eaque veniam voluptatem corporis vitae mollitia laborum corrupti ullam rem?
               </p>
               <p class="project-details__desc-para">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque
-                alias tenetur minus quaerat aliquid, aut provident blanditiis,
-                deleniti aspernatur ipsam eaque veniam voluptatem corporis vitae
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque alias tenetur minus quaerat aliquid, aut provident blanditiis, deleniti aspernatur ipsam eaque veniam voluptatem corporis vitae
                 mollitia laborum corrupti ullam rem?
               </p>
             </div>
             <div class="project-details__subsections">
               <h3 class="project-details__content-title">Subheading 1</h3>
               <p class="project-details__desc-para">
-                Explanation for subheading 1 goes here. You can provide details
-                about a specific aspect of your project, a challenge you faced,
-                or a feature you implemented. Lorem ipsum dolor sit amet,
+                Explanation for subheading 1 goes here. You can provide details about a specific aspect of your project, a challenge you faced, or a feature you implemented. Lorem ipsum dolor sit amet,
                 consectetur adipiscing elit.
               </p>
               <div class="project-details__img-cont">
@@ -148,10 +179,8 @@
               </div>
               <h3 class="project-details__content-title">Subheading 2</h3>
               <p class="project-details__desc-para">
-                Explanation for subheading 2. This could be another section
-                detailing a different part of the project, like the design
-                process or the technologies used. Sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua.
+                Explanation for subheading 2. This could be another section detailing a different part of the project, like the design process or the technologies used. Sed do eiusmod tempor incididunt ut
+                labore et dolore magna aliqua.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -164,10 +193,8 @@
               </div>
               <h3 class="project-details__content-title">Subheading 3</h3>
               <p class="project-details__desc-para">
-                Explanation for subheading 3. This is your final section,
-                summarizing key takeaways or future improvements. Ut enim ad
-                minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                aliquip ex ea commodo consequat.
+                Explanation for subheading 3. This is your final section, summarizing key takeaways or future improvements. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+                ea commodo consequat.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -175,6 +202,90 @@
                   alt="Image 3"
                   class="constrained-image"
                   id="image-3"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <h3 class="project-details__content-title">Subheading 4</h3>
+              <p class="project-details__desc-para">
+                Explanation for subheading 4 goes here. You can provide details about a specific aspect of your project, a challenge you faced, or a feature you implemented. Lorem ipsum dolor sit amet,
+                consectetur adipiscing elit.
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/png/image-4.png"
+                  alt="Image 4"
+                  class="constrained-image"
+                  id="image-4"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <h3 class="project-details__content-title">Subheading 5</h3>
+              <p class="project-details__desc-para">
+                Explanation for subheading 5 goes here. You can provide details about a specific aspect of your project, a challenge you faced, or a feature you implemented. Lorem ipsum dolor sit amet,
+                consectetur adipiscing elit.
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/png/image-5.png"
+                  alt="Image 5"
+                  class="constrained-image"
+                  id="image-5"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <h3 class="project-details__content-title">Subheading 6</h3>
+              <p class="project-details__desc-para">
+                Explanation for subheading 6 goes here.  You can provide details about a specific aspect of your project, a challenge you faced, or a feature you implemented.  Lorem ipsum dolor sit amet,
+                consectetur adipiscing elit.
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/png/image-6.png"
+                  alt="Image 6"
+                  class="constrained-image"
+                  id="image-6"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <h3 class="project-details__content-title">Subheading 7</h3>
+              <p class="project-details__desc-para">
+                Explanation for subheading 7 goes here.  You can provide details about a specific aspect of your project, a challenge you faced, or a feature you implemented.  Lorem ipsum dolor sit amet,
+                consectetur adipiscing elit.
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/png/image-7.png"
+                  alt="Image 7"
+                  class="constrained-image"
+                  id="image-7"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <h3 class="project-details__content-title">Subheading 8</h3>
+              <p class="project-details__desc-para">
+                Explanation for subheading 8 goes here.  You can provide details about a specific aspect of your project, a challenge you faced, or a feature you implemented.  Lorem ipsum dolor sit amet,
+                consectetur adipiscing elit.
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/png/image-8.png"
+                  alt="Image 8"
+                  class="constrained-image"
+                  id="image-8"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <h3 class="project-details__content-title">Subheading 9</h3>
+              <p class="project-details__desc-para">
+                Explanation for subheading 9 goes here.  You can provide details about a specific aspect of your project, a challenge you faced, or a feature you implemented.  Lorem ipsum dolor sit amet,
+                consectetur adipiscing elit.
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/png/image-9.png"
+                  alt="Image 9"
+                  class="constrained-image"
+                  id="image-9"
                   onclick="showOriginal(this)"
                 />
               </div>
@@ -198,18 +309,8 @@
             </div>
             <div class="project-details__links">
               <h3 class="project-details__content-title">See Live</h3>
-              <a
-                href="#"
-                class="btn btn--med btn--theme project-details__links-btn"
-                target="_blank"
-                >Live Link</a
-              >
-              <a
-                href="#"
-                class="btn btn--med btn--theme-inv project-details__links-btn"
-                target="_blank"
-                >Code Link</a
-              >
+              <a href="#" class="btn btn--med btn--theme project-details__links-btn" target="_blank">Live Link</a>
+              <a href="#" class="btn btn--med btn--theme-inv project-details__links-btn" target="_blank">Code Link</a>
             </div>
           </div>
         </div>
@@ -224,56 +325,32 @@
             </h2>
             <div class="main-footer__social-cont">
               <a target="_blank" rel="noreferrer" href="#">
-                <img
-                  class="main-footer__icon"
-                  src="./assets/png/linkedin-ico.png"
-                  alt="icon"
-                />
+                <img class="main-footer__icon" src="./assets/png/linkedin-ico.png" alt="icon" />
               </a>
               <a target="_blank" rel="noreferrer" href="#">
-                <img
-                  class="main-footer__icon"
-                  src="./assets/png/github-ico.png"
-                  alt="icon"
-                />
+                <img class="main-footer__icon" src="./assets/png/github-ico.png" alt="icon" />
               </a>
               <a target="_blank" rel="noreferrer" href="#">
-                <img
-                  class="main-footer__icon"
-                  src="./assets/png/twitter-ico.png"
-                  alt="icon"
-                />
+                <img class="main-footer__icon" src="./assets/png/twitter-ico.png" alt="icon" />
               </a>
               <a target="_blank" rel="noreferrer" href="#">
-                <img
-                  class="main-footer__icon"
-                  src="./assets/png/yt-ico.png"
-                  alt="icon"
-                />
+                <img class="main-footer__icon" src="./assets/png/yt-ico.png" alt="icon" />
               </a>
               <a target="_blank" rel="noreferrer" href="#">
-                <img
-                  class="main-footer__icon main-footer__icon--mr-none"
-                  src="./assets/png/insta-ico.png"
-                  alt="icon"
-                />
+                <img class="main-footer__icon main-footer__icon--mr-none" src="./assets/png/insta-ico.png" alt="icon" />
               </a>
             </div>
           </div>
           <div class="main-footer__row main-footer__row-2">
             <h4 class="heading heading-sm text-lt">John Doe</h4>
             <p class="main-footer__short-desc">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit facilis
-              tempora explicabo quae quod deserunt
+              Lorem ipsum dolor sit amet consectetur adipisicing elit facilis tempora explicabo quae quod deserunt
             </p>
           </div>
         </div>
-
         <div class="main-footer__lower">
           &copy; Copyright 2021. Made by
-          <a rel="noreferrer" target="_blank" href="https://rammaheshwari.com"
-            >Ram Maheshwari</a
-          >
+          <a rel="noreferrer" target="_blank" href="https://rammaheshwari.com">Ram Maheshwari</a>
         </div>
       </div>
     </footer>
@@ -282,22 +359,23 @@
       <img id="modal-img" class="modal-content" />
     </div>
     <script>
-      const images = document.querySelectorAll(".constrained-image");
+      const images = document.querySelectorAll('.constrained-image');
       const modal = document.getElementById("image-modal");
       const modalImg = document.getElementById("modal-img");
 
       modal.style.display = "none";
 
-      images.forEach((img) => {
+      images.forEach(img => {
         img.onload = () => {
           if (img.naturalWidth > 1890 || img.naturalHeight > 1100) {
-            img.classList.add("larger");
+            img.classList.add('larger');
           }
         };
+        img.onclick = () => showOriginal(img.id);
       });
 
-      function showOriginal(clickedImage) {
-        const img = clickedImage;
+      function showOriginal(imgId) {
+        const img = document.getElementById(imgId);
         modalImg.src = img.src;
         modal.style.display = "flex";
       }

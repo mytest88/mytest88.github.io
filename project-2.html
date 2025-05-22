@@ -137,208 +137,202 @@
         </div>
       </div>
     </header>
-    <section class="project-cs-hero">
-      <div class="project-cs-hero__content">
-        <h1 class="heading-primary">Security Monitoring and Incident Response Lab</h1>
-        <div class="project-cs-hero__info">
-          <p class="text-primary">
-            This project involved setting up a security monitoring and incident response lab environment. The goal was to establish a functional security operations framework utilizing open-source tools for threat detection, incident management, and automated response.
-          </p>
-        </div>
-        <div class="project-cs-hero__cta">
-          <a href="#" class="btn btn--bg" target="_blank">Live Link</a>
-        </div>
-      </div>
-    </section>
-    <section class="project-details">
-      <div class="main-container">
-        <div class="project-details__content">
-          <div class="project-details__showcase-img-cont">
-            <img src="./assets/jpeg/project-mockup-example.jpeg" alt="Project Image" class="project-details__showcase-img" />
-          </div>
-          <div class="project-details__content-main">
-            <div class="project-details__desc">
-              <h3 class="project-details__content-title">Project Overview</h3>
-              <p class="project-details__desc-para">
-                This project involved setting up a security monitoring and incident response lab environment. The goal was to establish a functional security operations framework utilizing open-source tools for threat detection, incident management, and automated response.
-              </p>
-              <p class="project-details__desc-para">
-                The workflow encompassed the following stages:
-                <ol>
-                    <li><strong>Environment Setup:</strong> Establishing a virtualized network with a Windows 10 endpoint acting as a source of security events, a dedicated server for security tools, and an analyst workstation.</li>
-                    <li><strong>Wazuh Deployment:</strong> Installing and configuring Wazuh as the core Extended Detection and Response (XDR)/Endpoint Detection and Response (EDR) platform for security event collection and analysis.</li>
-                    <li><strong>Agent Deployment:</strong> Deploying a Wazuh agent to the Windows 10 endpoint to forward security logs and events to the Wazuh Manager.</li>
-                    <li><strong>Integration:</strong> Configuring integrations between Wazuh, theHive for incident management, and Shuffle for Security Orchestration, Automation, and Response (SOAR) capabilities.</li>
-                    <li><strong>Monitoring and Analysis:</strong> Using the Analyst PC to monitor the dashboards of each platform and analyze security events.</li>
-                </ol>
-              </p>
-            </div>
-            <div class="project-details__subsections">
-              <h3 class="project-details__content-title">Lab Network Setup</h3>
-              <p class="project-details__desc-para">
-                The lab's network was configured as follows:
-              </p>
+    <div class="container">
+        <h1>Active Directory Threat Simulation and SIEM Analysis</h1>
 
-              <div class="project-details__img-cont">
-<pre><code>
-+-------------------+     +-------------------+     +-------------------+     +---------------------+
-| Windows 10 Endpoint | --> |       Wazuh       | --> |      theHive      | --> |       Shuffle       |
-| (Security Events)   |     |     (XDR/EDR)     |     | (Incident Mgmt)   |     |        (SOAR)       |
-+-------------------+     +-------------------+     +-------------------+     +---------------------+
-                                       ^
-                                       |
-                                       +-------------------+
-                                       |    Analyst PC     |
-                                       | (Monitoring &     |
-                                       |    Analysis)      |
-                                       +-------------------+
-</code></pre>
-              </div>
+        <h2>Project Overview</h2>
+        <p>In this project, I built and operated a comprehensive virtual lab environment to simulate Active Directory (AD) threats and analyze their impact using a Security Information and Event Management (SIEM) system. The primary challenge was to understand how advanced attacks target organizations and to confirm that our security monitoring (SIEM) could effectively capture and detect these threats. I set up a realistic domain with a Windows Server acting as an Active Directory Domain Controller, a Windows 10 endpoint, and a Kali Linux machine for offensive operations. All network and system events were systematically collected and analyzed by Splunk, which I deployed on an Ubuntu server.</p>
+        <p>Through this lab, I demonstrated my ability to not only simulate common and advanced attack vectors, such as RDP brute-force and Atomic Red Team techniques (like local account creation and data exfiltration), but also to precisely track and analyze their telemetry in Splunk. This project provided crucial insights into how a well-configured SIEM provides exceptional visibility, even when attacks are unsuccessful. I confirmed that Splunk effectively captured and indexed critical security events, providing crucial visibility into unauthorized access attempts and simulated adversary activities, which is fundamental for effective threat detection and incident response.</p>
+        <p><b>Key Skills Demonstrated:</b> Active Directory (AD DS), Splunk SIEM, Universal Forwarders, Sysmon, Kali Linux, Hydra, Atomic Red Team, PowerShell, network configuration, log analysis, threat simulation, incident detection, troubleshooting, forensic evidence collection, threat detection and incident response.</p>
 
-              <h3 class="project-details__content-title">Diagram:</h3>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/0diagram.png"
-                  alt="Network diagram illustrating the lab's security setup. It shows a Windows 10 Endpoint sending data to Wazuh, which then integrates with theHive and Shuffle. An Analyst PC also monitors Wazuh."
-                  class="constrained-image"
-                  id="image-1"
-                  onclick="showOriginal(this)"
-                />
-              </div>
+        <h2>Workflow</h2>
+        <p>This comprehensive workflow allowed me to simulate realistic attack scenarios and, crucially, to validate and demonstrate the effectiveness of Splunk as a SIEM solution in detecting, logging, and providing deep visibility into Active Directory-focused threats. Here's a breakdown of the workflow I followed:</p>
 
-              <h3 class="project-details__content-title">Installing Wazuh</h3>
-              <p class="project-details__desc-para">
-                Let's begin by installing <strong>Wazuh</strong>, the XDR/EDR platform, to establish core security monitoring and detection capabilities. The installation was performed using the official Wazuh script:
-              </p>
-              <pre><code>curl -sO https://packages.wazuh.com/4.12/wazuh-install.sh && sudo bash ./wazuh-install.sh -a</code></pre>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/1installing-wazuh.png"
-                  alt="Screenshot showing the terminal output of the Wazuh installation script being executed, displaying download and installation progress."
-                  class="constrained-image"
-                  id="image-2"
-                  onclick="showOriginal(this)"
-                />
-              </div>
+        <h3>Virtual Lab Environment Setup</h3>
+        <p>I deployed essential virtual machines: a Windows Server as our Active Directory Domain Controller (192.168.10.15), a Windows 10 Endpoint (192.168.10.10) for user activity and attacks, and a Kali Linux machine (192.168.10.13) for offensive tools. I configured an Ubuntu Server (192.168.10.12) to host our Splunk SIEM.</p>
 
-              <p class="project-details__desc-para">
-                To access the Wazuh dashboard, I first confirmed the IP address of the Wazuh service. The output of the <code>ifconfig</code> command revealed <code>192.168.10.11</code> as the assigned IP, which was then used for web interface access.
-              </p>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/2ip.png"
-                  alt="Cropped screenshot of the 'ifconfig' command output, highlighting the IP address 192.168.10.11."
-                  class="constrained-image"
-                  id="image-3"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/3wazuh.png"
-                  alt="Screenshot of the Wazuh dashboard login screen."
-                  class="constrained-image"
-                  id="image-4"
-                  onclick="showOriginal(this)"
-                />
-              </div>
+        <h3>Splunk SIEM Deployment and Configuration</h3>
+        <p>I installed Splunk Enterprise on the Ubuntu server, ensuring it was configured with a static IP and set to start automatically on boot. I deployed Splunk Universal Forwarders on both the Windows Server (AD DC) and the Windows 10 Endpoint. I configured the input.conf files on the Windows machines to forward critical Windows Event Logs (Application, Security, System, and Sysmon Operational logs) to Splunk. In Splunk, I created dedicated indexes, endpoint and ADserver, to organize the incoming logs and configured the receiving port (9997) to accept data from the forwarders. I verified successful log ingestion by searching for events from both Windows machines in Splunk.</p>
 
-              <p class="project-details__desc-para">
-                With Wazuh installed, the next step is to deploy an agent to the Windows 10 endpoint. As seen here, the dashboard currently shows no registered agents, prompting the "Deploy new agent" action to begin monitoring the endpoint.
-              </p>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/4deploy-wazuh-agent.png"
-                  alt="Screenshot of the Wazuh dashboard's Agents section, showing no registered agents and highlighting the 'Deploy new agent' button."
-                  class="constrained-image"
-                  id="image-5"
-                  onclick="showOriginal(this)"
-                />
-              </div>
+        <h3>Active Directory Domain Setup</h3>
+        <p>I installed Active Directory Domain Services (AD DS) on the Windows Server and promoted it to a domain controller, creating the hanlab.local forest. I created new domain user accounts within Active Directory. I configured the Windows 10 endpoint's DNS settings to point to the AD server and successfully joined it to the hanlab.local domain.</p>
 
-              <h3 class="project-details__content-title">Configuring Agent Deployment</h3>
-              <p class="project-details__desc-para">
-                To deploy the Wazuh agent to the Windows 10 endpoint, the server address <code>192.168.10.11</code> was assigned. An agent name, <code>myLab</code>, was also provided during this configuration step to uniquely identify the endpoint within Wazuh.
-              </p>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/5deploy-agent.png"
-                  alt="Screenshot of the Wazuh dashboard's agent deployment configuration, showing the server address set to 192.168.10.11 and agent name as 'myLab'."
-                  class="constrained-image"
-                  id="image-6"
-                  onclick="showOriginal(this)"
-                />
-              </div>
+        <h3>Threat Simulation: RDP Brute-Force Attack</h3>
+        <p>I prepared a password list on the Kali machine, including the target user's password. I enabled Remote Desktop on the Windows 10 endpoint and granted RDP access to our domain users. I executed an RDP brute-force attack using Hydra from the Kali machine against the Windows 10 endpoint. I troubleshooted an initial connection error by disabling Network Level Authentication (NLA) on the target. I analyzed the failed logon attempts (Event Code 4625) in Splunk, successfully identifying the Kali machine's IP as the source of the attack, demonstrating Splunk's ability to track malicious activity.</p>
 
-              <h3 class="project-details__content-title">Agent Deployment Commands</h3>
-              <p class="project-details__desc-para">
-                The Wazuh dashboard provides the specific <strong>PowerShell</strong> commands to download and install the agent on the Windows 10 endpoint. This includes the <code>Invoke-WebRequest</code> command to retrieve the installer and <code>msiexec.exe</code> for silent installation, ensuring the agent connects to the Wazuh Manager at <code>192.168.10.11</code> and is named <code>myLab</code>. Following this, <code>NET START WazuhSvc</code> starts the agent service.
-              </p>
-              <pre><code class="language-powershell">Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.7.2-1.msi -OutFile C:\wazuh-agent-4.7.2-1.msi
-msiexec.exe /i C:\wazuh-agent-4.7.2-1.msi /quiet SERVERIP="192.168.10.11" AGENTNAME="myLab"
-NET START WazuhSvc</code></pre>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/6-deploying-command.png"
-                  alt="Screenshot displaying the PowerShell commands provided by the Wazuh dashboard for deploying the agent on a Windows endpoint."
-                  class="constrained-image"
-                  id="image-7"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-            </div>
-            <div class="project-details__tools-used">
-              <h3 class="project-details__content-title">Tools Used</h3>
-              <div class="skills">
-                <div class="skills__skill">HTML</div>
-                <div class="skills__skill">CSS</div>
-                <div class="skills__skill">JavaScript</div>
-                <div class="skills__skill">React</div>
-                <div class="skills__skill">SASS</div>
-                <div class="skills__skill">GIT</div>
-                <div class="skills__skill">Shopify</div>
-                <div class="skills__skill">Wordpress</div>
-                <div class="skills__skill">Google ADS</div>
-                <div class="skills__skill">Facebook Ads</div>
-                <div class="skills__skill">Android</div>
-                <div class="skills__skill">IOS</div>
-              </div>
-            </div>
-            <div class="project-details__links">
-              <h3 class="project-details__content-title">See Live</h3>
-              <a href="#" class="btn btn--med btn--theme project-details__links-btn" target="_blank">Live Link</a>
-              <a href="#" class="btn btn--med btn--theme-inv project-details__links-btn" target="_blank">Code Link</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+        <h3>Threat Simulation: Atomic Red Team Attacks</h3>
+        <p>I prepared the Windows 10 endpoint for Atomic Red Team by adjusting the PowerShell execution policy and configuring Windows Defender exclusions. I installed Atomic Red Team on the Windows 10 endpoint. I executed T1136.001 (Create Account - Local Account) and verified the creation of new local user accounts by analyzing corresponding events in Splunk. I executed T1041 (C2 Data Exfiltration) to simulate data exfiltration attempts. Even though the exfiltration was blocked, I analyzed the generated telemetry in Splunk, highlighting the critical importance of seeing command-line arguments and attempted data in logs for early warning and forensic analysis.</p>
+
+        <p>Let’s get started!</p>
+
+        <h2>Virtual Lab Environment Diagram</h2>
+        <p>This diagram illustrates the virtual lab environment I set up for simulating Active Directory threats and performing SIEM analysis. The core components include a Windows Server acting as the Active Directory Domain Controller (192.168.10.15), a Windows 10 Endpoint (192.168.10.10) for simulating user activity and attacks, and a Kali Machine (192.168.10.13) for offensive operations. All network traffic is monitored and analyzed by Splunk, running on an Ubuntu Server (192.168.10.12).</p>
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/0-draw.png" alt="Virtual Lab Environment Diagram">
+
+        <h2>Setting Up Splunk: Network Configuration</h2>
+        <p>To begin setting up Splunk on the Ubuntu server, I first checked the network configuration using <code>ip a</code>. The output confirms the current IP address of 192.168.10.6 for the enp0s3 interface. Following this, I initiated the process to configure a static IP address by opening the <code>50-cloud-init.yaml</code> file with <code>sudo nano /etc/netplan/50-cloud-init.yaml</code>. This ensures Splunk has a consistent and predictable network address for reliable access and log ingestion.</p>
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/1-network-conf.png" alt="Splunk Network Configuration">
+
+        <h2>Configuring Static IP with Netplan</h2>
+        <p>To ensure a stable network presence for Splunk, I configured a static IP address for the Ubuntu server. I edited the <code>/etc/netplan/50-cloud-init.yaml</code> file, setting the enp0s3 interface to <code>addresses: [192.168.10.12/24]</code> and specifying <code>nameservers: [8.8.8.8]</code> for DNS resolution. After saving the changes, I applied the new configuration using <code>sudo netplan apply</code>. This step ensures the Splunk server maintains its designated IP address.</p>
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/2-conf-apply.png" alt="Applying Netplan Configuration">
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/3-conf-show.png" alt="Showing Netplan Configuration">
+
+        <h2>Mounting Shared Folder for Splunk Installation</h2>
+        <p>To transfer the Splunk installation file to the Ubuntu server, I mounted a shared folder from my host PC. I used the command <code>sudo mount -t vboxsf -o uid=1000,gid=1000 Projects share/</code>, which successfully mounted the "Projects" shared folder to the "share/" directory on the Ubuntu machine. Listing the directory contents with <code>ls -la</code> confirms that the "share" folder is now accessible, allowing me to easily transfer the Splunk installer on the VM.</p>
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/4-mounting.png" alt="Mounting Shared Folder">
+
+        <h2>Installing Splunk Enterprise</h2>
+        <p>With the shared folder mounted, I navigated into the <code>share/</code> directory. Here, I found the Splunk Enterprise Debian package, <code>splunk-9.4.2-e9664af3d956-linux-amd64.deb</code>. I then initiated the installation using <code>sudo dpkg -i splunk-9.4.2-e9664af3d956-linux-amd64.deb</code>. The output confirms the successful unpacking and setup of Splunk, indicating that the core Splunk components are now installed on the Ubuntu server.</p>
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/5-install-splunk.png" alt="Installing Splunk Enterprise">
+
+        <h2>Initializing Splunk and Creating Administrator Account</h2>
+        <p>After installing the Splunk package, I navigated to the <code>/opt/splunk</code> directory, which is Splunk's default installation path. To properly initialize Splunk and set up its environment, I switched to the <code>splunk</code> user using <code>sudo -u splunk bash</code>, then went into the <code>bin</code> directory. From there, I ran <code>./splunk start</code>. And then I created the administrator username <code>hanlab</code>, setting a new password.</p>
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/6-account-splunk.png" alt="Initializing Splunk and Creating Account">
+
+        <h2>Configuring Splunk for Boot-Start</h2>
+        <p>To ensure Splunk automatically starts whenever the virtual machine boots, I configured it for boot-start. I navigated to the <code>/opt/splunk/bin</code> directory and ran the command <code>sudo ./splunk enable boot-start -user splunk</code>. This command installs an initialization script at <code>/etc/init.d/splunk</code>, which is then configured to run at boot. This step automates Splunk's startup process, ensuring continuous log collection and analysis without manual intervention after a system restart. I was then able to access the Splunk web interface.</p>
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/7-auto-start.png" alt="Configuring Splunk for Boot-Start">
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/8-interface.png" alt="Splunk Web Interface">
+
+        <h2>Installing Splunk Universal Forwarder on Windows Endpoints</h2>
+        <p>To collect security logs from our Windows machines (the Windows Server and Windows 10 Endpoint), I installed the Splunk Universal Forwarder on them. This screenshot shows a key step in the Universal Forwarder setup wizard. Here, I'm configuring the "Receiving Indexer" by providing the hostname or IP address of our Splunk server, which is 192.168.10.12, and the default receiving port, 9997. This configuration ensures that the forwarder knows where to send the collected log data for analysis by Splunk.</p>
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/9-forwarder.png" alt="Installing Splunk Universal Forwarder">
+
+        <h2>Configuring Windows Event Log Inputs for Splunk</h2>
+        <p>To ensure comprehensive log collection from the Windows machines, I modified the <code>input.conf</code> file located at <code>C:\Program Files\SplunkUniversalForwarder\etc\system\local</code>. This configuration directs the Splunk Universal Forwarder to collect specific Windows Event Logs and forward them to our Splunk indexer. As seen in the configuration, I enabled the collection of:</p>
+        <ul>
+            <li>Application Logs (<code>WinEventLog://Application</code>)</li>
+            <li>Security Logs (<code>WinEventLog://Security</code>)</li>
+            <li>System Logs (<code>WinEventLog://System</code>)</li>
+            <li>Sysmon Operational Logs (<code>WinEventLog://Microsoft-Windows-Sysmon/Operational</code>)</li>
+        </ul>
+        <p>For each of these, I set <code>index = endpoint</code> to route the data to a dedicated index in Splunk, and <code>disabled = false</code> to ensure they are actively collected. Notably, for Sysmon logs, I also set <code>renderXml = true</code> and <code>source = XmlWinEventLog:Microsoft-Windows-Sysmon/Operational</code> to ensure the detailed XML structure of Sysmon events is preserved for richer analysis in Splunk. This setup is crucial for gaining deep visibility into endpoint activities.</p>
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/10-inputs-file.png" alt="Configuring Windows Event Log Inputs">
+
+        <h2>Creating a New Index in Splunk for Endpoint Logs</h2>
+        <p>To properly store and analyze the logs collected from the Windows Universal Forwarders, I created a new dedicated index in Splunk. I navigated to "Settings" -> "Indexes" and clicked "New Index." As shown, I named this new index <code>endpoint</code>. This ensures that all the Windows event logs (Application, Security, System, and Sysmon) are stored in a specific, organized location within Splunk, making it easier to search, analyze, and manage the data.</p>
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/11-index-endpoint.png" alt="Creating Splunk Index for Endpoint Logs">
+        <p>I performed a search in Splunk using <code>index="endpoint"</code>. The search results, showing 341 events, confirm that the Windows Application, Security, System, and Sysmon logs are now actively flowing into our Splunk instance. This critical step validates the entire data collection pipeline, making the logs available for analysis and threat hunting.</p>
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/12-logs-showing.png" alt="Splunk Endpoint Logs Flowing">
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/12-logs-showing2.png" alt="Splunk Endpoint Logs Flowing Continued">
+
+        <h2>Active Directory Server Log Ingestion Confirmed</h2>
+        <p>After repeating the Splunk Universal Forwarder installation and configuration process for the Active Directory server, I verified that its logs are successfully flowing into Splunk. I performed a search using <code>index=ADserver</code>, which is the dedicated index I created for the domain controller's logs. This establishes full visibility into the domain environment.</p>
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/13-AD-splunk0.png" alt="AD Server Logs in Splunk">
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/13-AD-splunk1.png" alt="AD Server Logs in Splunk Part 1">
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/13-AD-splunk2.png" alt="AD Server Logs in Splunk Part 2">
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/13-AD-splunk3.png" alt="AD Server Logs in Splunk Part 3">
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/13-AD-splunk4.png" alt="AD Server Logs in Splunk Part 4">
+
+        <h2>Active Directory Domain Setup</h2>
+        <p>I installed Active Directory Domain Services (AD DS) on the Windows Server and promoted it to a domain controller, creating the hanlab.local forest. I created new domain user accounts within Active Directory. I configured the Windows 10 endpoint's DNS settings to point to the AD server and successfully joined it to the hanlab.local domain.</p>
+
+        <h2>Installing Active Directory Domain Services</h2>
+        <p>Now that Splunk is set up and collecting logs, I'm moving on to configure the Active Directory (AD) server. The first step in this process is installing the Active Directory Domain Services (AD DS) role. I opened the "Add Roles and Features Wizard" in Server Manager and, as shown, selected "Active Directory Domain Services" from the list of available server roles. This foundational step establishes the domain controller, which is essential for managing user accounts, computers, and other network resources in our lab environment.</p>
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/14-install-ad.png" alt="Installing Active Directory Domain Services">
+
+        <h2>Promoting to Domain Controller: Creating a New Forest</h2>
+        <p>After installing the Active Directory Domain Services role, I proceeded to promote the server to a domain controller using the "Active Directory Domain Services Configuration Wizard". In the "Deployment Configuration" step, I selected "Add a new forest," as this is the first domain controller in our lab environment. I then specified the "Root domain name" as <code>hanlab.local</code>. This action establishes the foundational Active Directory structure, creating our new domain and making the server a functioning domain controller. We have successfully installed Active Directory Domain Services (AD DS) and promoted our server to domain controller.</p>
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/15-dc.png" alt="Promoting to Domain Controller">
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/16-adds.png" alt="Active Directory Domain Services Installed">
+
+        <h2>Creating a New Active Directory User</h2>
+        <p>With the Active Directory domain controller up and running, it's time to populate it with users and groups for our simulation. Here are the steps showing the process of creating a new user account.</p>
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/17-create0.png" alt="Creating New Active Directory User">
+
+        <h2>Configuring DNS for Domain Join on Windows 10 Endpoint</h2>
+        <p>To successfully join our Windows 10 endpoint to the <code>hanlab.local</code> domain, it is crucial that its DNS settings correctly point to our Active Directory Domain Controller (<code>192.168.10.15</code>). In the screenshot, I am updating the "Preferred DNS server" to the IP address of our AD DC within the IPv4 Properties. This ensures that the Windows 10 machine can resolve domain resources and communicate with the domain controller for authentication and policy application.</p>
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/18-dns-conf.png" alt="Configuring DNS for Domain Join">
+
+        <h2>Joining Windows 10 to the Domain</h2>
+        <p>After configuring the DNS settings, I proceeded to join the Windows 10 endpoint to the <code>hanlab.local</code> domain. As shown in the "System Properties" window, I entered <code>hanlab.local</code> as the domain name. Upon clicking "OK" and providing the domain administrator credentials, the Windows 10 machine successfully joined the domain. A reboot was required to complete the process, and after restarting, the machine is now an integral part of our simulated Active Directory environment.</p>
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/19-join-domain.png" alt="Joining Windows 10 to Domain">
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/20-win10-domain.png" alt="Windows 10 Joined to Domain">
+
+        <h2>Threat Simulation: RDP Brute-Force Attack</h2>
+        <p>I prepared a password list on the Kali machine, including the target user's password. I enabled Remote Desktop on the Windows 10 endpoint and granted RDP access to our domain users. I executed an RDP brute-force attack using Hydra from the Kali machine against the Windows 10 endpoint. I troubleshooted an initial connection error by disabling Network Level Authentication (NLA) on the target. I analyzed the failed logon attempts (Event Code 4625) in Splunk, successfully identifying the Kali machine's IP as the source of the attack, demonstrating Splunk's ability to track malicious activity.</p>
+
+        <h2>Creating a Password List for Hydra</h2>
+        <p>Before launching the RDP brute-force attack, I created a password list on the Kali Linux machine named <code>passwords.txt</code>. This file contains a list of potential passwords, including <code>Malware@123</code>, which is the actual password for the target user. This list will be used by Hydra to systematically attempt to guess the RDP login credentials.</p>
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/21-pass-list.png" alt="Creating Password List for Hydra">
+
+        <h2>Enabling Remote Desktop (RDP) on Windows 10</h2>
+        <p>To enable the RDP brute-force attack, I first needed to ensure that Remote Desktop was enabled on the Windows 10 endpoint. I navigated to "Settings" -> "System" -> "Remote Desktop" and toggled the "Enable Remote Desktop" option to On. This step allows the Kali machine to attempt RDP connections to the Windows 10 endpoint.</p>
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/22-enable-rdp.png" alt="Enabling Remote Desktop on Windows 10">
+
+        <h2>Granting RDP Access to Domain Users</h2>
+        <p>After enabling Remote Desktop, I added the domain users to the "Remote Desktop Users" group on the Windows 10 endpoint. This ensures that the user accounts I intend to target with the brute-force attack have the necessary permissions to log in via RDP. I accessed "Computer Management" -> "Local Users and Groups" -> "Groups" -> "Remote Desktop Users" and added the relevant domain users.</p>
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/23-user-access.png" alt="Granting RDP Access to Domain Users">
+
+        <h2>Performing RDP Brute-Force with Hydra</h2>
+        <p>From the Kali Linux machine, I initiated the RDP brute-force attack using Hydra. The command used was <code>hydra -L users.txt -P passwords.txt rdp://192.168.10.10 -s 3389 -V -t 4</code>. Initially, the attack failed to connect. This was due to Network Level Authentication (NLA) being enabled on the Windows 10 target, which Hydra cannot bypass by default. The error message clearly indicates "Access denied, target uses NLA."</p>
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/24-hydra-fail.png" alt="Hydra RDP Brute-Force Failure due to NLA">
+
+        <h2>Disabling Network Level Authentication (NLA) for Hydra Compatibility</h2>
+        <p>To overcome the NLA issue preventing Hydra from connecting, I disabled Network Level Authentication on the Windows 10 endpoint. I navigated to "System Properties" -> "Remote" tab, and unchecked "Allow connections only from computers running Remote Desktop with Network Level Authentication (recommended)". This change allows older RDP clients and tools like Hydra to connect, enabling the brute-force simulation to proceed.</p>
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/25-disable-nla.png" alt="Disabling NLA on Windows 10">
+
+        <h2>Successful RDP Brute-Force Attack</h2>
+        <p>After disabling NLA on the Windows 10 endpoint, I re-executed the Hydra RDP brute-force attack. As shown in the screenshot, Hydra successfully identified the valid credentials for the user <code>chris</code> as <code>Malware@123</code>. This demonstrates the effectiveness of Hydra in brute-forcing RDP when NLA is not a barrier.</p>
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/26-hydra-success.png" alt="Successful Hydra RDP Brute-Force">
+
+        <h2>Analyzing RDP Brute-Force Logs in Splunk</h2>
+        <p>To verify that Splunk was effectively logging the RDP brute-force attempts, I searched for Event Code 4625 (An account failed to log on) within the <code>endpoint</code> index. The search results clearly show multiple failed logon attempts originating from the Kali Linux machine (<code>192.168.10.13</code>), targeting the <code>chris</code> user on the Windows 10 endpoint (<code>192.168.10.10</code>). This confirms Splunk's capability to capture and provide visibility into RDP brute-force attacks, enabling effective threat detection and incident response.</p>
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/27-rdp-logs0.png" alt="RDP Brute-Force Logs in Splunk 0">
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/27-rdp-logs1.png" alt="RDP Brute-Force Logs in Splunk 1">
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/27-rdp-logs2.png" alt="RDP Brute-Force Logs in Splunk 2">
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/27-rdp-logs3.png" alt="RDP Brute-Force Logs in Splunk 3">
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/27-rdp-logs4.png" alt="RDP Brute-Force Logs in Splunk 4">
+
+        <h2>Threat Simulation: Atomic Red Team Attacks</h2>
+        <p>I prepared the Windows 10 endpoint for Atomic Red Team by adjusting the PowerShell execution policy and configuring Windows Defender exclusions. I installed Atomic Red Team on the Windows 10 endpoint. I executed T1136.001 (Create Account - Local Account) and verified the creation of new local user accounts by analyzing corresponding events in Splunk. I executed T1041 (C2 Data Exfiltration) to simulate data exfiltration attempts. Even though the exfiltration was blocked, I analyzed the generated telemetry in Splunk, highlighting the critical importance of seeing command-line arguments and attempted data in logs for early warning and forensic analysis.</p>
+
+        <h2>Configuring PowerShell Execution Policy for Atomic Red Team</h2>
+        <p>To allow the execution of Atomic Red Team playbooks, I needed to adjust the PowerShell execution policy on the Windows 10 endpoint. I opened PowerShell as an administrator and ran the command <code>Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope LocalMachine</code>. This command sets the execution policy to unrestricted for the local machine, allowing unsigned scripts, including those from Atomic Red Team, to run. This is a crucial step to enable the simulation of advanced attacks.</p>
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/28-powershell.png" alt="Configuring PowerShell Execution Policy">
+
+        <h2>Configuring Windows Defender Exclusions for Atomic Red Team</h2>
+        <p>To prevent Windows Defender from interfering with the Atomic Red Team simulations, I configured exclusions for the directory where Atomic Red Team will be installed. I added <code>C:\AtomicRedTeam</code> to the exclusion list in Windows Defender's Virus & threat protection settings. This ensures that the Atomic Red Team tools and scripts can run without being quarantined or blocked by the antivirus software, allowing for realistic threat simulation.</p>
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/29-defender.png" alt="Configuring Windows Defender Exclusions">
+
+        <h2>Installing Atomic Red Team</h2>
+        <p>With the PowerShell execution policy configured and Windows Defender exclusions in place, I proceeded to install Atomic Red Team on the Windows 10 endpoint. I used the command <code>IEX (IWR 'https://raw.githubusercontent.com/redcanaryco/invoke-atomicredteam/master/install-iat.ps1' -UseBasicParsing)</code> in PowerShell. This command downloads and executes the installation script from the official Atomic Red Team GitHub repository, setting up the necessary files and modules for running atomic tests.</p>
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/30-install-atomic.png" alt="Installing Atomic Red Team">
+
+        <h2>Executing T1136.001: Create Account - Local Account</h2>
+        <p>To simulate a malicious actor creating a local account, I executed the Atomic Red Team test T1136.001. The command used was <code>Invoke-AtomicTest T1136.001 -ShowDetails -CheckPrereqs -GetPrereqs -ExecutionDescription 'Creating a local account for testing purposes'</code>. This command attempts to create a new local user account named <code>john.doe</code> with the password <code>P@ssword123</code>. The output confirms the successful execution of the atomic test, indicating that the local account was created. This activity simulates a common technique used by attackers to establish persistence on a compromised system.</p>
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/31-atomic-t1136.png" alt="Executing T1136.001 Atomic Test">
+
+        <h2>Analyzing T1136.001 (Local Account Creation) in Splunk</h2>
+        <p>To verify the detection of the local account creation (T1136.001) in Splunk, I searched for Event Code 4720 (A user account was created) within the <code>endpoint</code> index. The search results clearly show that an account named <code>john.doe</code> was created, along with details like the subject (the user who created it, in this case, <code>chris</code>) and the workstation name (<code>WIN10-ENDPOINT</code>). This demonstrates Splunk's ability to provide visibility into local account creation, a crucial indicator of potential malicious activity.</p>
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/32-atomic-t1136-logs0.png" alt="T1136.001 Logs in Splunk 0">
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/32-atomic-t1136-logs1.png" alt="T1136.001 Logs in Splunk 1">
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/32-atomic-t1136-logs2.png" alt="T1136.001 Logs in Splunk 2">
+
+        <h2>Executing T1041: Command and Control: Exfiltration Over C2 Channel</h2>
+        <p>To simulate data exfiltration, I executed the Atomic Red Team test T1041, which represents Command and Control: Exfiltration Over C2 Channel. The command used was <code>Invoke-AtomicTest T1041 -ShowDetails -CheckPrereqs -GetPrereqs -ExecutionDescription 'Simulating data exfiltration attempt'</code>. This test attempts to exfiltrate data (in this case, "Confidential Document Content") using a PowerShell command that encodes the data and sends it to a specified URL. The output shows that while the command was executed, the exfiltration itself was blocked ("Exfiltration attempt failed due to network restrictions"). This simulates a scenario where network controls prevent data from leaving the network, but the attempt itself is still logged.</p>
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/33-atomic-t1041.png" alt="Executing T1041 Atomic Test">
+
+        <h2>Analyzing T1041 (Data Exfiltration) Telemetry in Splunk</h2>
+        <p>Even though the T1041 (Data Exfiltration) attempt was blocked, analyzing the telemetry in Splunk provides invaluable insights into the adversary's actions. I searched for events related to PowerShell activity in the <code>endpoint</code> index. The Splunk logs captured the full command line used, including the encoded data ("Q29uZm..."), the destination URL, and the fact that the exfiltration attempt failed. Specifically, we can see the full PowerShell command that was executed, showing the attempt to encode and send data. The logs also capture that the connection was refused, indicating a network control prevented the actual data exfiltration. The ability to see this telemetry in Splunk is vital for the analyst. Even if an attack is unsuccessful due to network controls or misconfigurations, the fact that our SIEM (Splunk) and endpoint logging (Sysmon via Universal Forwarder) capture these attempts provides:</p>
+        <ul>
+            <li><b>Early Warning:</b> These logs serve as critical indicators of compromise (IOCs) and an attacker's intent, allowing us to detect malicious activity before it succeeds.</li>
+            <li><b>Forensic Evidence:</b> The detailed information within these logs (source IP, command line, attempted data) is invaluable for post-incident analysis and understanding the adversary's techniques.</li>
+            <li><b>Validation of Controls:</b> It confirms that our logging infrastructure is functioning correctly and that our SIEM is effectively collecting and indexing the necessary data to identify sophisticated attacks like data exfiltration attempts.</li>
+            <li><b>Opportunity for Refinement:</b> This telemetry can be used to develop or refine detection rules, ensuring that future, similar attempts are immediately flagged and alerted upon.</li>
+        </ul>
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/34-atomic-t1041-logs0.png" alt="T1041 Logs in Splunk 0">
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/34-atomic-t1041-logs1.png" alt="T1041 Logs in Splunk 1">
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/34-atomic-t1041-logs2.png" alt="T1041 Logs in Splunk 2">
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/34-atomic-t1041-logs3.png" alt="T1041 Logs in Splunk 3">
+        <img src="./assets/Active Directory Threat Simulation and SIEM Analysis/34-atomic-t1041-logs4.png" alt="T1041 Logs in Splunk 4">
+        <p>This demonstrates the power of a well-configured SIEM in providing deep visibility into endpoint activities, regardless of the attack's success, which is fundamental for effective threat detection and incident response.</p>
+    </div>
     <footer class="main-footer">
       <div class="main-container">
         <div class="main-footer__upper">
           <div class="main-footer__row main-footer__row-1">
-            <h2 class="heading heading-sm main-footer__heading-sm">
-              <span>Social</span>
-            </h2>
-            <div class="main-footer__social-cont">
-              <a target="_blank" rel="noreferrer" href="#">
-                <img class="main-footer__icon" src="./assets/png/linkedin-ico.png" alt="icon" />
-              </a>
-              <a target="_blank" rel="noreferrer" href="#">
-                <img class="main-footer__icon" src="./assets/png/github-ico.png" alt="icon" />
-              </a>
-              <a target="_blank" rel="noreferrer" href="#">
-                <img class="main-footer__icon" src="./assets/png/twitter-ico.png" alt="icon" />
-              </a>
-              <a target="_blank" rel="noreferrer" href="#">
-                <img class="main-footer__icon" src="./assets/png/yt-ico.png" alt="icon" />
-              </a>
-              <a target="_blank" rel="noreferrer" href="#">
-                <img class="main-footer__icon main-footer__icon--mr-none" src="./assets/png/insta-ico.png" alt="icon" />
-              </a>
-            </div>
-          </div>
-          <div class="main-footer__row main-footer__row-2">
             <h4 class="heading heading-sm text-lt">John Doe</h4>
             <p class="main-footer__short-desc">
               Lorem ipsum dolor sit amet consectetur adipisicing elit facilis tempora explicabo quae quod deserunt
@@ -382,6 +376,22 @@ NET START WazuhSvc</code></pre>
       function closeModal() {
         modal.style.display = "none";
       }
+
+      const hamMenu = document.querySelector('.header__main-ham-menu');
+      const hamMenuClose = document.querySelector('.header__main-ham-menu-close');
+      const smMenu = document.querySelector('.header__sm-menu');
+
+      hamMenu.addEventListener('click', () => {
+        smMenu.classList.add('header__sm-menu--active');
+        hamMenu.classList.add('d-none');
+        hamMenuClose.classList.remove('d-none');
+      });
+
+      hamMenuClose.addEventListener('click', () => {
+        smMenu.classList.remove('header__sm-menu--active');
+        hamMenu.classList.remove('d-none');
+        hamMenuClose.classList.add('d-none');
+      });
     </script>
   </body>
 </html>

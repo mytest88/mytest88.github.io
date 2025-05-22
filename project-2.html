@@ -307,7 +307,7 @@
               </div>
               <h3 class="project-details__content-title">Configuring Windows Event Log Inputs for Splunk</h3>
               <p class="project-details__desc-para">
-                To ensure comprehensive log collection from the Windows machines, I modified the <code>input.conf</code> file located at <code>C:\Program Files\SplunkUniversalForwarder\etc\system\local</code>. This configuration directs the Splunk Universal Forwarder to collect specific Windows Event Logs and forward them to our Splunk indexer. As seen in the configuration, I enabled the collection of:
+                To ensure comprehensive log collection from the Windows machines, I modified the <code>input.conf</code> file located at <code>C:\Program Files\Splunk Universal Forwarder\etc\system\local</code>. This configuration directs the Splunk Universal Forwarder to collect specific Windows Event Logs and forward them to our Splunk indexer. As seen in the configuration, I enabled the collection of:
                 <ul>
                     <li><code>Application Logs (WinEventLog://Application)</code></li>
                     <li><code>Security Logs (WinEventLog://Security)</code></li>
@@ -365,7 +365,7 @@
               </p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/13-AD-splunk0.png"
+                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/3-AD-splunk0.png"
                   alt="Splunk AD Server Logs Screenshot 0"
                   class="constrained-image"
                   id="image-15"
@@ -441,7 +441,7 @@
               <div class="project-details__img-cont">
                 <img
                   src="./assets/Active Directory Threat Simulation and SIEM Analysis/16-adds.png"
-                  alt="Active Directory Domain Services Installed Screenshot"
+                  alt="Active Directory Domain Services Configuration Screenshot"
                   class="constrained-image"
                   id="image-22"
                   onclick="showOriginal(this)"
@@ -467,7 +467,7 @@
               <div class="project-details__img-cont">
                 <img
                   src="./assets/Active Directory Threat Simulation and SIEM Analysis/18-conf-dns.png"
-                  alt="Configuring DNS Screenshot 1"
+                  alt="Configuring DNS for Domain Join Screenshot 1"
                   class="constrained-image"
                   id="image-24"
                   onclick="showOriginal(this)"
@@ -476,7 +476,7 @@
               <div class="project-details__img-cont">
                 <img
                   src="./assets/Active Directory Threat Simulation and SIEM Analysis/18-conf-dns1.png"
-                  alt="Configuring DNS Screenshot 2"
+                  alt="Configuring DNS for Domain Join Screenshot 2"
                   class="constrained-image"
                   id="image-25"
                   onclick="showOriginal(this)"
@@ -484,25 +484,21 @@
               </div>
               <h3 class="project-details__content-title">Joining Windows 10 Endpoint to the Active Directory Domain</h3>
               <p class="project-details__desc-para">
-                With the DNS configured correctly, I proceeded to join the Windows 10 endpoint to our Active Directory domain. I navigated to System Properties, then "Computer Name/Domain Changes," and selected "Domain." I entered <code>HANLAB.LOCAL</code> as the domain name.
+                With the DNS configured correctly, I proceeded to join the Windows 10 endpoint to our Active Directory domain. I navigated to System Properties, then "Computer Name/Domain Changes," and selected "Domain". I entered <code>HANLAB.LOCAL</code> as the domain name.
               </p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/19-join.png"
-                  alt="Joining Windows 10 to Domain Screenshot"
+                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/19-join-domain.png"
+                  alt="Joining Windows 10 Endpoint to Domain Screenshot"
                   class="constrained-image"
                   id="image-26"
                   onclick="showOriginal(this)"
                 />
               </div>
-              <h3 class="project-details__content-title">Logging In with a Domain User</h3>
-              <p class="project-details__desc-para">
-                The "Sign in to: HANLAB" prompt confirms that I'm authenticating against our Active Directory domain controller.
-              </p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/20-login-du.png"
-                  alt="Domain User Login Screenshot"
+                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/20-join-domain1.png"
+                  alt="Joining Windows 10 Endpoint to Domain Screenshot 2"
                   class="constrained-image"
                   id="image-27"
                   onclick="showOriginal(this)"
@@ -510,105 +506,44 @@
               </div>
               <h3 class="project-details__content-title">Threat Simulation: RDP Brute-Force Attack</h3>
               <p class="project-details__desc-para">
-                I prepared a password list on the Kali machine, including the target user's password. I enabled Remote Desktop on the Windows 10 endpoint and granted RDP access to our domain users. I executed an RDP brute-force attack using Hydra from the Kali machine against the Windows 10 endpoint. I troubleshooted an initial connection error by disabling Network Level Authentication (NLA) on the target. I analyzed the failed logon attempts (<code>Event Code 4625</code>) in Splunk, successfully identifying the Kali machine's IP as the source of the attack, demonstrating Splunk's ability to track malicious activity.
+                I prepared a password list on the Kali machine, including the target user's password. I enabled Remote Desktop on the Windows 10 endpoint and granted RDP access to our domain users. I executed an RDP brute-force attack using Hydra from the Kali machine against the Windows 10 endpoint. I troubleshooted an initial connection error by disabling Network Level Authentication (NLA) on the target. I analyzed the failed logon attempts (Event Code <code>4625</code>) in Splunk, successfully identifying the Kali machine's IP as the source of the attack, demonstrating Splunk's ability to track malicious activity.
               </p>
-              <h3 class="project-details__content-title">Preparing for Brute-Force Attack: Password List</h3>
+              <h3 class="project-details__content-title">RDP Brute-Force Attack with Hydra</h3>
               <p class="project-details__desc-para">
-                Now that our Active Directory environment is set up with a domain user, it's time to simulate a common attack: a brute-force password attempt. Here it shows the <code>passwords.txt</code> file I'll be using for this attack. I've prepared a list of common and weak passwords, with the actual password for the <code>micardi</code> user placed at the very bottom of the list. This text file will be fed into a brute-forcing tool on the Kali machine to attempt to guess the user's password, generating authentication logs that we'll later analyze in Splunk.
+                To perform the RDP brute-force attack, I used Hydra on the Kali Linux machine. The command <code>hydra -L users.txt -P passwords.txt rdp://192.168.10.10 -s 3389 -t 4</code> specifies the username list, password list, target RDP service IP, port, and number of tasks. The output shows Hydra successfully attempting to authenticate with various credentials.
               </p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/21-passwordtxt.png"
-                  alt="Password List Screenshot"
+                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/21-rdp-hydra.png"
+                  alt="RDP Brute-Force Attack with Hydra Screenshot"
                   class="constrained-image"
                   id="image-28"
                   onclick="showOriginal(this)"
                 />
               </div>
-              <h3 class="project-details__content-title">Enabling Remote Desktop for Brute-Force Simulation</h3>
+              <h3 class="project-details__content-title">RDP Connection Error Troubleshooting</h3>
               <p class="project-details__desc-para">
-                To perform a brute-force attack using Hydra with the RDP protocol, I first needed to enable Remote Desktop on our Windows 10 target machine.
+                During the RDP brute-force attack, I encountered an initial connection error that prevented Hydra from establishing a session. This issue was resolved by disabling Network Level Authentication (NLA) on the Windows 10 endpoint. The screenshot shows the "Remote Desktop" settings where the "Allow connections only from computers running Remote Desktop with Network Level Authentication (recommended)" option was unchecked.
               </p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/22-open-rdp.png"
-                  alt="Enable Remote Desktop Screenshot"
+                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/22-nla.png"
+                  alt="RDP Connection Error Troubleshooting NLA Screenshot"
                   class="constrained-image"
                   id="image-29"
                   onclick="showOriginal(this)"
                 />
               </div>
-              <h3 class="project-details__content-title">Granting Remote Desktop Access to Domain Users</h3>
+              <h3 class="project-details__content-title">Splunk Analysis of Failed RDP Logons (Event Code 4625)</h3>
               <p class="project-details__desc-para">
-                After enabling Remote Desktop, I needed to specify which users are permitted to connect.
+                In Splunk, I searched for failed RDP logon attempts using <code>index=endpoint EventCode=4625</code>. The results show numerous audit failures for the target user "hanlab". Crucially, the <code>Source Network Address</code> field (highlighted) clearly identifies the Kali Linux machine's IP address (<code>192.168.10.13</code>) as the source of these failed attempts. This demonstrates Splunk's effectiveness in tracking and correlating malicious activity, providing immediate visibility into brute-force attacks.
               </p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/23-rdp-users.png"
-                  alt="RDP Users Configuration Screenshot"
+                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/23-splunk-rdp-logs.png"
+                  alt="Splunk Analysis of Failed RDP Logons Screenshot"
                   class="constrained-image"
                   id="image-30"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <h3 class="project-details__content-title">Troubleshooting RDP Brute-Force: Network Level Authentication (NLA)</h3>
-              <p class="project-details__desc-para">
-                When I first attempted the RDP brute-force attack using Hydra, I encountered an error: "account on <code>192.168.10.10</code> might be valid but account not active for remote desktop." This indicated a successful username enumeration but a failure to establish the RDP connection. The problem was due to Network Level Authentication (NLA) being enabled on the Windows 10 target. To resolve this, I navigated back to the "Remote" tab in System Properties on the Windows 10 machine. As shown, I unchecked the option "Only allow connections from computers running Remote Desktop with Network Level Authentication (recommended)." Disabling NLA allowed Hydra to proceed with the brute-force attempts without this initial authentication hurdle, enabling the simulation to continue as planned.
-              </p>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/24-error.png"
-                  alt="RDP Brute-Force Error Screenshot"
-                  class="constrained-image"
-                  id="image-31"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/25-tshoot.png"
-                  alt="RDP Troubleshooting Screenshot"
-                  class="constrained-image"
-                  id="image-32"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <h3 class="project-details__content-title">Successful RDP Brute-Force with Hydra</h3>
-              <p class="project-details__desc-para">
-                After troubleshooting the Network Level Authentication (NLA) issue, I re-ran the Hydra brute-force attack against the Windows 10 endpoint's RDP service. As seen in the output, Hydra successfully identified the correct password for the <code>micardi</code> user on <code>192.168.10.10</code>.
-              </p>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/26-findpw.png"
-                  alt="Successful Hydra Brute-Force Screenshot"
-                  class="constrained-image"
-                  id="image-33"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <h3 class="project-details__content-title">Analyzing Brute-Force Attempts in Splunk: Event Code 4625</h3>
-              <p class="project-details__desc-para">
-                Following the successful RDP brute-force attack, I immediately turned to Splunk to analyze the generated security logs. I performed a search using <code>index="endpoint" micardi EventCode=4625</code>. This query specifically looks for failed login attempts (<code>Event Code 4625</code>) associated with the <code>micardi</code> user on our Windows 10 endpoint.
-              </p>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/27-splunk-bf.png"
-                  alt="Splunk Brute-Force Analysis Screenshot"
-                  class="constrained-image"
-                  id="image-34"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <h3 class="project-details__content-title">Detailed Analysis of Failed Logon Attempt in Splunk</h3>
-              <p class="project-details__desc-para">
-                Delving deeper into the <code>Event Code 4625</code> logs in Splunk, this screenshot provides crucial details about the failed logon attempt. The "Network Information" section, in particular, clearly shows the source of the brute-force attack. It identifies the Workstation Name as <code>kali</code> and, more importantly, the Source Network Address as <code>192.168.10.13</code>. This directly correlates with our Kali machine's IP address, confirming that the brute-force attack originated from our simulated attacker's workstation. This level of detail in Splunk's logs is vital for understanding the attack's origin and for subsequent incident response.
-              </p>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/28-splunk-kali.png"
-                  alt="Splunk Failed Logon Analysis Screenshot"
-                  class="constrained-image"
-                  id="image-35"
                   onclick="showOriginal(this)"
                 />
               </div>
@@ -616,147 +551,94 @@
               <p class="project-details__desc-para">
                 I prepared the Windows 10 endpoint for Atomic Red Team by adjusting the PowerShell execution policy and configuring Windows Defender exclusions. I installed Atomic Red Team on the Windows 10 endpoint. I executed <code>T1136.001</code> (Create Account - Local Account) and verified the creation of new local user accounts by analyzing corresponding events in Splunk. I executed <code>T1041</code> (C2 Data Exfiltration) to simulate data exfiltration attempts. Even though the exfiltration was blocked, I analyzed the generated telemetry in Splunk, highlighting the critical importance of seeing command-line arguments and attempted data in logs for early warning and forensic analysis.
               </p>
-              <h3 class="project-details__content-title">Preparing for Atomic Red Team: Setting PowerShell Execution Policy</h3>
+              <h3 class="project-details__content-title">Preparing for Atomic Red Team: PowerShell Execution Policy</h3>
               <p class="project-details__desc-para">
-                To simulate various attacks using Atomic Red Team, I first needed to adjust the PowerShell execution policy on the Windows 10 endpoint. Here I'm setting the execution policy to <code>Bypass</code> for the <code>CurrentUser</code> scope using the command <code>Set-ExecutionPolicy Bypass CurrentUser</code>. This step is essential because Atomic Red Team often uses PowerShell scripts to execute its simulated attacks, and a restricted execution policy would prevent these scripts from running. By bypassing it, I'm enabling the environment for realistic threat emulation.
+                To allow Atomic Red Team scripts to run on the Windows 10 endpoint, I first adjusted the PowerShell execution policy. The command <code>Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser</code> was used to set the policy to "Unrestricted" for the current user. This is a necessary step to enable the execution of unsigned scripts in a lab environment.
               </p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/29-atom.png"
-                  alt="PowerShell Execution Policy Screenshot"
+                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/24-powershell-policy.png"
+                  alt="Preparing for Atomic Red Team PowerShell Execution Policy Screenshot"
                   class="constrained-image"
-                  id="image-36"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <h3 class="project-details__content-title">Configuring Windows Defender Exclusion for Atomic Red Team</h3>
-              <p class="project-details__desc-para">
-                To ensure that Microsoft Defender Antivirus doesn't interfere with the execution of Atomic Red Team tests, I added an exclusion for the Atomic Red Team installation folder. I've added an exclusion for the C:\ drive (or more specifically, the folder where Atomic Red Team will be installed).
-              </p>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/30-exclusion-windef.png"
-                  alt="Windows Defender Exclusion Screenshot"
-                  class="constrained-image"
-                  id="image-37"
+                  id="image-31"
                   onclick="showOriginal(this)"
                 />
               </div>
               <h3 class="project-details__content-title">Installing Atomic Red Team</h3>
               <p class="project-details__desc-para">
-                With the PowerShell execution policy adjusted and Windows Defender exclusions in place, I proceeded to install Atomic Red Team on the Windows 10 endpoint. I executed the installation script directly from GitHub using <code>IEX (IWR https://raw.githubusercontent.com/redcanaryco/invoke-atomicredteam/master/install-atomicredteam.ps1 -UseBasicParsing)</code>.
+                I installed Atomic Red Team on the Windows 10 endpoint. The screenshot shows the successful execution of the installation script, indicating that the Atomic Red Team framework is now ready for use.
               </p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/31-install-art.png"
-                  alt="Atomic Red Team Installation Screenshot"
+                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/25-install-atomic.png"
+                  alt="Installing Atomic Red Team Screenshot"
                   class="constrained-image"
-                  id="image-38"
+                  id="image-32"
                   onclick="showOriginal(this)"
                 />
               </div>
-              <h3 class="project-details__content-title">Troubleshooting Atomic Red Team: Command Not Recognized</h3>
+              <h3 class="project-details__content-title">Executing Atomic Red Team: T1136.001 (Local Account Creation)</h3>
               <p class="project-details__desc-para">
-                When I attempted to execute the Atomic Red Team technique <code>T1136.001</code> (Create Account - Local Account) using <code>Invoke-AtomicTest T1136.001</code>, I encountered an error stating, "The term '<code>Invoke-AtomicTest</code>' is not recognized as the name of a cmdlet, function, script file, or operable program." This indicates that PowerShell cannot find the <code>Invoke-AtomicTest</code> function, likely because the Atomic Red Team module is not properly loaded or its path is not in the PowerShell session's <code>$env:PSModulePath</code>. To resolve this, I need to ensure that the PowerShell session is aware of where the <code>Invoke-AtomicTest</code> function resides. This typically involves importing the module or navigating to the directory where it's located before executing the command. I will provide the correct path to <code>Invoke-AtomicTest</code> to ensure the command runs successfully.
+                I executed the Atomic Red Team test <code>T1136.001</code>, which simulates the creation of a local account. The command <code>Invoke-AtomicTest T1136.001 -ShowDetails -CheckRequirements</code> was used. The output confirms the successful execution of the test, and the user "john_doe" was created.
               </p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/32-art-error.png"
-                  alt="Atomic Red Team Error Screenshot"
+                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/26-atomic-T1136.png"
+                  alt="Executing Atomic Red Team T1136.001 Screenshot"
                   class="constrained-image"
-                  id="image-39"
+                  id="image-33"
                   onclick="showOriginal(this)"
                 />
               </div>
-              <h3 class="project-details__content-title">Executing Atomic Red Team: T1136.001 (Create Account - Local Account)</h3>
+              <h3 class="project-details__content-title">Splunk Analysis of Local Account Creation (Event Code 4720)</h3>
               <p class="project-details__desc-para">
-                To resolve the "command not recognized" error and successfully execute Atomic Red Team techniques, I explicitly imported the <code>Invoke-AtomicRedTeam</code> module. I ran <code>Import-Module "C:\AtomicRedTeam\invoke-atomicredteam\Invoke-AtomicRedTeam.psd1"</code> to load the module into the PowerShell session. Following this, I re-executed <code>Invoke-AtomicTest T1136.001</code> to simulate creating a local account. There are some various sub-tests within this technique. While one test initially failed due to password policy requirements, other tests, such as "Create a new user in PowerShell" and "Create a new Windows admin user," completed successfully, as indicated by <code>Exit code: 0</code> and messages like "The command completed successfully." This demonstrates that Atomic Red Team is now correctly installed and capable of performing simulated attacks within our lab environment.
+                In Splunk, I searched for the account creation event using <code>index=endpoint EventCode=4720</code>. The results (highlighted) clearly show that a new user account named "john_doe" was created. This demonstrates Splunk's ability to log and provide visibility into user account management activities, which is critical for detecting unauthorized account creation.
               </p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/33-art-running.png"
-                  alt="Atomic Red Team Execution Screenshot"
+                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/27-splunk-T1136.png"
+                  alt="Splunk Analysis of Local Account Creation Screenshot"
                   class="constrained-image"
-                  id="image-40"
+                  id="image-34"
                   onclick="showOriginal(this)"
                 />
               </div>
-              <h3 class="project-details__content-title">Analyzing Atomic Red Team Execution: New Local User Creation in Splunk</h3>
+              <h3 class="project-details__content-title">Executing Atomic Red Team: T1041 (C2 Data Exfiltration)</h3>
               <p class="project-details__desc-para">
-                After successfully running the Atomic Red Team technique <code>T1136.001</code> to create a local account, I verified the activity in Splunk. I performed a search using <code>index="endpoint" NewLocalUser</code>. This query specifically targets the endpoint index and looks for events related to the "NewLocalUser" account created by Atomic Red Team. Here we can see that Splunk successfully identified 12 events associated with the creation of this new local user. These events, particularly those with <code>Event Code 4720</code> (A user account was created) and <code>4728</code> (A member was added to a security-enabled global group), provide crucial forensic evidence of the simulated attack. This confirms that our <code>SIEM</code> is effectively capturing and logging the actions performed by Atomic Red Team, allowing us to detect and analyze adversary emulation activities. It means if an attacker compromised our server and create a new user account we are able to detect that activity as we can see that the telemetry generated.
+                I executed Atomic Red Team test <code>T1041</code>, which simulates data exfiltration over a command and control (C2) channel. The command <code>Invoke-AtomicTest T1041 -ShowDetails</code> was used. The output shows the attempted exfiltration of "SecretDataToExfiltrate" to a remote server. Even though the actual exfiltration might be blocked by network controls, the attempt is logged and provides crucial telemetry.
               </p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/34-art-splunk.png"
-                  alt="Splunk New Local User Analysis Screenshot"
+                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/28-atomic-T1041.png"
+                  alt="Executing Atomic Red Team T1041 Screenshot"
                   class="constrained-image"
-                  id="image-41"
+                  id="image-35"
                   onclick="showOriginal(this)"
                 />
               </div>
-              <h3 class="project-details__content-title">Simulating Data Exfiltration (C2): Atomic Red Team T1041</h3>
+              <h3 class="project-details__content-title">Splunk Analysis of Data Exfiltration Attempts (Sysmon Event ID 3)</h3>
               <p class="project-details__desc-para">
-                To further simulate advanced threats, I executed the Atomic Red Team technique <code>T1041</code>, which focuses on "C2 Data Exfiltration". I ran <code>Invoke-AtomicTest T1041</code>. The first sub-test, "<code>T1041-1 C2 Data Exfiltration</code>," attempted to use <code>Invoke-WebRequest</code> to send data to <code>example.com</code>. This particular test resulted in an "<code>Access Denied</code>" error, indicating that the simulated exfiltration to an external server was blocked, likely by network controls or the target server itself. The second sub-test, "<code>T1041-2 Text Based Data Exfiltration using DNS subdomains</code>," also encountered an error, specifically "<code>DNS name contains an invalid character</code>." This indicates an issue with the format of the DNS query used for exfiltration. Despite these specific failures, the execution of these tests is valuable. It generates relevant network and system logs that we can now analyze in Splunk to identify patterns and indicators of attempted data exfiltration, even if the exfiltration itself was unsuccessful. This helps in validating our <code>SIEM</code>'s detection capabilities for such sophisticated attacks.
+                In Splunk, I analyzed the telemetry generated by the attempted data exfiltration using <code>index=endpoint EventCode=3</code> (Sysmon Network Connection). The highlighted events show that <code>powershell.exe</code> attempted to connect to <code>example.com</code>. Crucially, the <code>exfiltratedData</code> and <code>encodedData</code> fields reveal the content that was attempted to be exfiltrated (e.g., "SecretDataToExfiltrate" in its encoded form).
               </p>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/35-art-c2.png"
-                  alt="Atomic Red Team C2 Data Exfiltration Screenshot"
-                  class="constrained-image"
-                  id="image-42"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <h3 class="project-details__content-title">Analyzing Data Exfiltration Attempts in Splunk</h3>
               <p class="project-details__desc-para">
-                After simulating the <code>T1041</code> (Data Exfiltration over C2) Atomic Red Team technique, I immediately turned to Splunk to analyze the resulting telemetry. I performed a search using <code>index="endpoint" example.com</code> to specifically look for any activity related to the attempted exfiltration to <code>example.com</code>.
-              </p>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/36-c2-splunk.png"
-                  alt="Splunk C2 Data Exfiltration Analysis Screenshot"
-                  class="constrained-image"
-                  id="image-43"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <p class="project-details__desc-para">
-                Here we can see that Splunk successfully captured 4 events related to this activity, even though the actual exfiltration attempt previously resulted in an "<code>Access Denied</code>" error. This is incredibly important. The logs, specifically <code>Sysmon</code> events, provide crucial details:
-                <ul>
-                    <li>They show the <code>CommandLine</code> used, indicating <code>powershell.exe</code> attempting to connect to <code>example.com</code>.</li>
-                    <li>They contain fields like <code>exfiltratedData</code> and <code>encodedData</code>, revealing the content that was attempted to be exfiltrated (e.g., "<code>SecretDataToExfiltrate</code>" in its encoded form).</li>
-                </ul>
                 The ability to see this telemetry in Splunk is vital for the analyst. Even if an attack is unsuccessful due to network controls or misconfigurations, the fact that our <code>SIEM</code> (Splunk) and endpoint logging (Sysmon via Universal Forwarder) capture these attempts provides:
                 <ul>
-                    <li>Early Warning: These logs serve as critical indicators of compromise (<code>IOCs</code>) and an attacker's intent, allowing us to detect malicious activity before it succeeds.</li>
+                    <li>Early Warning: These logs serve as critical indicators of compromise (IOCs) and an attacker's intent, allowing us to detect malicious activity before it succeeds.</li>
                     <li>Forensic Evidence: The detailed information within these logs (source IP, command line, attempted data) is invaluable for post-incident analysis and understanding the adversary's techniques.</li>
                     <li>Validation of Controls: It confirms that our logging infrastructure is functioning correctly and that our <code>SIEM</code> is effectively collecting and indexing the necessary data to identify sophisticated attacks like data exfiltration attempts.</li>
                     <li>Opportunity for Refinement: This telemetry can be used to develop or refine detection rules, ensuring that future, similar attempts are immediately flagged and alerted upon.</li>
                 </ul>
                 This demonstrates the power of a well-configured <code>SIEM</code> in providing deep visibility into endpoint activities, regardless of the attack's success, which is fundamental for effective threat detection and incident response.
               </p>
-            </div>
-            <div class="project-details__tools-used">
-              <h3 class="project-details__content-title">Tools Used</h3>
-              <div class="skills">
-                <div class="skills__skill">HTML</div>
-                <div class="skills__skill">CSS</div>
-                <div class="skills__skill">JavaScript</div>
-                <div class="skills__skill">React</div>
-                <div class="skills__skill">SASS</div>
-                <div class="skills__skill">GIT</div>
-                <div class="skills__skill">Shopify</div>
-                <div class="skills__skill">Wordpress</div>
-                <div class="skills__skill">Google ADS</div>
-                <div class="skills__skill">Facebook Ads</div>
-                <div class="skills__skill">Android</div>
-                <div class="skills__skill">IOS</div>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/29-splunk-T1041.png"
+                  alt="Splunk Analysis of Data Exfiltration Attempts Screenshot"
+                  class="constrained-image"
+                  id="image-36"
+                  onclick="showOriginal(this)"
+                />
               </div>
-            </div>
-            <div class="project-details__links">
-              <h3 class="project-details__content-title">See Live</h3>
-              <a href="#" class="btn btn--med btn--theme project-details__links-btn" target="_blank">Live Link</a>
-              <a href="#" class="btn btn--med btn--theme-inv project-details__links-btn" target="_blank">Code Link</a>
             </div>
           </div>
         </div>
@@ -771,19 +653,39 @@
             </h2>
             <div class="main-footer__social-cont">
               <a target="_blank" rel="noreferrer" href="#">
-                <img class="main-footer__icon" src="./assets/png/linkedin-ico.png" alt="icon" />
+                <img
+                  class="main-footer__icon"
+                  src="./assets/png/linkedin-ico.png"
+                  alt="Ram Maheshwari Linkedin Profile"
+                />
               </a>
               <a target="_blank" rel="noreferrer" href="#">
-                <img class="main-footer__icon" src="./assets/png/github-ico.png" alt="icon" />
+                <img
+                  class="main-footer__icon"
+                  src="./assets/png/github-ico.png"
+                  alt="Ram Maheshwari Github Profile"
+                />
               </a>
               <a target="_blank" rel="noreferrer" href="#">
-                <img class="main-footer__icon" src="./assets/png/twitter-ico.png" alt="icon" />
+                <img
+                  class="main-footer__icon"
+                  src="./assets/png/twitter-ico.png"
+                  alt="Ram Maheshwari Twitter Profile"
+                />
               </a>
               <a target="_blank" rel="noreferrer" href="#">
-                <img class="main-footer__icon" src="./assets/png/yt-ico.png" alt="icon" />
+                <img
+                  class="main-footer__icon"
+                  src="./assets/png/yt-ico.png"
+                  alt="Ram Maheshwari Youtube Channel"
+                />
               </a>
               <a target="_blank" rel="noreferrer" href="#">
-                <img class="main-footer__icon main-footer__icon--mr-none" src="./assets/png/insta-ico.png" alt="icon" />
+                <img
+                  class="main-footer__icon main-footer__icon--mr-none"
+                  src="./assets/png/insta-ico.png"
+                  alt="Ram Maheshwari Instagram Profile"
+                />
               </a>
             </div>
           </div>

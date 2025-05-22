@@ -139,10 +139,10 @@
     </header>
     <section class="project-cs-hero">
       <div class="project-cs-hero__content">
-        <h1 class="heading-primary">Active Directory Threat Simulation and SIEM Analysis [cite: 1]</h1>
+        <h1 class="heading-primary">Active Directory Threat Simulation and SIEM Analysis</h1>
         <div class="project-cs-hero__info">
           <p class="text-primary">
-            In this project, a comprehensive virtual lab environment was built and operated to simulate Active Directory (AD) threats and analyze their impact using a Security Information and Event Management (SIEM) system. [cite: 1]
+            In this project, a comprehensive virtual lab environment was built and operated to simulate Active Directory (AD) threats and analyze their impact using a Security Information and Event Management (SIEM) system.
           </p>
         </div>
         <div class="project-cs-hero__cta">
@@ -160,46 +160,46 @@
             <div class="project-details__desc">
               <h3 class="project-details__content-title">Project Overview</h3>
               <p class="project-details__desc-para">
-                In this project, a comprehensive virtual lab environment was built and operated to simulate Active Directory (AD) threats and analyze their impact using a Security Information and Event Management (SIEM) system. [cite: 1] The primary challenge was to understand how advanced attacks target organizations and to confirm that security monitoring (<code>SIEM</code>) could effectively capture and detect these threats. [cite: 2] A realistic domain was set up with a Windows Server acting as an Active Directory Domain Controller, a Windows 10 endpoint, and a Kali Linux machine for offensive operations. [cite: 3] All network and system events were systematically collected and analyzed by Splunk, which was deployed on an Ubuntu server. [cite: 4]
+                In this project, a comprehensive virtual lab environment was built and operated to simulate Active Directory (AD) threats and analyze their impact using a Security Information and Event Management (SIEM) system. The primary challenge was to understand how advanced attacks target organizations and to confirm that security monitoring (<code>SIEM</code>) could effectively capture and detect these threats. A realistic domain was set up with a Windows Server acting as an Active Directory Domain Controller, a Windows 10 endpoint, and a Kali Linux machine for offensive operations. All network and system events were systematically collected and analyzed by Splunk, which was deployed on an Ubuntu server.
               </p>
               <p class="project-details__desc-para">
-                Through this lab, the ability to not only simulate common and advanced attack vectors, such as RDP brute-force and Atomic Red Team techniques (like local account creation and data exfiltration), but also to precisely track and analyze their telemetry in Splunk was demonstrated. [cite: 5] This project provided crucial insights into how a well-configured <code>SIEM</code> provides exceptional visibility, even when attacks are unsuccessful. [cite: 6] It was confirmed that Splunk effectively captured and indexed critical security events, providing crucial visibility into unauthorized access attempts and simulated adversary activities, which is fundamental for effective threat detection and incident response. [cite: 7]
+                Through this lab, the ability to not only simulate common and advanced attack vectors, such as RDP brute-force and Atomic Red Team techniques (like local account creation and data exfiltration), but also to precisely track and analyze their telemetry in Splunk was demonstrated. This project provided crucial insights into how a well-configured <code>SIEM</code> provides exceptional visibility, even when attacks are unsuccessful. It was confirmed that Splunk effectively captured and indexed critical security events, providing crucial visibility into unauthorized access attempts and simulated adversary activities, which is fundamental for effective threat detection and incident response.
               </p>
             </div>
             <div class="project-details__subsections">
               <h3 class="project-details__content-title">Key Skills Demonstrated</h3>
               <p class="project-details__desc-para">
-                Active Directory (<code>AD DS</code>), <code>Splunk SIEM</code>, Universal Forwarders, Sysmon, Kali Linux, Hydra, Atomic Red Team, PowerShell, network configuration, log analysis, threat simulation, incident detection, troubleshooting, forensic evidence collection, threat detection and incident response. [cite: 8]
+                Active Directory (<code>AD DS</code>), <code>Splunk SIEM</code>, Universal Forwarders, Sysmon, Kali Linux, Hydra, Atomic Red Team, PowerShell, network configuration, log analysis, threat simulation, incident detection, troubleshooting, forensic evidence collection, threat detection and incident response.
               </p>
               <h3 class="project-details__content-title">Workflow</h3>
               <p class="project-details__desc-para">
-                This comprehensive workflow allowed for the simulation of realistic attack scenarios and, crucially, to validate and demonstrate the effectiveness of Splunk as a <code>SIEM</code> solution in detecting, logging, and providing deep visibility into Active Directory-focused threats. [cite: 9]
+                This comprehensive workflow allowed for the simulation of realistic attack scenarios and, crucially, to validate and demonstrate the effectiveness of Splunk as a <code>SIEM</code> solution in detecting, logging, and providing deep visibility into Active Directory-focused threats.
               </p>
               <p class="project-details__desc-para">
-                Here's a breakdown of the workflow followed: [cite: 10]
+                Here's a breakdown of the workflow followed:
               </p>
               <h3 class="project-details__content-title">Virtual Lab Environment Setup</h3>
               <p class="project-details__desc-para">
-                Essential virtual machines were deployed: a Windows Server as the Active Directory Domain Controller (<code>192.168.10.15</code>), a Windows 10 Endpoint (<code>192.168.10.10</code>) for user activity and attacks, and a Kali Linux machine (<code>192.168.10.13</code>) for offensive tools. [cite: 10] An Ubuntu Server (<code>192.168.10.12</code>) was configured to host the Splunk <code>SIEM</code>. [cite: 11]
+                Essential virtual machines were deployed: a Windows Server as the Active Directory Domain Controller (<code>192.168.10.15</code>), a Windows 10 Endpoint (<code>192.168.10.10</code>) for user activity and attacks, and a Kali Linux machine (<code>192.168.10.13</code>) for offensive tools. An Ubuntu Server (<code>192.168.10.12</code>) was configured to host the Splunk <code>SIEM</code>.
               </p>
               <h3 class="project-details__content-title">Splunk SIEM Deployment and Configuration</h3>
               <p class="project-details__desc-para">
-                Splunk Enterprise was installed on the Ubuntu server, ensuring it was configured with a static IP and set to start automatically on boot. [cite: 12] Splunk Universal Forwarders were deployed on both the Windows Server (AD DC) and the Windows 10 Endpoint. [cite: 13] The <code>input.conf</code> files on the Windows machines were configured to forward critical Windows Event Logs (Application, Security, System, and Sysmon Operational logs) to Splunk. [cite: 14] In Splunk, dedicated indexes, <code>endpoint</code> and <code>ADserver</code>, were created to organize the incoming logs, and the receiving port (<code>9997</code>) was configured to accept data from the forwarders. [cite: 15] Successful log ingestion was verified by searching for events from both Windows machines in Splunk. [cite: 16]
+                Splunk Enterprise was installed on the Ubuntu server, ensuring it was configured with a static IP and set to start automatically on boot. Splunk Universal Forwarders were deployed on both the Windows Server (AD DC) and the Windows 10 Endpoint. The <code>input.conf</code> files on the Windows machines were configured to forward critical Windows Event Logs (Application, Security, System, and Sysmon Operational logs) to Splunk. In Splunk, dedicated indexes, <code>endpoint</code> and <code>ADserver</code>, were created to organize the incoming logs, and the receiving port (<code>9997</code>) was configured to accept data from the forwarders. Successful log ingestion was verified by searching for events from both Windows machines in Splunk.
               </p>
               <h3 class="project-details__content-title">Active Directory Domain Setup</h3>
               <p class="project-details__desc-para">
-                Active Directory Domain Services (AD DS) was installed on the Windows Server and it was promoted to a domain controller, creating the <code>hanlab.local</code> forest. [cite: 17] New domain user accounts were created within Active Directory. [cite: 18] The Windows 10 endpoint's DNS settings were configured to point to the AD server, and it was successfully joined to the <code>hanlab.local</code> domain. [cite: 18]
+                Active Directory Domain Services (AD DS) was installed on the Windows Server and it was promoted to a domain controller, creating the <code>hanlab.local</code> forest. New domain user accounts were created within Active Directory. The Windows 10 endpoint's DNS settings were configured to point to the AD server, and it was successfully joined to the <code>hanlab.local</code> domain.
               </p>
               <h3 class="project-details__content-title">Threat Simulation: RDP Brute-Force Attack</h3>
               <p class="project-details__desc-para">
-                A password list was prepared on the Kali machine, including the target user's password. [cite: 19] Remote Desktop was enabled on the Windows 10 endpoint and RDP access was granted to domain users. [cite: 20] An RDP brute-force attack was executed using Hydra from the Kali machine against the Windows 10 endpoint. [cite: 21] An initial connection error was troubleshooted by disabling Network Level Authentication (NLA) on the target. [cite: 22] Failed logon attempts (<code>Event Code 4625</code>) were analyzed in Splunk, successfully identifying the Kali machine's IP as the source of the attack, demonstrating Splunk's ability to track malicious activity. [cite: 23]
+                A password list was prepared on the Kali machine, including the target user's password. Remote Desktop was enabled on the Windows 10 endpoint and RDP access was granted to domain users. An RDP brute-force attack was executed using Hydra from the Kali machine against the Windows 10 endpoint. An initial connection error was troubleshooted by disabling Network Level Authentication (NLA) on the target. Failed logon attempts (<code>Event Code 4625</code>) were analyzed in Splunk, successfully identifying the Kali machine's IP as the source of the attack, demonstrating Splunk's ability to track malicious activity.
               </p>
               <h3 class="project-details__content-title">Threat Simulation: Atomic Red Team Attacks</h3>
               <p class="project-details__desc-para">
-                The Windows 10 endpoint was prepared for Atomic Red Team by adjusting the PowerShell execution policy and configuring Windows Defender exclusions. [cite: 24] Atomic Red Team was installed on the Windows 10 endpoint. [cite: 25] <code>T1136.001</code> (Create Account - Local Account) was executed, and the creation of new local user accounts was verified by analyzing corresponding events in Splunk. [cite: 26] <code>T1041</code> (C2 Data Exfiltration) was executed to simulate data exfiltration attempts. [cite: 27] Even though the exfiltration was blocked, the generated telemetry in Splunk was analyzed, highlighting the critical importance of seeing command-line arguments and attempted data in logs for early warning and forensic analysis. [cite: 28]
+                The Windows 10 endpoint was prepared for Atomic Red Team by adjusting the PowerShell execution policy and configuring Windows Defender exclusions. Atomic Red Team was installed on the Windows 10 endpoint. <code>T1136.001</code> (Create Account - Local Account) was executed, and the creation of new local user accounts was verified by analyzing corresponding events in Splunk. <code>T1041</code> (C2 Data Exfiltration) was executed to simulate data exfiltration attempts. Even though the exfiltration was blocked, the generated telemetry in Splunk was analyzed, highlighting the critical importance of seeing command-line arguments and attempted data in logs for early warning and forensic analysis.
               </p>
               <p class="project-details__desc-para">
-                Let’s get started! [cite: 29]
+                Let’s get started!
               </p>
               <h3 class="project-details__content-title">Virtual Lab Environment Diagram</h3>
               <div class="project-details__img-cont">
@@ -212,11 +212,11 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                This diagram illustrates the virtual lab environment set up for simulating Active Directory threats and performing <code>SIEM</code> analysis. [cite: 29] The core components include a Windows Server acting as the Active Directory Domain Controller (<code>192.168.10.15</code>), a Windows 10 Endpoint (<code>192.168.10.10</code>) for simulating user activity and attacks, and a Kali Machine (<code>192.168.10.13</code>) for offensive operations. [cite: 30] All network traffic is monitored and analyzed by Splunk, running on an Ubuntu Server (<code>192.168.10.12</code>). [cite: 31]
+                This diagram illustrates the virtual lab environment set up for simulating Active Directory threats and performing <code>SIEM</code> analysis. The core components include a Windows Server acting as the Active Directory Domain Controller (<code>192.168.10.15</code>), a Windows 10 Endpoint (<code>192.168.10.10</code>) for simulating user activity and attacks, and a Kali Machine (<code>192.168.10.13</code>) for offensive operations. All network traffic is monitored and analyzed by Splunk, running on an Ubuntu Server (<code>192.168.10.12</code>).
               </p>
               <h3 class="project-details__content-title">Setting Up Splunk: Network Configuration</h3>
               <p class="project-details__desc-para">
-                To begin setting up Splunk on the Ubuntu server, the network configuration was first checked using <code>ip a</code>. [cite: 32] The output confirmed the current IP address of <code>192.168.10.6</code> for the <code>enp0s3</code> interface. [cite: 33] Following this, the process to configure a static IP address was initiated by opening the <code>50-cloud-init.yaml</code> file with <code>sudo nano /etc/netplan/50-cloud-init.yaml</code>. [cite: 34] This ensures Splunk has a consistent and predictable network address for reliable access and log ingestion. [cite: 35]
+                To begin setting up Splunk on the Ubuntu server, the network configuration was first checked using <code>ip a</code>. The output confirmed the current IP address of <code>192.168.10.6</code> for the <code>enp0s3</code> interface. Following this, the process to configure a static IP address was initiated by opening the <code>50-cloud-init.yaml</code> file with <code>sudo nano /etc/netplan/50-cloud-init.yaml</code>. This ensures Splunk has a consistent and predictable network address for reliable access and log ingestion.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -229,7 +229,7 @@
               </div>
               <h3 class="project-details__content-title">Configuring Static IP with Netplan</h3>
               <p class="project-details__desc-para">
-                To ensure a stable network presence for Splunk, a static IP address was configured for the Ubuntu server. [cite: 36] The <code>/etc/netplan/50-cloud-init.yaml</code> file was edited, setting the <code>enp0s3</code> interface to <code>addresses: [192.168.10.12/24]</code> and specifying <code>nameservers: [8.8.8.8]</code> for DNS resolution. [cite: 37] After saving the changes, the new configuration was applied using <code>sudo netplan apply</code>. [cite: 38] This step ensures the Splunk server maintains its designated IP address. [cite: 39]
+                To ensure a stable network presence for Splunk, a static IP address was configured for the Ubuntu server. The <code>/etc/netplan/50-cloud-init.yaml</code> file was edited, setting the <code>enp0s3</code> interface to <code>addresses: [192.168.10.12/24]</code> and specifying <code>nameservers: [8.8.8.8]</code> for DNS resolution. After saving the changes, the new configuration was applied using <code>sudo netplan apply</code>. This step ensures the Splunk server maintains its designated IP address.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -251,7 +251,7 @@
               </div>
               <h3 class="project-details__content-title">Mounting Shared Folder for Splunk Installation</h3>
               <p class="project-details__desc-para">
-                To transfer the Splunk installation file to the Ubuntu server, a shared folder from the host PC was mounted. [cite: 40] The command <code>sudo mount -t vboxsf -o uid=1000,gid=1000 Projects share/</code> was used, which successfully mounted the "Projects" shared folder to the "share/" directory on the Ubuntu machine. [cite: 41] Listing the directory contents with <code>ls -la</code> confirms that the "share" folder is now accessible, allowing easy transfer of the Splunk installer on the VM. [cite: 42]
+                To transfer the Splunk installation file to the Ubuntu server, a shared folder from the host PC was mounted. The command <code>sudo mount -t vboxsf -o uid=1000,gid=1000 Projects share/</code> was used, which successfully mounted the "Projects" shared folder to the "share/" directory on the Ubuntu machine. Listing the directory contents with <code>ls -la</code> confirms that the "share" folder is now accessible, allowing easy transfer of the Splunk installer on the VM.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -264,7 +264,7 @@
               </div>
               <h3 class="project-details__content-title">Installing Splunk Enterprise</h3>
               <p class="project-details__desc-para">
-                With the shared folder mounted, navigation into the <code>share/</code> directory occurred. [cite: 43] The Splunk Enterprise Debian package, <code>splunk-9.4.2-e9664af3d956-linux-amd64.deb</code>, was found. [cite: 44] The installation was then initiated using <code>sudo dpkg -i splunk-9.4.2-e9664af3d956-linux-amd64.deb</code>. [cite: 44] The output confirms the successful unpacking and setup of Splunk, indicating that the core Splunk components are now installed on the Ubuntu server. [cite: 45]
+                With the shared folder mounted, navigation into the <code>share/</code> directory occurred. The Splunk Enterprise Debian package, <code>splunk-9.4.2-e9664af3d956-linux-amd64.deb</code>, was found. The installation was then initiated using <code>sudo dpkg -i splunk-9.4.2-e9664af3d956-linux-amd64.deb</code>. The output confirms the successful unpacking and setup of Splunk, indicating that the core Splunk components are now installed on the Ubuntu server.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -277,7 +277,7 @@
               </div>
               <h3 class="project-details__content-title">Initializing Splunk and Creating Administrator Account</h3>
               <p class="project-details__desc-para">
-                After installing the Splunk package, navigation to the <code>/opt/splunk</code> directory, which is Splunk's default installation path, occurred. [cite: 46] To properly initialize Splunk and set up its environment, switching to the <code>splunk</code> user was done using <code>sudo -u splunk bash</code>, then entering the <code>bin</code> directory. [cite: 47] From there, <code>./splunk start</code> was run, and an administrator username <code>hanlab</code> was created, setting a new password. [cite: 48]
+                After installing the Splunk package, navigation to the <code>/opt/splunk</code> directory, which is Splunk's default installation path, occurred. To properly initialize Splunk and set up its environment, switching to the <code>splunk</code> user was done using <code>sudo -u splunk bash</code>, then entering the <code>bin</code> directory. From there, <code>./splunk start</code> was run, and an administrator username <code>hanlab</code> was created, setting a new password.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -290,7 +290,7 @@
               </div>
               <h3 class="project-details__content-title">Configuring Splunk for Boot-Start</h3>
               <p class="project-details__desc-para">
-                To ensure Splunk automatically starts whenever the virtual machine boots, it was configured for boot-start. [cite: 49] Navigation to the <code>/opt/splunk/bin</code> directory occurred, and the command <code>sudo ./splunk enable boot-start -user splunk</code> was run. [cite: 50] This command installs an initialization script at <code>/etc/init.d/splunk</code>, which is then configured to run at boot. [cite: 51] This step automates Splunk's startup process, ensuring continuous log collection and analysis without manual intervention after a system restart. [cite: 52] The Splunk web interface was then accessible. [cite: 53]
+                To ensure Splunk automatically starts whenever the virtual machine boots, it was configured for boot-start. Navigation to the <code>/opt/splunk/bin</code> directory occurred, and the command <code>sudo ./splunk enable boot-start -user splunk</code> was run. This command installs an initialization script at <code>/etc/init.d/splunk</code>, which is then configured to run at boot. This step automates Splunk's startup process, ensuring continuous log collection and analysis without manual intervention after a system restart. The Splunk web interface was then accessible.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -312,7 +312,7 @@
               </div>
               <h3 class="project-details__content-title">Installing Splunk Universal Forwarder on Windows Endpoints</h3>
               <p class="project-details__desc-para">
-                To collect security logs from the Windows machines (the Windows Server and Windows 10 Endpoint), the Splunk Universal Forwarder was installed on them. [cite: 54] A key step in the Universal Forwarder setup wizard was configuring the "Receiving Indexer" by providing the hostname or IP address of the Splunk server, which is <code>192.168.10.12</code>, and the default receiving port, <code>9997</code>. [cite: 56] This configuration ensures that the forwarder knows where to send the collected log data for analysis by Splunk. [cite: 56]
+                To collect security logs from the Windows machines (the Windows Server and Windows 10 Endpoint), the Splunk Universal Forwarder was installed on them. A key step in the Universal Forwarder setup wizard was configuring the "Receiving Indexer" by providing the hostname or IP address of the Splunk server, which is <code>192.168.10.12</code>, and the default receiving port, <code>9997</code>. This configuration ensures that the forwarder knows where to send the collected log data for analysis by Splunk.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -325,14 +325,14 @@
               </div>
               <h3 class="project-details__content-title">Configuring Windows Event Log Inputs for Splunk</h3>
               <p class="project-details__desc-para">
-                To ensure comprehensive log collection from the Windows machines, the <code>input.conf</code> file located at <code>C:\Program Files\SplunkUniversalForwarder\etc\system\local</code> was modified. [cite: 57] This configuration directs the Splunk Universal Forwarder to collect specific Windows Event Logs and forward them to the Splunk indexer. [cite: 58] As seen in the configuration, the collection of:
+                To ensure comprehensive log collection from the Windows machines, the <code>input.conf</code> file located at <code>C:\Program Files\SplunkUniversalForwarder\etc\system\local</code> was modified. This configuration directs the Splunk Universal Forwarder to collect specific Windows Event Logs and forward them to the Splunk indexer. As seen in the configuration, the collection of:
                 <ul>
-                    <li>Application Logs (<code>WinEventLog://Application</code>) [cite: 59]</li>
-                    <li>Security Logs (<code>WinEventLog://Security</code>) [cite: 59]</li>
-                    <li>System Logs (<code>WinEventLog://System</code>) [cite: 59]</li>
-                    <li>Sysmon Operational Logs (<code>WinEventLog://Microsoft-Windows-Sysmon/Operational</code>) [cite: 59]</li>
+                    <li>Application Logs (<code>WinEventLog://Application</code>)</li>
+                    <li>Security Logs (<code>WinEventLog://Security</code>)</li>
+                    <li>System Logs (<code>WinEventLog://System</code>)</li>
+                    <li>Sysmon Operational Logs (<code>WinEventLog://Microsoft-Windows-Sysmon/Operational</code>)</li>
                 </ul>
-                For each of these, <code>index = endpoint</code> was set to route the data to a dedicated index in Splunk, and <code>disabled = false</code> was set to ensure they are actively collected. [cite: 59] Notably, for Sysmon logs, <code>renderXml = true</code> and <code>source = XmlWinEventLog:Microsoft-Windows-Sysmon/Operational</code> were also set to ensure the detailed XML structure of Sysmon events is preserved for richer analysis in Splunk. [cite: 60] This setup is crucial for gaining deep visibility into endpoint activities. [cite: 61]
+                For each of these, <code>index = endpoint</code> was set to route the data to a dedicated index in Splunk, and <code>disabled = false</code> was set to ensure they are actively collected. Notably, for Sysmon logs, <code>renderXml = true</code> and <code>source = XmlWinEventLog:Microsoft-Windows-Sysmon/Operational</code> were also set to ensure the detailed XML structure of Sysmon events is preserved for richer analysis in Splunk. This setup is crucial for gaining deep visibility into endpoint activities.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -345,7 +345,7 @@
               </div>
               <h3 class="project-details__content-title">Creating a New Index in Splunk for Endpoint Logs</h3>
               <p class="project-details__desc-para">
-                To properly store and analyze the logs collected from the Windows Universal Forwarders, a new dedicated index was created in Splunk. [cite: 62] Navigation to "Settings" -> "Indexes" occurred, and "New Index" was clicked. [cite: 63] The new index was named <code>endpoint</code>. [cite: 63] This ensures that all the Windows event logs (Application, Security, System, and Sysmon) are stored in a specific, organized location within Splunk, making it easier to search, analyze, and manage the data. [cite: 64]
+                To properly store and analyze the logs collected from the Windows Universal Forwarders, a new dedicated index was created in Splunk. Navigation to "Settings" -> "Indexes" occurred, and "New Index" was clicked. The new index was named <code>endpoint</code>. This ensures that all the Windows event logs (Application, Security, System, and Sysmon) are stored in a specific, organized location within Splunk, making it easier to search, analyze, and manage the data.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -357,7 +357,7 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                A search in Splunk was performed using <code>index="endpoint"</code>. [cite: 65] The search results, showing 341 events, confirm that the Windows Application, Security, System, and Sysmon logs are now actively flowing into the Splunk instance. [cite: 65] This critical step validates the entire data collection pipeline, making the logs available for analysis and threat hunting. [cite: 66]
+                A search in Splunk was performed using <code>index="endpoint"</code>. The search results, showing 341 events, confirm that the Windows Application, Security, System, and Sysmon logs are now actively flowing into the Splunk instance. This critical step validates the entire data collection pipeline, making the logs available for analysis and threat hunting.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -379,7 +379,7 @@
               </div>
               <h3 class="project-details__content-title">Active Directory Server Log Ingestion Confirmed</h3>
               <p class="project-details__desc-para">
-                After repeating the Splunk Universal Forwarder installation and configuration process for the Active Directory server, it was verified that its logs are successfully flowing into Splunk. [cite: 67] A search was performed using <code>index=ADserver</code>, which is the dedicated index created for the domain controller's logs. [cite: 68] This establishes full visibility into the domain environment. [cite: 69]
+                After repeating the Splunk Universal Forwarder installation and configuration process for the Active Directory server, it was verified that its logs are successfully flowing into Splunk. A search was performed using <code>index=ADserver</code>, which is the dedicated index created for the domain controller's logs. This establishes full visibility into the domain environment.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -428,11 +428,11 @@
               </div>
               <h3 class="project-details__content-title">Active Directory Domain Setup</h3>
               <p class="project-details__desc-para">
-                Active Directory Domain Services (AD DS) was installed on the Windows Server and it was promoted to a domain controller, creating the <code>hanlab.local</code> forest. [cite: 17] New domain user accounts were created within Active Directory. [cite: 18] The Windows 10 endpoint's DNS settings were configured to point to the AD server, and it was successfully joined to the <code>hanlab.local</code> domain. [cite: 18]
+                Active Directory Domain Services (AD DS) was installed on the Windows Server and it was promoted to a domain controller, creating the <code>hanlab.local</code> forest. New domain user accounts were created within Active Directory. The Windows 10 endpoint's DNS settings were configured to point to the AD server, and it was successfully joined to the <code>hanlab.local</code> domain.
               </p>
               <h3 class="project-details__content-title">Installing Active Directory Domain Services</h3>
               <p class="project-details__desc-para">
-                Now that Splunk is set up and collecting logs, the Active Directory (AD) server configuration was started. [cite: 70] The first step in this process is installing the Active Directory Domain Services (AD DS) role. [cite: 70] The "Add Roles and Features Wizard" in Server Manager was opened, and "Active Directory Domain Services" was selected from the list of available server roles. [cite: 71] This foundational step establishes the domain controller, which is essential for managing user accounts, computers, and other network resources in the lab environment. [cite: 72]
+                Now that Splunk is set up and collecting logs, the Active Directory (AD) server configuration was started. The first step in this process is installing the Active Directory Domain Services (AD DS) role. The "Add Roles and Features Wizard" in Server Manager was opened, and "Active Directory Domain Services" was selected from the list of available server roles. This foundational step establishes the domain controller, which is essential for managing user accounts, computers, and other network resources in the lab environment.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -445,7 +445,7 @@
               </div>
               <h3 class="project-details__content-title">Promoting to Domain Controller: Creating a New Forest</h3>
               <p class="project-details__desc-para">
-                After installing the Active Directory Domain Services role, the server was promoted to a domain controller using the "Active Directory Domain Services Configuration Wizard". [cite: 73] In the "Deployment Configuration" step, "Add a new forest" was selected, as this is the first domain controller in the lab environment. [cite: 74] The "Root domain name" was then specified as <code>hanlab.local</code>. [cite: 75] This action establishes the foundational Active Directory structure, creating the new domain and making the server a functioning domain controller. [cite: 75] Active Directory Domain Services (AD DS) was successfully installed and the server was promoted to a domain controller. [cite: 76]
+                After installing the Active Directory Domain Services role, the server was promoted to a domain controller using the "Active Directory Domain Services Configuration Wizard". In the "Deployment Configuration" step, "Add a new forest" was selected, as this is the first domain controller in the lab environment. The "Root domain name" was then specified as <code>hanlab.local</code>. This action establishes the foundational Active Directory structure, creating the new domain and making the server a functioning domain controller. Active Directory Domain Services (AD DS) was successfully installed and the server was promoted to a domain controller.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -467,7 +467,7 @@
               </div>
               <h3 class="project-details__content-title">Creating a New Active Directory User</h3>
               <p class="project-details__desc-para">
-                With the Active Directory domain controller up and running, it was populated with users and groups for the simulation. [cite: 77] Here are the steps showing the process of creating a new user account. [cite: 78]
+                With the Active Directory domain controller up and running, it was populated with users and groups for the simulation. Here are the steps showing the process of creating a new user account.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -480,7 +480,7 @@
               </div>
               <h3 class="project-details__content-title">Configuring DNS for Domain Join on Windows 10 Endpoint</h3>
               <p class="project-details__desc-para">
-                To successfully join the Windows 10 endpoint to the <code>hanlab.local</code> Active Directory domain, it first needed to be able to resolve the domain controller. [cite: 79] Since the Windows 10 machine wouldn't inherently know how to find <code>HANLAB.LOCAL</code>, its DNS settings were manually configured. [cite: 80]
+                To successfully join the Windows 10 endpoint to the <code>hanlab.local</code> Active Directory domain, it first needed to be able to resolve the domain controller. Since the Windows 10 machine wouldn't inherently know how to find <code>HANLAB.LOCAL</code>, its DNS settings were manually configured.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -502,7 +502,7 @@
               </div>
               <h3 class="project-details__content-title">Joining Windows 10 Endpoint to the Active Directory Domain</h3>
               <p class="project-details__desc-para">
-                With the DNS configured correctly, the Windows 10 endpoint was joined to the Active Directory domain. [cite: 81] Navigation to System Properties, then "Computer Name/Domain Changes," occurred, and "Domain" was selected. [cite: 82] <code>HANLAB.LOCAL</code> was entered as the domain name. [cite: 82]
+                With the DNS configured correctly, the Windows 10 endpoint was joined to the Active Directory domain. Navigation to System Properties, then "Computer Name/Domain Changes," occurred, and "Domain" was selected. <code>HANLAB.LOCAL</code> was entered as the domain name.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -515,7 +515,7 @@
               </div>
               <h3 class="project-details__content-title">Logging In with a Domain User</h3>
               <p class="project-details__desc-para">
-                The "Sign in to: HANLAB" prompt confirms authentication against the Active Directory domain controller. [cite: 83]
+                The "Sign in to: HANLAB" prompt confirms authentication against the Active Directory domain controller.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -528,7 +528,7 @@
               </div>
               <h3 class="project-details__content-title">Preparing for Brute-Force Attack: Password List</h3>
               <p class="project-details__desc-para">
-                Now that the Active Directory environment is set up with a domain user, a common attack was simulated: a brute-force password attempt. [cite: 84] Here it shows the <code>passwords.txt</code> file used for this attack. [cite: 85] A list of common and weak passwords was prepared, with the actual password for the <code>micardi</code> user placed at the very bottom of the list. [cite: 86] This text file will be fed into a brute-forcing tool on the Kali machine to attempt to guess the user's password, generating authentication logs that will later be analyzed in Splunk. [cite: 87]
+                Now that the Active Directory environment is set up with a domain user, a common attack was simulated: a brute-force password attempt. Here it shows the <code>passwords.txt</code> file used for this attack. A list of common and weak passwords was prepared, with the actual password for the <code>micardi</code> user placed at the very bottom of the list. This text file will be fed into a brute-forcing tool on the Kali machine to attempt to guess the user's password, generating authentication logs that will later be analyzed in Splunk.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -541,7 +541,7 @@
               </div>
               <h3 class="project-details__content-title">Enabling Remote Desktop for Brute-Force Simulation</h3>
               <p class="project-details__desc-para">
-                To perform a brute-force attack using Hydra with the RDP protocol, Remote Desktop was first enabled on the Windows 10 target machine. [cite: 88]
+                To perform a brute-force attack using Hydra with the RDP protocol, Remote Desktop was first enabled on the Windows 10 target machine.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -554,7 +554,7 @@
               </div>
               <h3 class="project-details__content-title">Granting Remote Desktop Access to Domain Users</h3>
               <p class="project-details__desc-para">
-                After enabling Remote Desktop, it was necessary to specify which users are permitted to connect. [cite: 89]
+                After enabling Remote Desktop, it was necessary to specify which users are permitted to connect.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -567,7 +567,7 @@
               </div>
               <h3 class="project-details__content-title">Troubleshooting RDP Brute-Force: Network Level Authentication (NLA)</h3>
               <p class="project-details__desc-para">
-                When the RDP brute-force attack using Hydra was first attempted, an error was encountered: "account on <code>192.168.10.10</code> might be valid but account not active for remote desktop". [cite: 90] This indicated a successful username enumeration but a failure to establish the RDP connection. [cite: 91] The problem was due to Network Level Authentication (NLA) being enabled on the Windows 10 target. [cite: 92] To resolve this, navigation back to the "Remote" tab in System Properties on the Windows 10 machine occurred. [cite: 93] The option "Only allow connections from computers running Remote Desktop with Network Level Authentication (recommended)" was unchecked. [cite: 94] Disabling NLA allowed Hydra to proceed with the brute-force attempts without this initial authentication hurdle, enabling the simulation to continue as planned. [cite: 95]
+                When the RDP brute-force attack using Hydra was first attempted, an error was encountered: "account on <code>192.168.10.10</code> might be valid but account not active for remote desktop". This indicated a successful username enumeration but a failure to establish the RDP connection. The problem was due to Network Level Authentication (NLA) being enabled on the Windows 10 target. To resolve this, navigation back to the "Remote" tab in System Properties on the Windows 10 machine occurred. The option "Only allow connections from computers running Remote Desktop with Network Level Authentication (recommended)" was unchecked. Disabling NLA allowed Hydra to proceed with the brute-force attempts without this initial authentication hurdle, enabling the simulation to continue as planned.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -589,7 +589,7 @@
               </div>
               <h3 class="project-details__content-title">Successful RDP Brute-Force with Hydra</h3>
               <p class="project-details__desc-para">
-                After troubleshooting the Network Level Authentication (NLA) issue, the Hydra brute-force attack was re-run against the Windows 10 endpoint's RDP service. [cite: 96] As seen in the output, Hydra successfully identified the correct password for the <code>micardi</code> user on <code>192.168.10.10</code>. [cite: 97]
+                After troubleshooting the Network Level Authentication (NLA) issue, the Hydra brute-force attack was re-run against the Windows 10 endpoint's RDP service. As seen in the output, Hydra successfully identified the correct password for the <code>micardi</code> user on <code>192.168.10.10</code>.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -602,7 +602,7 @@
               </div>
               <h3 class="project-details__content-title">Analyzing Brute-Force Attempts in Splunk: Event Code 4625</h3>
               <p class="project-details__desc-para">
-                Following the successful RDP brute-force attack, immediate attention was turned to Splunk to analyze the generated security logs. [cite: 98] A search was performed using <code>index="endpoint" micardi EventCode=4625</code>. [cite: 99] This query specifically looks for failed login attempts (<code>Event Code 4625</code>) associated with the <code>micardi</code> user on the Windows 10 endpoint. [cite: 99]
+                Following the successful RDP brute-force attack, immediate attention was turned to Splunk to analyze the generated security logs. A search was performed using <code>index="endpoint" micardi EventCode=4625</code>. This query specifically looks for failed login attempts (<code>Event Code 4625</code>) associated with the <code>micardi</code> user on the Windows 10 endpoint.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -615,7 +615,7 @@
               </div>
               <h3 class="project-details__content-title">Detailed Analysis of Failed Logon Attempt in Splunk</h3>
               <p class="project-details__desc-para">
-                Delving deeper into the <code>Event Code 4625</code> logs in Splunk, this screenshot provides crucial details about the failed logon attempt. [cite: 100] The "Network Information" section, in particular, clearly shows the source of the brute-force attack. [cite: 101] It identifies the Workstation Name as <code>kali</code> and, more importantly, the Source Network Address as <code>192.168.10.13</code>. [cite: 102] This directly correlates with the Kali machine's IP address, confirming that the brute-force attack originated from the simulated attacker's workstation. [cite: 103] This level of detail in Splunk's logs is vital for understanding the attack's origin and for subsequent incident response. [cite: 104]
+                Delving deeper into the <code>Event Code 4625</code> logs in Splunk, this screenshot provides crucial details about the failed logon attempt. The "Network Information" section, in particular, clearly shows the source of the brute-force attack. It identifies the Workstation Name as <code>kali</code> and, more importantly, the Source Network Address as <code>192.168.10.13</code>. This directly correlates with the Kali machine's IP address, confirming that the brute-force attack originated from the simulated attacker's workstation. This level of detail in Splunk's logs is vital for understanding the attack's origin and for subsequent incident response.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -628,7 +628,7 @@
               </div>
               <h3 class="project-details__content-title">Preparing for Atomic Red Team: Setting PowerShell Execution Policy</h3>
               <p class="project-details__desc-para">
-                To simulate various attacks using Atomic Red Team, the PowerShell execution policy on the Windows 10 endpoint was first adjusted. [cite: 105] The execution policy was set to <code>Bypass</code> for the <code>CurrentUser</code> scope using the command <code>Set-ExecutionPolicy Bypass CurrentUser</code>. [cite: 106] This step is essential because Atomic Red Team often uses PowerShell scripts to execute its simulated attacks, and a restricted execution policy would prevent these scripts from running. [cite: 107] By bypassing it, the environment for realistic threat emulation was enabled. [cite: 108]
+                To simulate various attacks using Atomic Red Team, the PowerShell execution policy on the Windows 10 endpoint was first adjusted. The execution policy was set to <code>Bypass</code> for the <code>CurrentUser</code> scope using the command <code>Set-ExecutionPolicy Bypass CurrentUser</code>. This step is essential because Atomic Red Team often uses PowerShell scripts to execute its simulated attacks, and a restricted execution policy would prevent these scripts from running. By bypassing it, the environment for realistic threat emulation was enabled.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -641,7 +641,7 @@
               </div>
               <h3 class="project-details__content-title">Configuring Windows Defender Exclusion for Atomic Red Team</h3>
               <p class="project-details__desc-para">
-                To ensure that Microsoft Defender Antivirus doesn't interfere with the execution of Atomic Red Team tests, an exclusion was added for the Atomic Red Team installation folder. [cite: 109] An exclusion was added for the C:\ drive (or more specifically, the folder where Atomic Red Team will be installed). [cite: 110]
+                To ensure that Microsoft Defender Antivirus doesn't interfere with the execution of Atomic Red Team tests, an exclusion was added for the Atomic Red Team installation folder. An exclusion was added for the C:\ drive (or more specifically, the folder where Atomic Red Team will be installed).
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -654,7 +654,7 @@
               </div>
               <h3 class="project-details__content-title">Installing Atomic Red Team</h3>
               <p class="project-details__desc-para">
-                With the PowerShell execution policy adjusted and Windows Defender exclusions in place, Atomic Red Team was installed on the Windows 10 endpoint. [cite: 111] The installation script was executed directly from GitHub using <code>IEX (IWR https://raw.githubusercontent.com/redcanaryco/invoke-atomicredteam/master/install-atomicredteam.ps1 -UseBasicParsing)</code>. [cite: 112]
+                With the PowerShell execution policy adjusted and Windows Defender exclusions in place, Atomic Red Team was installed on the Windows 10 endpoint. The installation script was executed directly from GitHub using <code>IEX (IWR https://raw.githubusercontent.com/redcanaryco/invoke-atomicredteam/master/install-atomicredteam.ps1 -UseBasicParsing)</code>.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -667,7 +667,7 @@
               </div>
               <h3 class="project-details__content-title">Troubleshooting Atomic Red Team: Command Not Recognized</h3>
               <p class="project-details__desc-para">
-                When attempting to execute the Atomic Red Team technique <code>T1136.001</code> (Create Account - Local Account) using <code>Invoke-AtomicTest T1136.001</code>, an error stating, "The term '<code>Invoke-AtomicTest</code>' is not recognized as the name of a cmdlet, function, script file, or operable program" was encountered. [cite: 113] This indicates that PowerShell cannot find the <code>Invoke-AtomicTest</code> function, likely because the Atomic Red Team module is not properly loaded or its path is not in the PowerShell session's <code>$env:PSModulePath</code>. [cite: 114] To resolve this, it was necessary to ensure that the PowerShell session was aware of where the <code>Invoke-AtomicTest</code> function resides. [cite: 115] This typically involves importing the module or navigating to the directory where it's located before executing the command. [cite: 116] The correct path to <code>Invoke-AtomicTest</code> will be provided to ensure the command runs successfully. [cite: 117]
+                When attempting to execute the Atomic Red Team technique <code>T1136.001</code> (Create Account - Local Account) using <code>Invoke-AtomicTest T1136.001</code>, an error stating, "The term '<code>Invoke-AtomicTest</code>' is not recognized as the name of a cmdlet, function, script file, or operable program" was encountered. This indicates that PowerShell cannot find the <code>Invoke-AtomicTest</code> function, likely because the Atomic Red Team module is not properly loaded or its path is not in the PowerShell session's <code>$env:PSModulePath</code>. To resolve this, it was necessary to ensure that the PowerShell session was aware of where the <code>Invoke-AtomicTest</code> function resides. This typically involves importing the module or navigating to the directory where it's located before executing the command. The correct path to <code>Invoke-AtomicTest</code> will be provided to ensure the command runs successfully.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -680,7 +680,7 @@
               </div>
               <h3 class="project-details__content-title">Executing Atomic Red Team: T1136.001 (Create Account - Local Account)</h3>
               <p class="project-details__desc-para">
-                To resolve the "command not recognized" error and successfully execute Atomic Red Team techniques, the <code>Invoke-AtomicRedTeam</code> module was explicitly imported. [cite: 118] <code>Import-Module "C:\AtomicRedTeam\invoke-atomicredteam\Invoke-AtomicRedTeam.psd1"</code> was run to load the module into the PowerShell session. [cite: 119] Following this, <code>Invoke-AtomicTest T1136.001</code> was re-executed to simulate creating a local account. [cite: 120] There are some various sub-tests within this technique. While one test initially failed due to password policy requirements, other tests, such as "Create a new user in PowerShell" and "Create a new Windows admin user," completed successfully, as indicated by <code>Exit code: 0</code> and messages like "The command completed successfully". [cite: 121] This demonstrates that Atomic Red Team is now correctly installed and capable of performing simulated attacks within the lab environment. [cite: 122]
+                To resolve the "command not recognized" error and successfully execute Atomic Red Team techniques, the <code>Invoke-AtomicRedTeam</code> module was explicitly imported. <code>Import-Module "C:\AtomicRedTeam\invoke-atomicredteam\Invoke-AtomicRedTeam.psd1"</code> was run to load the module into the PowerShell session. Following this, <code>Invoke-AtomicTest T1136.001</code> was re-executed to simulate creating a local account. There are some various sub-tests within this technique. While one test initially failed due to password policy requirements, other tests, such as "Create a new user in PowerShell" and "Create a new Windows admin user," completed successfully, as indicated by <code>Exit code: 0</code> and messages like "The command completed successfully". This demonstrates that Atomic Red Team is now correctly installed and capable of performing simulated attacks within the lab environment.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -693,7 +693,7 @@
               </div>
               <h3 class="project-details__content-title">Analyzing Atomic Red Team Execution: New Local User Creation in Splunk</h3>
               <p class="project-details__desc-para">
-                After successfully running the Atomic Red Team technique <code>T1136.001</code> to create a local account, the activity was verified in Splunk. [cite: 123] A search was performed using <code>index="endpoint" NewLocalUser</code>. [cite: 124] This query specifically targets the endpoint index and looks for events related to the "NewLocalUser" account created by Atomic Red Team. [cite: 124] Here it can be seen that Splunk successfully identified 12 events associated with the creation of this new local user. [cite: 125] These events, particularly those with <code>Event Code 4720</code> (A user account was created) and <code>4728</code> (A member was added to a security-enabled global group), provide crucial forensic evidence of the simulated attack. [cite: 126] This confirms that the <code>SIEM</code> is effectively capturing and logging the actions performed by Atomic Red Team, allowing detection and analysis of adversary emulation activities. [cite: 127] It means if an attacker compromised the server and created a new user account, that activity can be detected as the telemetry generated can be seen. [cite: 128]
+                After successfully running the Atomic Red Team technique <code>T1136.001</code> to create a local account, the activity was verified in Splunk. A search was performed using <code>index="endpoint" NewLocalUser</code>. This query specifically targets the endpoint index and looks for events related to the "NewLocalUser" account created by Atomic Red Team. Here it can be seen that Splunk successfully identified 12 events associated with the creation of this new local user. These events, particularly those with <code>Event Code 4720</code> (A user account was created) and <code>4728</code> (A member was added to a security-enabled global group), provide crucial forensic evidence of the simulated attack. This confirms that the <code>SIEM</code> is effectively capturing and logging the actions performed by Atomic Red Team, allowing detection and analysis of adversary emulation activities. It means if an attacker compromised the server and created a new user account, that activity can be detected as the telemetry generated can be seen.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -706,7 +706,7 @@
               </div>
               <h3 class="project-details__content-title">Simulating Data Exfiltration (C2): Atomic Red Team T1041</h3>
               <p class="project-details__desc-para">
-                To further simulate advanced threats, the Atomic Red Team technique <code>T1041</code>, which focuses on "C2 Data Exfiltration," was executed. [cite: 129] <code>Invoke-AtomicTest T1041</code> was run. [cite: 130] The first sub-test, "<code>T1041-1 C2 Data Exfiltration</code>," attempted to use <code>Invoke-WebRequest</code> to send data to <code>example.com</code>. [cite: 130] This particular test resulted in an "Access Denied" error, indicating that the simulated exfiltration to an external server was blocked, likely by network controls or the target server itself. [cite: 131] The second sub-test, "<code>T1041-2 Text Based Data Exfiltration using DNS subdomains</code>," also encountered an error, specifically "<code>DNS name contains an invalid character</code>". [cite: 132] This indicates an issue with the format of the DNS query used for exfiltration. [cite: 133] Despite these specific failures, the execution of these tests is valuable. [cite: 134] It generates relevant network and system logs that can now be analyzed in Splunk to identify patterns and indicators of attempted data exfiltration, even if the exfiltration itself was unsuccessful. [cite: 135] This helps in validating the <code>SIEM</code>'s detection capabilities for such sophisticated attacks. [cite: 136]
+                To further simulate advanced threats, the Atomic Red Team technique <code>T1041</code>, which focuses on "C2 Data Exfiltration," was executed. <code>Invoke-AtomicTest T1041</code> was run. The first sub-test, "<code>T1041-1 C2 Data Exfiltration</code>," attempted to use <code>Invoke-WebRequest</code> to send data to <code>example.com</code>. This particular test resulted in an "Access Denied" error, indicating that the simulated exfiltration to an external server was blocked, likely by network controls or the target server itself. The second sub-test, "<code>T1041-2 Text Based Data Exfiltration using DNS subdomains</code>," also encountered an error, specifically "<code>DNS name contains an invalid character</code>". This indicates an issue with the format of the DNS query used for exfiltration. Despite these specific failures, the execution of these tests is valuable. It generates relevant network and system logs that can now be analyzed in Splunk to identify patterns and indicators of attempted data exfiltration, even if the exfiltration itself was unsuccessful. This helps in validating the <code>SIEM</code>'s detection capabilities for such sophisticated attacks.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -719,7 +719,7 @@
               </div>
               <h3 class="project-details__content-title">Analyzing Data Exfiltration Attempts in Splunk</h3>
               <p class="project-details__desc-para">
-                After simulating the <code>T1041</code> (Data Exfiltration over C2) Atomic Red Team technique, immediate attention was turned to Splunk to analyze the resulting telemetry. [cite: 137] A search was performed using <code>index="endpoint" example.com</code> to specifically look for any activity related to the attempted exfiltration to <code>example.com</code>. [cite: 138]
+                After simulating the <code>T1041</code> (Data Exfiltration over C2) Atomic Red Team technique, immediate attention was turned to Splunk to analyze the resulting telemetry. A search was performed using <code>index="endpoint" example.com</code> to specifically look for any activity related to the attempted exfiltration to <code>example.com</code>.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -731,19 +731,19 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                Here it can be seen that Splunk successfully captured 4 events related to this activity, even though the actual exfiltration attempt previously resulted in an "Access Denied" error. [cite: 139] This is incredibly important. The logs, specifically <code>Sysmon</code> events, provide crucial details:
+                Here it can be seen that Splunk successfully captured 4 events related to this activity, even though the actual exfiltration attempt previously resulted in an "Access Denied" error. This is incredibly important. The logs, specifically <code>Sysmon</code> events, provide crucial details:
                 <ul>
-                    <li>They show the <code>CommandLine</code> used, indicating <code>powershell.exe</code> attempting to connect to <code>example.com</code>. [cite: 140]</li>
-                    <li>They contain fields like <code>exfiltratedData</code> and <code>encodedData</code>, revealing the content that was attempted to be exfiltrated (e.g., "<code>SecretDataToExfiltrate</code>" in its encoded form). [cite: 141]</li>
+                    <li>They show the <code>CommandLine</code> used, indicating <code>powershell.exe</code> attempting to connect to <code>example.com</code>.</li>
+                    <li>They contain fields like <code>exfiltratedData</code> and <code>encodedData</code>, revealing the content that was attempted to be exfiltrated (e.g., "<code>SecretDataToExfiltrate</code>" in its encoded form).</li>
                 </ul>
-                The ability to see this telemetry in Splunk is vital for the analyst. [cite: 142] Even if an attack is unsuccessful due to network controls or misconfigurations, the fact that our <code>SIEM</code> (Splunk) and endpoint logging (Sysmon via Universal Forwarder) capture these attempts provides:
+                The ability to see this telemetry in Splunk is vital for the analyst. Even if an attack is unsuccessful due to network controls or misconfigurations, the fact that our <code>SIEM</code> (Splunk) and endpoint logging (Sysmon via Universal Forwarder) capture these attempts provides:
                 <ul>
-                    <li>Early Warning: These logs serve as critical indicators of compromise (<code>IOCs</code>) and an attacker's intent, allowing detection of malicious activity before it succeeds. [cite: 143]</li>
-                    <li>Forensic Evidence: The detailed information within these logs (source IP, command line, attempted data) is invaluable for post-incident analysis and understanding the adversary's techniques. [cite: 144]</li>
-                    <li>Validation of Controls: It confirms that our logging infrastructure is functioning correctly and that our <code>SIEM</code> is effectively collecting and indexing the necessary data to identify sophisticated attacks like data exfiltration attempts. [cite: 145]</li>
-                    <li>Opportunity for Refinement: This telemetry can be used to develop or refine detection rules, ensuring that future, similar attempts are immediately flagged and alerted upon. [cite: 146]</li>
+                    <li>Early Warning: These logs serve as critical indicators of compromise (<code>IOCs</code>) and an attacker's intent, allowing detection of malicious activity before it succeeds.</li>
+                    <li>Forensic Evidence: The detailed information within these logs (source IP, command line, attempted data) is invaluable for post-incident analysis and understanding the adversary's techniques.</li>
+                    <li>Validation of Controls: It confirms that our logging infrastructure is functioning correctly and that our <code>SIEM</code> is effectively collecting and indexing the necessary data to identify sophisticated attacks like data exfiltration attempts.</li>
+                    <li>Opportunity for Refinement: This telemetry can be used to develop or refine detection rules, ensuring that future, similar attempts are immediately flagged and alerted upon.</li>
                 </ul>
-                This demonstrates the power of a well-configured <code>SIEM</code> in providing deep visibility into endpoint activities, regardless of the attack's success, which is fundamental for effective threat detection and incident response. [cite: 147]
+                This demonstrates the power of a well-configured <code>SIEM</code> in providing deep visibility into endpoint activities, regardless of the attack's success, which is fundamental for effective threat detection and incident response.
               </p>
             </div>
             <div class="project-details__tools-used">

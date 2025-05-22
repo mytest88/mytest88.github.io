@@ -731,19 +731,39 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                Here it can be seen that Splunk successfully captured 4 events related to this activity, even though the actual exfiltration attempt previously resulted in an "Access Denied" error. This is incredibly important. The logs, specifically <code>Sysmon</code> events, provide crucial details:
-                
-                    <li>They show the <code>CommandLine</code> used, indicating <code>powershell.exe</code> attempting to connect to <code>example.com</code>.<li>
-                    <li>They contain fields like <code>exfiltratedData</code> and <code>encodedData</code>, revealing the content that was attempted to be exfiltrated (e.g., "<code>SecretDataToExfiltrate</code>" in its encoded form).<li>
-                
-                <li>The ability to see this telemetry in Splunk is vital for the analyst. Even if an attack is unsuccessful due to network controls or misconfigurations, the fact that our <code>SIEM</code> (Splunk) and endpoint logging (Sysmon via Universal Forwarder) capture these attempts provides:
-                
-                    <li>Early Warning: These logs serve as critical indicators of compromise (<code>IOCs</code>) and an attacker's intent, allowing detection of malicious activity before it succeeds.</li>
-                    <li>Forensic Evidence: The detailed information within these logs (source IP, command line, attempted data) is invaluable for post-incident analysis and understanding the adversary's techniques.</li>
-                    <li>Validation of Controls: It confirms that our logging infrastructure is functioning correctly and that our <code>SIEM</code> is effectively collecting and indexing the necessary data to identify sophisticated attacks like data exfiltration attempts.</li>
-                    <li>Opportunity for Refinement: This telemetry can be used to develop or refine detection rules, ensuring that future, similar attempts are immediately flagged and alerted upon.</li>
-                
-                This demonstrates the power of a well-configured <code>SIEM</code> in providing deep visibility into endpoint activities, regardless of the attack's success, which is fundamental for effective threat detection and incident response.
+    Here it can be seen that Splunk successfully captured 4 events related to this activity, even though the actual exfiltration attempt previously resulted in an "Access Denied" error. This is incredibly important. The logs, specifically <code>Sysmon</code> events, provide crucial details:
+              </p>
+
+              <p class="project-details__desc-para">
+    They show the <code>CommandLine</code> used, indicating <code>powershell.exe</code> attempting to connect to <code>example.com</code>.
+              </p>
+
+              <p class="project-details__desc-para">
+    They contain fields like <code>exfiltratedData</code> and <code>encodedData</code>, revealing the content that was attempted to be exfiltrated (e.g., "<code>SecretDataToExfiltrate</code>" in its encoded form).
+              </p>
+
+              <p class="project-details__desc-para">
+    The ability to see this telemetry in Splunk is vital for the analyst. Even if an attack is unsuccessful due to network controls or misconfigurations, the fact that our <code>SIEM</code> (Splunk) and endpoint logging (Sysmon via Universal Forwarder) capture these attempts provides:
+              </p>
+
+              <p class="project-details__desc-para">
+    Early Warning: These logs serve as critical indicators of compromise (<code>IOCs</code>) and an attacker's intent, allowing detection of malicious activity before it succeeds.
+              </p>
+
+              <p class="project-details__desc-para">
+    Forensic Evidence: The detailed information within these logs (source IP, command line, attempted data) is invaluable for post-incident analysis and understanding the adversary's techniques.
+              </p>
+
+              <p class="project-details__desc-para">
+    Validation of Controls: It confirms that our logging infrastructure is functioning correctly and that our <code>SIEM</code> is effectively collecting and indexing the necessary data to identify sophisticated attacks like data exfiltration attempts.
+              </p>
+
+              <p class="project-details__desc-para">
+    Opportunity for Refinement: This telemetry can be used to develop or refine detection rules, ensuring that future, similar attempts are immediately flagged and alerted upon.
+              </p>
+
+              <p class="project-details__desc-para">
+      This demonstrates the power of a well-configured <code>SIEM</code> in providing deep visibility into endpoint activities, regardless of the attack's success, which is fundamental for effective threat detection and incident response.
               </p>
             </div>
             <div class="project-details__tools-used">

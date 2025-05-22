@@ -325,14 +325,27 @@
               </div>
               <h3 class="project-details__content-title">Configuring Windows Event Log Inputs for Splunk</h3>
               <p class="project-details__desc-para">
-                To ensure comprehensive log collection from the Windows machines, the <code>input.conf</code> file located at <code>C:\Program Files\SplunkUniversalForwarder\etc\system\local</code> was modified. This configuration directs the Splunk Universal Forwarder to collect specific Windows Event Logs and forward them to the Splunk indexer. As seen in the configuration, the collection of:
-                <ul>
-                    <li>Application Logs (<code>WinEventLog://Application</code>)</li>
-                    <li>Security Logs (<code>WinEventLog://Security</code>)</li>
-                    <li>System Logs (<code>WinEventLog://System</code>)</li>
-                    <li>Sysmon Operational Logs (<code>WinEventLog://Microsoft-Windows-Sysmon/Operational</code>)</li>
-                </ul>
-                For each of these, <code>index = endpoint</code> was set to route the data to a dedicated index in Splunk, and <code>disabled = false</code> was set to ensure they are actively collected. Notably, for Sysmon logs, <code>renderXml = true</code> and <code>source = XmlWinEventLog:Microsoft-Windows-Sysmon/Operational</code> were also set to ensure the detailed XML structure of Sysmon events is preserved for richer analysis in Splunk. This setup is crucial for gaining deep visibility into endpoint activities.
+    To ensure comprehensive log collection from the Windows machines, the <code>code-input.conf</code> file located at <code>C:\Program Files\SplunkUniversalForwarder\etc\system\local</code> was modified. This configuration directs the Splunk Universal Forwarder to collect specific Windows Event Logs and forward them to the Splunk indexer. As seen in the configuration, the collection of:
+              </p>
+
+              <p class="project-details__desc-para">
+    Application Logs (<code>WindowsEventLog://Application</code>)
+              </p>
+
+              <p class="project-details__desc-para">
+    Security Logs (<code>WindowsEventLog://Security</code>)
+              </p>
+
+              <p class="project-details__desc-para">
+    System Logs (<code>WindowsEventLog://System</code>)
+              </p>
+
+              <p class="project-details__desc-para">
+    Sysmon Operational Logs (<code>WindowsEventLog://Microsoft-Windows-Sysmon/Operational</code>)
+              </p>
+
+              <p class="project-details__desc-para">
+    For each of these, <code>index = endpoint</code> was set to route the data to a dedicated index in Splunk, and <code>disabled = false</code> was set to ensure they are actively collected. Notably, for Sysmon logs, <code>renderXml = true</code> and <code>source = XmlWinEventLog:Microsoft-Windows-Sysmon/Operational</code> were also set to ensure the detailed XML structure of Sysmon events is preserved for richer analysis in Splunk. This setup is crucial for gaining deep visibility into endpoint activities.
               </p>
               <div class="project-details__img-cont">
                 <img

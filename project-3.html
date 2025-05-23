@@ -676,38 +676,38 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                After creating and saving the custom rule, the Wazuh Manager service was restarted using systemctl restart wazuh-manager. This crucial step ensures that the new detection logic is loaded and actively applied, allowing Wazuh to immediately begin identifying Mimikatz activity.
+                Now it's time to test. Here's Wazuh dashboard before i'm re-executing mimikatz.exe
               </p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/Automated SOC with SOAR Implementation/37-restart-service.png"
-                  alt="Restart Service"
+                  src="./assets/Automated SOC with SOAR Implementation/37-beforeRe.png"
+                  alt="Before Re-execution"
                   class="constrained-image"
                   id="image-40"
                   onclick="showOriginal(this)"
                 />
               </div>
+
               <p class="project-details__desc-para">
-                With the custom rule in place and the Wazuh Manager restarted, I re-executed Mimikatz on the Windows 10 endpoint. This time, as shown in the Wazuh dashboard, an alert titled "Mimikatz Usage Detected!!!" was successfully generated. This confirms that our custom rule is accurately identifying the threat and that Wazuh is now providing real-time detection capabilities.
+                Executing mimikatz.exe
               </p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/Automated SOC with SOAR Implementation/38-mimikatz-alert.png"
-                  alt="Mimikatz Alert"
+                  src="./assets/Automated SOC with SOAR Implementation/38-exeMimikatz.png"
+                  alt="Executing Mimikatz"
                   class="constrained-image"
                   id="image-41"
                   onclick="showOriginal(this)"
                 />
               </div>
 
-              <h3 class="project-details__content-title">Installing Shuffle (SOAR)</h3>
               <p class="project-details__desc-para">
-                Moving to the SOAR component, Shuffle, the installation process was initiated on its dedicated server. The setup involved using Docker-Compose to deploy Shuffle along with its necessary services. The screenshot confirms the successful creation of all Docker containers, indicating Shuffle is now up and running and ready for workflow orchestration.
+                After restarting the Wazuh manager and re-executing Mimikatz on the Windows 10 endpoint, our custom detection rule immediately triggered a high-severity alert. As highlighted, the Wazuh dashboard now displays a new event with rule.mitre.id as T1003 (Credential Access) and rule.description clearly stating "Mimikatz Usage Detected!!!".
               </p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/Automated SOC with SOAR Implementation/39-install-shuffle.png"
-                  alt="Installing Shuffle"
+                  src="./assets/Automated SOC with SOAR Implementation/39-afterRe.png"
+                  alt="After Re-execution"
                   class="constrained-image"
                   id="image-42"
                   onclick="showOriginal(this)"

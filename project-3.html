@@ -1,234 +1,957 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Active Directory Threat Simulation and SIEM Analysis</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Automated SOC with SOAR Implementation</title>
+    <meta name="description" content="Case study page of Automated SOC with SOAR Implementation Project" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap" rel="stylesheet" />
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-        .container {
-            max-width: 900px;
-            margin: auto;
-            background: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1, h2, h3 {
-            color: #0056b3;
-        }
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 20px 0;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        ul {
-            list-style-type: disc;
-            margin-left: 20px;
-        }
-        b {
-            font-weight: bold;
-        }
+      .constrained-image {
+        display: block;
+        width: 100%;
+        height: auto;
+        cursor: pointer; /* Add a pointer cursor on hover */
+        transition: transform 0.2s ease;
+      }
+
+      .constrained-image.larger {
+        max-width: 1890px;
+        max-height: 1100px;
+      }
+
+      .constrained-image:hover {
+        transform: scale(1.03);
+      }
+
+      .project-details__img-cont {
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+
+      /* The Modal (background) */
+      .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1000; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgba(0, 0, 0, 0.9); /* Black with opacity */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* Modal Content (image) */
+      .modal-content {
+        /* margin: auto; */
+        display: block;
+        /* width: 80%; */
+        max-width: 90%;
+        max-height: 90%;
+      }
+
+      /* Close Button */
+      .close {
+        position: absolute;
+        top: 15px;
+        right: 35px;
+        color: #f1f1f1;
+        font-size: 40px;
+        font-weight: bold;
+        transition: color 0.3s;
+        cursor: pointer;
+      }
+
+      .close:hover,
+      .close:focus {
+        color: #bbb;
+        text-decoration: none;
+      }
+      code {
+        background-color: #eee; /* Light background for code */
+        padding: 2px 4px;
+        border-radius: 3px;
+        font-family: 'Source Code Pro', monospace; /* Monospaced font for code */
+        font-size: 0.9em; /* Slightly smaller than surrounding text */
+      }
     </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Active Directory Threat Simulation and SIEM Analysis</h1>
-
-        <h2>Project Overview</h2>
-        <p>In this project, I built and operated a comprehensive virtual lab environment to simulate Active Directory (AD) threats and analyze their impact using a Security Information and Event Management (SIEM) system. The primary challenge was to understand how advanced attacks target organizations and to confirm that our security monitoring (SIEM) could effectively capture and detect these threats. I set up a realistic domain with a Windows Server acting as an Active Directory Domain Controller, a Windows 10 endpoint, and a Kali Linux machine for offensive operations. All network and system events were systematically collected and analyzed by Splunk, which I deployed on an Ubuntu server.</p>
-        <p>Through this lab, I demonstrated my ability to not only simulate common and advanced attack vectors, such as RDP brute-force and Atomic Red Team techniques (like local account creation and data exfiltration), but also to precisely track and analyze their telemetry in Splunk. This project provided crucial insights into how a well-configured SIEM provides exceptional visibility, even when attacks are unsuccessful. I confirmed that Splunk effectively captured and indexed critical security events, providing crucial visibility into unauthorized access attempts and simulated adversary activities, which is fundamental for effective threat detection and incident response.</p>
-        <p><b>Key Skills Demonstrated:</b> Active Directory (AD DS), Splunk SIEM, Universal Forwarders, Sysmon, Kali Linux, Hydra, Atomic Red Team, PowerShell, network configuration, log analysis, threat simulation, incident detection, troubleshooting, forensic evidence collection, threat detection and incident response.</p>
-
-        <h2>Workflow</h2>
-        <p>This comprehensive workflow allowed me to simulate realistic attack scenarios and, crucially, to validate and demonstrate the effectiveness of Splunk as a SIEM solution in detecting, logging, and providing deep visibility into Active Directory-focused threats. Here's a breakdown of the workflow I followed:</p>
-
-        <h3>Virtual Lab Environment Setup</h3>
-        <p>I deployed essential virtual machines: a Windows Server as our Active Directory Domain Controller (192.168.10.15), a Windows 10 Endpoint (192.168.10.10) for user activity and attacks, and a Kali Linux machine (192.168.10.13) for offensive tools. I configured an Ubuntu Server (192.168.10.12) to host our Splunk SIEM.</p>
-
-        <h3>Splunk SIEM Deployment and Configuration</h3>
-        <p>I installed Splunk Enterprise on the Ubuntu server, ensuring it was configured with a static IP and set to start automatically on boot. I deployed Splunk Universal Forwarders on both the Windows Server (AD DC) and the Windows 10 Endpoint. I configured the input.conf files on the Windows machines to forward critical Windows Event Logs (Application, Security, System, and Sysmon Operational logs) to Splunk. In Splunk, I created dedicated indexes, endpoint and ADserver, to organize the incoming logs and configured the receiving port (9997) to accept data from the forwarders. I verified successful log ingestion by searching for events from both Windows machines in Splunk.</p>
-
-        <h3>Active Directory Domain Setup</h3>
-        <p>I installed Active Directory Domain Services (AD DS) on the Windows Server and promoted it to a domain controller, creating the hanlab.local forest. I created new domain user accounts within Active Directory. I configured the Windows 10 endpoint's DNS settings to point to the AD server and successfully joined it to the hanlab.local domain.</p>
-
-        <h3>Threat Simulation: RDP Brute-Force Attack</h3>
-        <p>I prepared a password list on the Kali machine, including the target user's password. I enabled Remote Desktop on the Windows 10 endpoint and granted RDP access to our domain users. I executed an RDP brute-force attack using Hydra from the Kali machine against the Windows 10 endpoint. I troubleshooted an initial connection error by disabling Network Level Authentication (NLA) on the target. I analyzed the failed logon attempts (Event Code 4625) in Splunk, successfully identifying the Kali machine's IP as the source of the attack, demonstrating Splunk's ability to track malicious activity.</p>
-
-        <h3>Threat Simulation: Atomic Red Team Attacks</h3>
-        <p>I prepared the Windows 10 endpoint for Atomic Red Team by adjusting the PowerShell execution policy and configuring Windows Defender exclusions. I installed Atomic Red Team on the Windows 10 endpoint. I executed T1136.001 (Create Account - Local Account) and verified the creation of new local user accounts by analyzing corresponding events in Splunk. I executed T1041 (C2 Data Exfiltration) to simulate data exfiltration attempts. Even though the exfiltration was blocked, I analyzed the generated telemetry in Splunk, highlighting the critical importance of seeing command-line arguments and attempted data in logs for early warning and forensic analysis.</p>
-
-        <p>Let’s get started!</p>
-
-        <h2>Virtual Lab Environment Diagram</h2>
-        <p>This diagram illustrates the virtual lab environment I set up for simulating Active Directory threats and performing SIEM analysis. The core components include a Windows Server acting as the Active Directory Domain Controller (192.168.10.15), a Windows 10 Endpoint (192.168.10.10) for simulating user activity and attacks, and a Kali Machine (192.168.10.13) for offensive operations. All network traffic is monitored and analyzed by Splunk, running on an Ubuntu Server (192.168.10.12).</p>
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/0-draw.png" alt="Virtual Lab Environment Diagram">
-
-        <h2>Setting Up Splunk: Network Configuration</h2>
-        <p>To begin setting up Splunk on the Ubuntu server, I first checked the network configuration using <code>ip a</code>. The output confirms the current IP address of 192.168.10.6 for the enp0s3 interface. Following this, I initiated the process to configure a static IP address by opening the <code>50-cloud-init.yaml</code> file with <code>sudo nano /etc/netplan/50-cloud-init.yaml</code>. This ensures Splunk has a consistent and predictable network address for reliable access and log ingestion.</p>
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/1-network-conf.png" alt="Splunk Network Configuration">
-
-        <h2>Configuring Static IP with Netplan</h2>
-        <p>To ensure a stable network presence for Splunk, I configured a static IP address for the Ubuntu server. I edited the <code>/etc/netplan/50-cloud-init.yaml</code> file, setting the enp0s3 interface to <code>addresses: [192.168.10.12/24]</code> and specifying <code>nameservers: [8.8.8.8]</code> for DNS resolution. After saving the changes, I applied the new configuration using <code>sudo netplan apply</code>. This step ensures the Splunk server maintains its designated IP address.</p>
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/2-conf-apply.png" alt="Applying Netplan Configuration">
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/3-conf-show.png" alt="Showing Netplan Configuration">
-
-        <h2>Mounting Shared Folder for Splunk Installation</h2>
-        <p>To transfer the Splunk installation file to the Ubuntu server, I mounted a shared folder from my host PC. I used the command <code>sudo mount -t vboxsf -o uid=1000,gid=1000 Projects share/</code>, which successfully mounted the "Projects" shared folder to the "share/" directory on the Ubuntu machine. Listing the directory contents with <code>ls -la</code> confirms that the "share" folder is now accessible, allowing me to easily transfer the Splunk installer on the VM.</p>
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/4-mounting.png" alt="Mounting Shared Folder">
-
-        <h2>Installing Splunk Enterprise</h2>
-        <p>With the shared folder mounted, I navigated into the <code>share/</code> directory. Here, I found the Splunk Enterprise Debian package, <code>splunk-9.4.2-e9664af3d956-linux-amd64.deb</code>. I then initiated the installation using <code>sudo dpkg -i splunk-9.4.2-e9664af3d956-linux-amd64.deb</code>. The output confirms the successful unpacking and setup of Splunk, indicating that the core Splunk components are now installed on the Ubuntu server.</p>
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/5-install-splunk.png" alt="Installing Splunk Enterprise">
-
-        <h2>Initializing Splunk and Creating Administrator Account</h2>
-        <p>After installing the Splunk package, I navigated to the <code>/opt/splunk</code> directory, which is Splunk's default installation path. To properly initialize Splunk and set up its environment, I switched to the <code>splunk</code> user using <code>sudo -u splunk bash</code>, then went into the <code>bin</code> directory. From there, I ran <code>./splunk start</code>. And then I created the administrator username <code>hanlab</code>, setting a new password.</p>
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/6-account-splunk.png" alt="Initializing Splunk and Creating Account">
-
-        <h2>Configuring Splunk for Boot-Start</h2>
-        <p>To ensure Splunk automatically starts whenever the virtual machine boots, I configured it for boot-start. I navigated to the <code>/opt/splunk/bin</code> directory and ran the command <code>sudo ./splunk enable boot-start -user splunk</code>. This command installs an initialization script at <code>/etc/init.d/splunk</code>, which is then configured to run at boot. This step automates Splunk's startup process, ensuring continuous log collection and analysis without manual intervention after a system restart. I was then able to access the Splunk web interface.</p>
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/7-auto-start.png" alt="Configuring Splunk for Boot-Start">
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/8-interface.png" alt="Splunk Web Interface">
-
-        <h2>Installing Splunk Universal Forwarder on Windows Endpoints</h2>
-        <p>To collect security logs from our Windows machines (the Windows Server and Windows 10 Endpoint), I installed the Splunk Universal Forwarder on them. This screenshot shows a key step in the Universal Forwarder setup wizard. Here, I'm configuring the "Receiving Indexer" by providing the hostname or IP address of our Splunk server, which is 192.168.10.12, and the default receiving port, 9997. This configuration ensures that the forwarder knows where to send the collected log data for analysis by Splunk.</p>
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/9-forwarder.png" alt="Installing Splunk Universal Forwarder">
-
-        <h2>Configuring Windows Event Log Inputs for Splunk</h2>
-        <p>To ensure comprehensive log collection from the Windows machines, I modified the <code>input.conf</code> file located at <code>C:\Program Files\SplunkUniversalForwarder\etc\system\local</code>. This configuration directs the Splunk Universal Forwarder to collect specific Windows Event Logs and forward them to our Splunk indexer. As seen in the configuration, I enabled the collection of:</p>
-        <ul>
-            <li>Application Logs (<code>WinEventLog://Application</code>)</li>
-            <li>Security Logs (<code>WinEventLog://Security</code>)</li>
-            <li>System Logs (<code>WinEventLog://System</code>)</li>
-            <li>Sysmon Operational Logs (<code>WinEventLog://Microsoft-Windows-Sysmon/Operational</code>)</li>
-        </ul>
-        <p>For each of these, I set <code>index = endpoint</code> to route the data to a dedicated index in Splunk, and <code>disabled = false</code> to ensure they are actively collected. Notably, for Sysmon logs, I also set <code>renderXml = true</code> and <code>source = XmlWinEventLog:Microsoft-Windows-Sysmon/Operational</code> to ensure the detailed XML structure of Sysmon events is preserved for richer analysis in Splunk. This setup is crucial for gaining deep visibility into endpoint activities.</p>
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/10-inputs-file.png" alt="Configuring Windows Event Log Inputs">
-
-        <h2>Creating a New Index in Splunk for Endpoint Logs</h2>
-        <p>To properly store and analyze the logs collected from the Windows Universal Forwarders, I created a new dedicated index in Splunk. I navigated to "Settings" -> "Indexes" and clicked "New Index." As shown, I named this new index <code>endpoint</code>. This ensures that all the Windows event logs (Application, Security, System, and Sysmon) are stored in a specific, organized location within Splunk, making it easier to search, analyze, and manage the data.</p>
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/11-index-endpoint.png" alt="Creating Splunk Index for Endpoint Logs">
-        <p>I performed a search in Splunk using <code>index="endpoint"</code>. The search results, showing 341 events, confirm that the Windows Application, Security, System, and Sysmon logs are now actively flowing into our Splunk instance. This critical step validates the entire data collection pipeline, making the logs available for analysis and threat hunting.</p>
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/12-logs-showing.png" alt="Splunk Endpoint Logs Flowing">
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/12-logs-showing2.png" alt="Splunk Endpoint Logs Flowing Continued">
-
-        <h2>Active Directory Server Log Ingestion Confirmed</h2>
-        <p>After repeating the Splunk Universal Forwarder installation and configuration process for the Active Directory server, I verified that its logs are successfully flowing into Splunk. I performed a search using <code>index=ADserver</code>, which is the dedicated index I created for the domain controller's logs. This establishes full visibility into the domain environment.</p>
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/3-AD-splunk0.png" alt="AD Server Logs in Splunk">
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/13-AD-splunk1.png" alt="AD Server Logs in Splunk Part 1">
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/13-AD-splunk2.png" alt="AD Server Logs in Splunk Part 2">
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/13-AD-splunk3.png" alt="AD Server Logs in Splunk Part 3">
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/13-AD-splunk4.png" alt="AD Server Logs in Splunk Part 4">
-
-        <h2>Installing Active Directory Domain Services</h2>
-        <p>Now that Splunk is set up and collecting logs, I'm moving on to configure the Active Directory (AD) server. The first step in this process is installing the Active Directory Domain Services (AD DS) role. I opened the "Add Roles and Features Wizard" in Server Manager and, as shown, selected "Active Directory Domain Services" from the list of available server roles. This foundational step establishes the domain controller, which is essential for managing user accounts, computers, and other network resources in our lab environment.</p>
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/14-install-ad.png" alt="Installing Active Directory Domain Services">
-
-        <h2>Promoting to Domain Controller: Creating a New Forest</h2>
-        <p>After installing the Active Directory Domain Services role, I proceeded to promote the server to a domain controller using the "Active Directory Domain Services Configuration Wizard". In the "Deployment Configuration" step, I selected "Add a new forest," as this is the first domain controller in our lab environment. I then specified the "Root domain name" as <code>hanlab.local</code>. This action establishes the foundational Active Directory structure, creating our new domain and making the server a functioning domain controller. We have successfully installed Active Directory Domain Services (AD DS) and promoted our server to domain controller.</p>
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/15-dc.png" alt="Promoting to Domain Controller">
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/16-adds.png" alt="Active Directory Domain Services Installation">
-
-        <h2>Creating a New Active Directory User</h2>
-        <p>With the Active Directory domain controller up and running, it's time to populate it with users and groups for our simulation. Here are the steps showing the process of creating a new user account.</p>
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/17-create0.png" alt="Creating a New Active Directory User">
-
-        <h2>Configuring DNS for Domain Join on Windows 10 Endpoint</h2>
-        <p>To successfully join our Windows 10 endpoint to the <code>hanlab.local</code> Active Directory domain, I first needed to ensure it could resolve the domain controller. Since the Windows 10 machine wouldn't inherently know how to find <code>HANLAB.LOCAL</code>, I manually configured its DNS settings.</p>
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/18-conf-dns.png" alt="Configuring DNS on Windows 10 Endpoint">
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/18-conf-dns1.png" alt="Configuring DNS on Windows 10 Endpoint Continued">
-
-        <h2>Joining Windows 10 Endpoint to the Active Directory Domain</h2>
-        <p>With the DNS configured correctly, I proceeded to join the Windows 10 endpoint to our Active Directory domain. I navigated to System Properties, then "Computer Name/Domain Changes," and selected "Domain". I entered <code>HANLAB.LOCAL</code> as the domain name.</p>
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/19-join.png" alt="Joining Windows 10 to Active Directory Domain">
-
-        <h2>Logging In with a Domain User</h2>
-        <p>The "Sign in to: HANLAB" prompt confirms that I'm authenticating against our Active Directory domain controller.</p>
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/20-login-du.png" alt="Logging In with a Domain User">
-
-        <h2>Preparing for Brute-Force Attack: Password List</h2>
-        <p>Now that our Active Directory environment is set up with a domain user, it's time to simulate a common attack: a brute-force password attempt. Here it shows the <code>passwords.txt</code> file I'll be using for this attack. I've prepared a list of common and weak passwords, with the actual password for the <code>micardi</code> user placed at the very bottom of the list. This text file will be fed into a brute-forcing tool on the Kali machine to attempt to guess the user's password, generating authentication logs that we'll later analyze in Splunk.</p>
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/21-passwordtxt.png" alt="Password List for Brute-Force Attack">
-
-        <h2>Enabling Remote Desktop for Brute-Force Simulation</h2>
-        <p>To perform a brute-force attack using Hydra with the RDP protocol, I first needed to enable Remote Desktop on our Windows 10 target machine.</p>
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/22-open-rdp.png" alt="Enabling Remote Desktop">
-
-        <h2>Granting Remote Desktop Access to Domain Users</h2>
-        <p>After enabling Remote Desktop, I needed to specify which users are permitted to connect.</p>
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/23-rdp-users.png" alt="Granting Remote Desktop Access">
-
-        <h2>Troubleshooting RDP Brute-Force: Network Level Authentication (NLA)</h2>
-        <p>When I first attempted the RDP brute-force attack using Hydra, I encountered an error: "account on 192.168.10.10 might be valid but account not active for remote desktop". This indicated a successful username enumeration but a failure to establish the RDP connection. The problem was due to Network Level Authentication (NLA) being enabled on the Windows 10 target. To resolve this, I navigated back to the "Remote" tab in System Properties on the Windows 10 machine. As shown, I unchecked the option "Only allow connections from computers running Remote Desktop with Network Level Authentication (recommended)". Disabling NLA allowed Hydra to proceed with the brute-force attempts without this initial authentication hurdle, enabling the simulation to continue as planned.</p>
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/24-error.png" alt="RDP Brute-Force Error">
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/25-tshoot.png" alt="Troubleshooting NLA">
-
-        <h2>Successful RDP Brute-Force with Hydra</h2>
-        <p>After troubleshooting the Network Level Authentication (NLA) issue, I re-ran the Hydra brute-force attack against the Windows 10 endpoint's RDP service. As seen in the output, Hydra successfully identified the correct password for the <code>micardi</code> user on 192.168.10.10.</p>
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/26-findpw.png" alt="Successful RDP Brute-Force">
-
-        <h2>Analyzing Brute-Force Attempts in Splunk: Event Code 4625</h2>
-        <p>Following the successful RDP brute-force attack, I immediately turned to Splunk to analyze the generated security logs. I performed a search using <code>index="endpoint" micardi EventCode=4625</code>. This query specifically looks for failed login attempts (Event Code 4625) associated with the <code>micardi</code> user on our Windows 10 endpoint.</p>
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/27-splunk-bf.png" alt="Analyzing Brute-Force Attempts in Splunk">
-
-        <h2>Detailed Analysis of Failed Logon Attempt in Splunk</h2>
-        <p>Delving deeper into the Event Code 4625 logs in Splunk, this screenshot provides crucial details about the failed logon attempt. The "Network Information" section, in particular, clearly shows the source of the brute-force attack. It identifies the Workstation Name as <code>kali</code> and, more importantly, the Source Network Address as 192.168.10.13. This directly correlates with our Kali machine's IP address, confirming that the brute-force attack originated from our simulated attacker's workstation. This level of detail in Splunk's logs is vital for understanding the attack's origin and for subsequent incident response.</p>
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/28-splunk-kali.png" alt="Detailed Analysis of Failed Logon Attempt">
-
-        <h2>Preparing for Atomic Red Team: Setting PowerShell Execution Policy</h2>
-        <p>To simulate various attacks using Atomic Red Team, I first needed to adjust the PowerShell execution policy on the Windows 10 endpoint. Here I'm setting the execution policy to <code>Bypass</code> for the <code>CurrentUser</code> scope using the command <code>Set-ExecutionPolicy Bypass CurrentUser</code>. This step is essential because Atomic Red Team often uses PowerShell scripts to execute its simulated attacks, and a restricted execution policy would prevent these scripts from running. By bypassing it, I'm enabling the environment for realistic threat emulation.</p>
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/29-atom.png" alt="Setting PowerShell Execution Policy">
-
-        <h2>Configuring Windows Defender Exclusion for Atomic Red Team</h2>
-        <p>To ensure that Microsoft Defender Antivirus doesn't interfere with the execution of Atomic Red Team tests, I added an exclusion for the Atomic Red Team installation folder. I've added an exclusion for the C:\ drive (or more specifically, the folder where Atomic Red Team will be installed).</p>
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/30-exclusion-windef.png" alt="Configuring Windows Defender Exclusion">
-
-        <h2>Installing Atomic Red Team</h2>
-        <p>With the PowerShell execution policy adjusted and Windows Defender exclusions in place, I proceeded to install Atomic Red Team on the Windows 10 endpoint. I executed the installation script directly from GitHub using <code>IEX (IWR https://raw.githubusercontent.com/redcanaryco/invoke-atomicredteam/master/install-atomicredteam.ps1 -UseBasicParsing)</code>.</p>
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/31-install-art.png" alt="Installing Atomic Red Team">
-
-        <h2>Troubleshooting Atomic Red Team: Command Not Recognized</h2>
-        <p>When I attempted to execute the Atomic Red Team technique T1136.001 (Create Account - Local Account) using Invoke-AtomicTest T1136.001, I encountered an error stating, "The term 'Invoke-AtomicTest' is not recognized as the name of a cmdlet, function, script file, or operable program". This indicates that PowerShell cannot find the Invoke-AtomicTest function, likely because the Atomic Red Team module is not properly loaded or its path is not in the PowerShell session's $env:PSModulePath. To resolve this, I need to ensure that the PowerShell session is aware of where the Invoke-AtomicTest function resides. This typically involves importing the module or navigating to the directory where it's located before executing the command. I will provide the correct path to Invoke-AtomicTest to ensure the command runs successfully.</p>
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/32-art-error.png" alt="Atomic Red Team Command Not Recognized Error">
-
-        <h2>Executing Atomic Red Team: T1136.001 (Create Account - Local Account)</h2>
-        <p>To resolve the "command not recognized" error and successfully execute Atomic Red Team techniques, I explicitly imported the Invoke-AtomicRedTeam module. I ran <code>Import-Module "C:\AtomicRedTeam\invoke-atomicredteam\Invoke-AtomicRedTeam.psd1"</code> to load the module into the PowerShell session. Following this, I re-executed Invoke-AtomicTest T1136.001 to simulate creating a local account. There are some various sub-tests within this technique. While one test initially failed due to password policy requirements, other tests, such as "Create a new user in PowerShell" and "Create a new Windows admin user," completed successfully, as indicated by Exit code: 0 and messages like "The command completed successfully". This demonstrates that Atomic Red Team is now correctly installed and capable of performing simulated attacks within our lab environment.</p>
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/33-art-running.png" alt="Executing Atomic Red Team T1136.001">
-
-        <h2>Analyzing Atomic Red Team Execution: New Local User Creation in Splunk</h2>
-        <p>After successfully running the Atomic Red Team technique T1136.001 to create a local account, I verified the activity in Splunk. I performed a search using <code>index="endpoint" NewLocalUser</code>. This query specifically targets the endpoint index and looks for events related to the "NewLocalUser" account created by Atomic Red Team. Here we can see that Splunk successfully identified 12 events associated with the creation of this new local user. These events, particularly those with Event Code 4720 (A user account was created) and 4728 (A member was added to a security-enabled global group), provide crucial forensic evidence of the simulated attack. This confirms that our SIEM is effectively capturing and logging the actions performed by Atomic Red Team, allowing us to detect and analyze adversary emulation activities. It means if an attacker compromised our server and create a new user account we are able to detect that activity as we can see that the telemetry generated.</p>
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/34-art-splunk.png" alt="Analyzing New Local User Creation in Splunk">
-
-        <h2>Simulating Data Exfiltration (C2): Atomic Red Team T1041</h2>
-        <p>To further simulate advanced threats, I executed the Atomic Red Team technique T1041, which focuses on "C2 Data Exfiltration". I ran Invoke-AtomicTest T1041. The first sub-test, "T1041-1 C2 Data Exfiltration," attempted to use Invoke-WebRequest to send data to example.com. This particular test resulted in an "Access Denied" error, indicating that the simulated exfiltration to an external server was blocked, likely by network controls or the target server itself. The second sub-test, "T1041-2 Text Based Data Exfiltration using DNS subdomains," also encountered an error, specifically "DNS name contains an invalid character". This indicates an issue with the format of the DNS query used for exfiltration. Despite these specific failures, the execution of these tests is valuable. It generates relevant network and system logs that we can now analyze in Splunk to identify patterns and indicators of attempted data exfiltration, even if the exfiltration itself was unsuccessful. This helps in validating our SIEM's detection capabilities for such sophisticated attacks.</p>
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/35-art-c2.png" alt="Simulating Data Exfiltration with Atomic Red Team T1041">
-
-        <h2>Analyzing Data Exfiltration Attempts in Splunk</h2>
-        <p>After simulating the T1041 (Data Exfiltration over C2) Atomic Red Team technique, I immediately turned to Splunk to analyze the resulting telemetry. I performed a search using <code>index="endpoint" example.com</code> to specifically look for any activity related to the attempted exfiltration to example.com.</p>
-        <img src="/assets/Active Directory Threat Simulation and SIEM Analysis/36-c2-splunk.png" alt="Analyzing Data Exfiltration Attempts in Splunk">
-        <p>Here we can see that Splunk successfully captured 4 events related to this activity, even though the actual exfiltration attempt previously resulted in an "Access Denied" error. This is incredibly important. The logs, specifically Sysmon events, provide crucial details:</p>
-        <ul>
-            <li>They show the <code>CommandLine</code> used, indicating <code>powershell.exe</code> attempting to connect to <code>example.com</code>.</li>
-            <li>They contain fields like <code>exfiltratedData</code> and <code>encodedData</code>, revealing the content that was attempted to be exfiltrated (e.g., "SecretDataToExfiltrate" in its encoded form).</li>
-        </ul>
-        <p>The ability to see this telemetry in Splunk is vital for the analyst. Even if an attack is unsuccessful due to network controls or misconfigurations, the fact that our SIEM (Splunk) and endpoint logging (Sysmon via Universal Forwarder) capture these attempts provides:</p>
-        <ul>
-            <li><b>Early Warning:</b> These logs serve as critical indicators of compromise (IOCs) and an attacker's intent, allowing us to detect malicious activity before it succeeds.</li>
-            <li><b>Forensic Evidence:</b> The detailed information within these logs (source IP, command line, attempted data) is invaluable for post-incident analysis and understanding the adversary's techniques.</li>
-            <li><b>Validation of Controls:</b> It confirms that our logging infrastructure is functioning correctly and that our SIEM is effectively collecting and indexing the necessary data to identify sophisticated attacks like data exfiltration attempts.</li>
-            <li><b>Opportunity for Refinement:</b> This telemetry can be used to develop or refine detection rules, ensuring that future, similar attempts are immediately flagged and alerted upon.</li>
-        </ul>
-        <p>This demonstrates the power of a well-configured SIEM in providing deep visibility into endpoint activities, regardless of the attack's success, which is fundamental for effective threat detection and incident response.</p>
+  </head>
+  <body>
+    <header class="header">
+      <div class="header__content">
+        <div class="header__logo-container">
+          <a href="./index.html">
+            <div class="header__logo-img-cont">
+              <img src="./assets/png/john-doe.png" alt="Ram Maheshwari Logo Image" class="header__logo-img" />
+            </div>
+            <span class="header__logo-sub">John Doe</span>
+          </a>
+        </div>
+        <div class="header__main">
+          <ul class="header__links">
+            <li class="header__link-wrapper">
+              <a href="./index.html" class="header__link"> Home </a>
+            </li>
+            <li class="header__link-wrapper">
+              <a href="./index.html#about" class="header__link">About </a>
+            </li>
+            <li class="header__link-wrapper">
+              <a href="./index.html#projects" class="header__link">
+                Projects
+              </a>
+            </li>
+            <li class="header__link-wrapper">
+              <a href="./index.html#contact" class="header__link"> Contact </a>
+            </li>
+          </ul>
+          <div class="header__main-ham-menu-cont">
+            <img src="./assets/svg/ham-menu.svg" alt="hamburger menu" class="header__main-ham-menu" />
+            <img src="./assets/svg/ham-menu-close.svg" alt="hamburger menu close" class="header__main-ham-menu-close d-none" />
+          </div>
+        </div>
+      </div>
+      <div class="header__sm-menu">
+        <div class="header__sm-menu-content">
+          <ul class="header__sm-menu-links">
+            <li class="header__sm-menu-link">
+              <a href="./index.html"> Home </a>
+            </li>
+            <li class="header__sm-menu-link">
+              <a href="./index.html#about"> About </a>
+            </li>
+            <li class="header__sm-menu-link">
+              <a href="./index.html#projects"> Projects </a>
+            </li>
+            <li class="header__sm-menu-link">
+              <a href="./index.html#contact"> Contact </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </header>
+    <section class="project-cs-hero">
+      <div class="project-cs-hero__content">
+        <h1 class="heading-primary">Automated SOC with SOAR Implementation</h1>
+        <div class="project-cs-hero__info">
+          <p class="text-primary">
+            This project involved the setup and deployment of a fully automated Security Operations Center (SOC) within a virtual lab environment.
+          </p>
+        </div>
+        <div class="project-cs-hero__cta">
+          <a href="#" class="btn btn--bg" target="_blank">Live Link</a>
+        </div>
+      </div>
+    </section>
+    <section class="project-details">
+      <div class="main-container">
+        <div class="project-details__content">
+          <div class="project-details__showcase-img-cont">
+            <img src="./assets/jpeg/project-mockup-example.jpeg" alt="Project Image" class="project-details__showcase-img" />
+          </div>
+          <div class="project-details__content-main">
+            <div class="project-details__desc">
+              <h3 class="project-details__content-title">Project Overview</h3>
+              <p class="project-details__desc-para">
+                This project involved the setup and deployment of a fully automated Security Operations Center (SOC) within a virtual lab environment. The primary challenge addressed was the inherent inefficiency of manual incident detection and response. The solution integrates Wazuh (XDR/EDR) for thorough endpoint monitoring, TheHive (Incident Response) for organized incident management, and Shuffle (SOAR) for orchestrating automated workflows. By utilizing Sysmon logs and crafting custom rules, a robust system was built to simulate, detect, and respond to advanced threats like Mimikatz in real-time. This setup demonstrates a proactive approach, transforming raw security events into actionable intelligence and automating critical response actions. Wazuh detected the threat, and the custom integration script successfully forwarded the alert to TheHive for immediate case management. Furthermore, automated email notifications were sent to the SOC analyst, enabling rapid case management. This automated alert creation significantly reduces response time and ensures critical incidents are promptly addressed, showcasing the ability to build resilient and efficient security operations. [cite: 305, 306, 307, 308, 309, 310, 311, 312]
+              </p>
+            </div>
+            <div class="project-details__subsections">
+              <h3 class="project-details__content-title">Key Skills Demonstrated</h3>
+              <p class="project-details__desc-para">
+                Wazuh, TheHive, Shuffle, Sysmon, SOAR, XDR, EDR, log analysis, alert automation, incident response, rule creation, virtualization, API integration, troubleshooting, playbook, and workflow orchestration. [cite: 313]
+              </p>
+              <h3 class="project-details__content-title">Workflow</h3>
+              <p class="project-details__desc-para">
+                The project workflow minimizes manual intervention, ensuring that critical security incidents are detected, enriched with threat intelligence, escalated for case management, and communicated to the response team with unparalleled speed and efficiency. The success of this project stems from a carefully designed automated workflow, ensuring rapid and consistent incident response. [cite: 314, 315]
+              </p>
+              <p class="project-details__desc-para">
+                Here's a breakdown of the automated process: [cite: 316]
+              </p>
+              <h4>Endpoint Monitoring & Log Ingestion:</h4>
+              <p class="project-details__desc-para">
+                A Windows 10 endpoint, equipped with Sysmon, generates security events. The Wazuh agent on the endpoint collects these Sysmon operational logs and forwards them to the Wazuh Manager. Wazuh is configured to ingest and archive all raw logs into Elasticsearch for comprehensive visibility and future analysis. [cite: 316, 317, 318]
+              </p>
+              <h4>Threat Detection & Custom Rule Creation:</h4>
+              <p class="project-details__desc-para">
+                To detect specific threats like Mimikatz, a custom Wazuh rule was developed and implemented. This rule precisely identifies Mimikatz execution based on <code>originalFileName</code> within Sysmon event data, assigning a critical severity level and linking it to MITRE ATT&CK T1003 (OS Credential Dumping). Upon Mimikatz execution, Wazuh immediately generates a high-fidelity alert. [cite: 319, 320, 321]
+              </p>
+              <h4>Automated Incident Creation in TheHive:</h4>
+              <p class="project-details__desc-para">
+                A custom Python integration script was developed and deployed on the Wazuh Manager. This script is configured in <code>ossec.conf</code> to automatically forward critical Wazuh alerts, including Mimikatz detection, directly to TheHive. TheHive receives these alerts and automatically creates new cases for incident management, populating them with all relevant details from the Wazuh alert. [cite: 321, 322, 323]
+              </p>
+              <h4>SOAR Orchestration & Threat Intelligence Enrichment (Shuffle):</h4>
+              <p class="project-details__desc-para">
+                Wazuh alerts are also forwarded to Shuffle via a dedicated webhook. Shuffle's workflow automatically extracts the SHA256 hash from the Mimikatz alert data using a regex capture group. This extracted hash is then used to query VirusTotal via its API, enriching the alert with real-time threat intelligence and confirming the malicious nature of the executable. [cite: 324, 325, 326]
+              </p>
+              <h4>Automated Analyst Notification:</h4>
+              <p class="project-details__desc-para">
+                As the final step in the Shuffle workflow, an automated email notification is sent to the analyst. This email, containing critical alert details (e.g., alert title, filename, affected host), ensures immediate awareness and prompts the analyst to initiate their investigation in TheHive. [cite: 327, 328]
+              </p>
+              <p class="project-details__desc-para">
+                Let's get started! [cite: 329]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/0diagram.png"
+                  alt="Virtual Lab Environment Diagram"
+                  class="constrained-image"
+                  id="image-1"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                This diagram illustrates the lab's network setup: A Windows 10 endpoint generates security events, which are monitored by Wazuh (XDR/EDR). TheHive (incident management) and Shuffle (SOAR) are integrated to manage and automate responses, with the Analyst PC used for monitoring and analysis. [cite: 329, 330]
+              </p>
+              <h3 class="project-details__content-title">Installing Wazuh</h3>
+              <p class="project-details__desc-para">
+                Installation of Wazuh, the XDR/EDR platform, was performed to establish core security monitoring and detection capabilities. The installation utilized the official Wazuh script: <code>curl -sO https://packages.wazuh.com/4.12/wazuh-install.sh && sudo bash ./wazuh-install.sh -a</code> [cite: 331, 332]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/1installing-wazuh.png"
+                  alt="Installing Wazuh Screenshot"
+                  class="constrained-image"
+                  id="image-2"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                To access the Wazuh dashboard, the IP address of the Wazuh service was confirmed. The <code>ifconfig</code> output showed <code>192.168.10.11</code> as the assigned IP, which was then used for web interface access. [cite: 333, 334]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/2ip.png"
+                  alt="IP Address Screenshot"
+                  class="constrained-image"
+                  id="image-3"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/3wazuh.png"
+                  alt="Wazuh Dashboard Screenshot"
+                  class="constrained-image"
+                  id="image-4"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                With Wazuh installed, the next step was to deploy an agent to the Windows 10 endpoint. The dashboard initially showed no registered agents, prompting the "Deploy new agent" action to begin monitoring the endpoint. [cite: 334, 335]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/4deploy-wazuh-agent.png"
+                  alt="Deploy Wazuh Agent Screenshot"
+                  class="constrained-image"
+                  id="image-5"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <h3 class="project-details__content-title">Configuring Agent Deployment</h3>
+              <p class="project-details__desc-para">
+                For Wazuh agent deployment to the Windows 10 endpoint, the server address <code>192.168.10.11</code> was assigned. An agent name, <code>myLab</code>, was also provided to uniquely identify the endpoint within Wazuh. [cite: 336, 337]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/5deploy-agent.png"
+                  alt="Configure Agent Deployment Screenshot"
+                  class="constrained-image"
+                  id="image-6"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                The Wazuh dashboard provided specific PowerShell commands to download and install the agent on the Windows 10 endpoint. This included the <code>Invoke-WebRequest</code> command to retrieve the installer and <code>msiexec.exe</code> for silent installation, ensuring the agent connects to the Wazuh Manager at <code>192.168.10.11</code> and is named <code>myLab</code>. Following this, <code>NET START WazuhSvc</code> started the agent service. [cite: 338, 339, 340]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/6-deploying-command.png"
+                  alt="Deploying Command Screenshot"
+                  class="constrained-image"
+                  id="image-7"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                After running the deployment commands on the Windows 10 endpoint, the Wazuh agent successfully registered. The dashboard now displays "myLab" (<code>192.168.10.10</code>) as an active agent, confirming it is sending security data for monitoring. [cite: 341, 342]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/7-node.png"
+                  alt="Wazuh Node Screenshot"
+                  class="constrained-image"
+                  id="image-8"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <h3 class="project-details__content-title">Installing TheHive Dependencies (Java)</h3>
+              <p class="project-details__desc-para">
+                Installation of TheHive, the incident response platform, commenced by ensuring all necessary Java dependencies were in place. TheHive relies on Apache Cassandra for its distributed database. Elasticsearch is another dependency for TheHive, providing powerful search and analytics capabilities for incident data. [cite: 343, 344, 345]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/8-java.png"
+                  alt="Java Installation Screenshot"
+                  class="constrained-image"
+                  id="image-9"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/9-cassandra-status.png"
+                  alt="Cassandra Status Screenshot"
+                  class="constrained-image"
+                  id="image-10"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/10-elasticsearch-status.png"
+                  alt="Elasticsearch Status Screenshot"
+                  class="constrained-image"
+                  id="image-11"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                After installing TheHive, file permissions were correctly set to ensure proper operation and security. The <code>ls -la /opt/thp</code> output initially showed root as the owner. To align with TheHive's operational requirements, the file ownership for <code>/opt/thp</code> was changed recursively to <code>thehive:thehive</code> using the <code>chown -R thehive:thehive /opt/thp</code> command. [cite: 346, 347, 348]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/11-root-owner.png"
+                  alt="Root Owner Screenshot"
+                  class="constrained-image"
+                  id="image-12"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/12-change-ownership.png"
+                  alt="Change Ownership Screenshot 1"
+                  class="constrained-image"
+                  id="image-13"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/13-change-ownershipU.png"
+                  alt="Change Ownership Screenshot 2"
+                  class="constrained-image"
+                  id="image-14"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                With the installation, permission adjustments, and configurations complete, TheHive's web interface became accessible, confirming successful deployment and readiness for incident management operations. [cite: 349]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/14-thehive.png"
+                  alt="TheHive Web Interface Screenshot"
+                  class="constrained-image"
+                  id="image-15"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                Default credentials for TheHive are: <code>admin@thehive.local - secret</code>. An error occurred when attempting to log in with these credentials. [cite: 350]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/15-errorHive.png"
+                  alt="TheHive Login Error Screenshot"
+                  class="constrained-image"
+                  id="image-16"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                Upon checking the Elasticsearch service, it was found to have failed to start due to being killed by the Out Of Memory (OOM) Killer, indicating insufficient available memory to run the service. [cite: 351]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/16-esError.png"
+                  alt="Elasticsearch Error Screenshot"
+                  class="constrained-image"
+                  id="image-17"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <h4>Why does the OOM Killer activate?</h4>
+              <p class="project-details__desc-para">
+                The OOM Killer is a mechanism in the Linux kernel that activates when the system is critically low on memory. It selects and terminates processes to free up memory and prevent the entire system from crashing or becoming unresponsive. Elasticsearch, especially with default configurations or when handling significant data, can be memory-intensive. [cite: 352, 353, 354]
+              </p>
+              <h4>How to solve this problem:</h4>
+              <ol>
+                <li><strong>Increase Available Memory:</strong> The most direct solution is to provide more RAM to the machine running Elasticsearch. If possible, upgrade the system's memory. [cite: 355, 356]</li>
+                <li><strong>Reduce Elasticsearch Memory Usage:</strong> If increasing RAM is not possible, Elasticsearch needs to be configured to use less memory. This involves adjusting the JVM heap size that Elasticsearch uses. [cite: 356, 357]</li>
+              </ol>
+              <p class="project-details__desc-para">
+                The chosen solution was to increase the RAM of the VM. With the increased RAM, the Elasticsearch service now runs without OOM issues, allowing TheHive to start and authenticate correctly. [cite: 358, 359]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/17-theHiveLoggedin.png"
+                  alt="TheHive Logged In Screenshot"
+                  class="constrained-image"
+                  id="image-18"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <h3 class="project-details__content-title">Configuring Wazuh in Win10 Machine</h3>
+              <p class="project-details__desc-para">
+                To ingest Sysmon logs into Wazuh for comprehensive endpoint monitoring, the full name of the Sysmon operational log (<code>Microsoft-Windows-Sysmon/Operational</code>) was identified within the Event Viewer. [cite: 360]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/18-sysmonPath.png"
+                  alt="Sysmon Path Screenshot"
+                  class="constrained-image"
+                  id="image-19"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                To integrate Sysmon logs with Wazuh, the <code>ossec.conf</code> file on the Windows 10 agent was modified. A <code>&lt;localfile&gt;</code> entry was added, pointing to the <code>Microsoft-Windows-Sysmon/Operational</code> event channel, ensuring these security events are collected and forwarded to the Wazuh Manager for analysis. [cite: 361, 362]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/19-ossecConf.png"
+                  alt="ossec.conf Configuration Screenshot"
+                  class="constrained-image"
+                  id="image-20"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                After modifying the <code>ossec.conf</code> file, the Wazuh agent service on the Windows 10 endpoint was restarted. This ensured configuration changes took effect immediately, allowing the agent to begin collecting Sysmon logs as configured. [cite: 363, 364]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/20-restartWazuh.png"
+                  alt="Restart Wazuh Screenshot"
+                  class="constrained-image"
+                  id="image-21"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                With the Wazuh agent restarted and properly configured, Sysmon logs were verified to be successfully ingested and displayed within the Wazuh dashboard. The search filter for "sysmon" confirmed that relevant events from the Windows 10 endpoint were actively flowing into the system for monitoring and analysis. [cite: 365, 366]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/21-sysmon-wazuh.png"
+                  alt="Sysmon Wazuh Dashboard Screenshot"
+                  class="constrained-image"
+                  id="image-22"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                To simulate a real-world threat and test monitoring capabilities, Mimikatz—a tool commonly used for credential access—was executed on the Windows 10 endpoint. This action generated specific security events that Wazuh was configured to detect and log. [cite: 367, 368]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/22-run-mimikatz.png"
+                  alt="Run Mimikatz Screenshot"
+                  class="constrained-image"
+                  id="image-23"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                After executing Mimikatz, the Wazuh dashboard initially showed "No Results" for "mimikatz" alerts. This confirmed that while Sysmon logs were being collected, Wazuh's default ruleset did not yet contain specific detections for this type of threat, demonstrating the need for custom rule creation to enhance detection capabilities. [cite: 369, 370]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/23-no-result.png"
+                  alt="No Result Screenshot"
+                  class="constrained-image"
+                  id="image-24"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                Before modifying Wazuh's core configuration, a backup of the existing <code>ossec.conf</code> file was created to ensure the ability to restore the original configuration if needed, minimizing disruption during rule development and testing. [cite: 371]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/24-copy-conf.png"
+                  alt="Copy Conf Screenshot"
+                  class="constrained-image"
+                  id="image-25"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                To ensure all raw logs, including those that do not immediately trigger an alert, are stored for later analysis, the <code>ossec.conf</code> file was modified. Specifically, the <code>logall</code> and <code>logall_json</code> parameters were changed from "no" to "yes" within the global configuration. This enabled full fidelity logging, essential for detailed investigations and custom rule development. [cite: 372, 373, 374]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/25-configured-file.png"
+                  alt="Configured File Screenshot"
+                  class="constrained-image"
+                  id="image-26"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                <code>systemctl restart wazuh-manager.service</code>
+              </p>
+              <p class="project-details__desc-para">
+                To complement the full log collection enabled in Wazuh, the <code>filebeat.yml</code> configuration was modified. Specifically, <code>archives: enabled</code> was set to <code>true</code> under the <code>filebeat.modules.wazuh.alerts</code> section. This ensures that raw, non-alerting logs, critical for in-depth analysis and custom rule creation, are also ingested into Elasticsearch for comprehensive visibility. [cite: 375, 376, 377]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/26-filebeat-conf.png"
+                  alt="Filebeat Configuration Screenshot"
+                  class="constrained-image"
+                  id="image-27"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                <code>systemctl restart filebeat</code>
+              </p>
+              <p class="project-details__desc-para">
+                To prepare for analyzing the newly enabled full logs, "Dashboards Management" -> "Index patterns" was navigated within the Wazuh interface to create a new index pattern. This step ensures that the raw log data, including archival logs, is properly indexed and searchable for analysis. However, an error occurred. Creating a new index pattern with a single <code>*</code> resolved the issue. [cite: 378, 379, 380]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/27-index1.png"
+                  alt="Index Pattern 1 Screenshot"
+                  class="constrained-image"
+                  id="image-28"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/27-index2.png"
+                  alt="Index Pattern 2 Screenshot"
+                  class="constrained-image"
+                  id="image-29"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/27-index3.png"
+                  alt="Index Pattern 3 Screenshot"
+                  class="constrained-image"
+                  id="image-30"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/28-index4Error.png"
+                  alt="Index Pattern Error Screenshot"
+                  class="constrained-image"
+                  id="image-31"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/29-indexPattern.png"
+                  alt="Index Pattern Resolved Screenshot"
+                  class="constrained-image"
+                  id="image-32"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                To confirm that Sysmon successfully captured the Mimikatz execution and Wazuh archived the raw event, <code>cat archives.json</code> was piped through <code>grep -i mimikatz</code>. The output clearly showed the detailed Sysmon event logs related to the Mimikatz process, confirming that the comprehensive logging setup effectively collects even non-alerting security events. This data is now available for further analysis and custom rule creation. [cite: 381, 382, 383]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/30-check-logs.png"
+                  alt="Check Logs Screenshot"
+                  class="constrained-image"
+                  id="image-33"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                After enabling full log collection and verifying the raw <code>archives.json</code> file, the Wazuh dashboard's "wazuh-archives-*" index was searched for "mimikatz" events. The successful query, showing "11 hits" and displaying the detailed Sysmon logs related to Mimikatz execution, confirmed that the raw, non-alerting events are now fully searchable and accessible within the Wazuh interface. [cite: 384, 385]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/31-wazuh-dashboard-hit.png"
+                  alt="Wazuh Dashboard Hits Screenshot"
+                  class="constrained-image"
+                  id="image-34"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                To create a custom rule for Mimikatz detection, "Server Management" -> "Rules" -> "Manage Rule Files" was navigated in the Wazuh dashboard. <code>0800-sysmon_id_1.xml</code> was identified as the appropriate file within the <code>ruleset/rules</code> directory. This is where the specific detection logic for Mimikatz activity would be added. [cite: 386, 387]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/32-rule-file.png"
+                  alt="Rule File Screenshot"
+                  class="constrained-image"
+                  id="image-35"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                Before defining the custom detection rule, the archived Mimikatz logs in the Wazuh dashboard were analyzed. Specifically, the <code>data.win.eventdata.originalFileName</code> field, which contains "mimikatz.exe," was extracted. This unique and reliable indicator would be used as a key element in the custom rule to accurately detect future Mimikatz executions. [cite: 388]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/33-original-file-name.png"
+                  alt="Original File Name Screenshot"
+                  class="constrained-image"
+                  id="image-36"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                With the relevant log data identified, a custom rule was crafted within <code>local_rules.xml</code> to detect Mimikatz execution. This rule is designed with the highest critical <code>level="15"</code> and specifically targets <code>originalFileName</code> for "mimikatz.exe" (case-insensitive). It was also linked to MITRE ATT&CK T1003 (OS Credential Dumping), providing immediate threat context. [cite: 389, 390]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/34-rule.png"
+                  alt="Custom Rule Screenshot"
+                  class="constrained-image"
+                  id="image-37"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                After restarting the Wazuh manager and re-executing Mimikatz on the Windows 10 endpoint, the custom detection rule immediately triggered a high-severity alert. The Wazuh dashboard displayed a new event with <code>rule.mitre.id</code> as T1003 (Credential Access) and <code>rule.description</code> clearly stating "Mimikatz Usage Detected!!!". [cite: 391, 392]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/35-rule-detected.png"
+                  alt="Rule Detected Screenshot"
+                  class="constrained-image"
+                  id="image-38"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <h3 class="project-details__content-title">Integrating SOAR</h3>
+              <p class="project-details__desc-para">
+                To enable automated incident response, Shuffle, the SOAR platform, was integrated with Wazuh. The initial configuration within Shuffle involved setting up a new "Wazuh-alerts" webhook. The critical step was obtaining the unique "Webhook URI" (<code>https://shuffler.io/api/v1/hooks/webhook</code>), which would act as the communication channel for Wazuh alerts to be sent to Shuffle for orchestration and automation. This setup laid the groundwork for Shuffle to receive and process security alerts. [cite: 393, 394]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/36-webhook.png"
+                  alt="Webhook Configuration Screenshot"
+                  class="constrained-image"
+                  id="image-39"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                To bridge Wazuh and Shuffle, the <code>ossec.conf</code> file on the Wazuh Manager was modified, adding an <code>&lt;integration&gt;</code> block. This configuration directs Wazuh to forward alerts to Shuffle's webhook URI, specifically including the custom Mimikatz alert (<code>rule_id 100002</code>). By specifying <code>alert_format</code> as <code>json</code>, alerts are ensured to be sent in a structured format, enabling seamless parsing and automation within Shuffle. [cite: 395, 396]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/37-ossec-conf.png"
+                  alt="ossec.conf Integration Screenshot"
+                  class="constrained-image"
+                  id="image-40"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                Following the <code>ossec.conf</code> modifications and restarting the Wazuh service, the Shuffle webhook was initiated. The screenshot confirmed its successful activation, displaying "Webhook: running" and a notification indicating "Successfully started webhook". [cite: 397, 398]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/38-webhook-running.png"
+                  alt="Webhook Running Screenshot"
+                  class="constrained-image"
+                  id="image-41"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                Mimikatz was re-executed on the Windows 10 endpoint. The screenshot confirmed that the alert was successfully ingested by Shuffle, showing a "FINISHED" status for the webhook event. The JSON payload revealed the custom <code>rule_id: "100002"</code>, a "Mimikatz Usage Detected!!!" title, and associated details like <code>severity: 3</code>. This validated the seamless flow of high-fidelity alerts from Wazuh to Shuffle, confirming the SOAR platform was ready to automate responses based on critical security events. [cite: 399, 400]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/39-shuffle-finished.png"
+                  alt="Shuffle Finished Screenshot"
+                  class="constrained-image"
+                  id="image-42"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                To enrich the alert data and facilitate threat intelligence lookups, the automated workflow needed specific details from the Mimikatz alert. The raw event data highlighted the <code>hashes</code> field which contained the SHA1 hash (D1F783...). Crucially, within the same log, the SHA256 hash was also present, which would be the primary identifier used for reputation checks. This extraction step is vital for context-rich incident analysis. [cite: 401, 402]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/40-hashes.png"
+                  alt="Hashes Screenshot"
+                  class="constrained-image"
+                  id="image-43"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                To automate the VirusTotal lookup, a "Regex capture group" action was implemented within Shuffle. This step extracted the SHA256 hash from the incoming Wazuh alert. The Input data was set to <code>$exec.text.win.eventdata.hashes</code>, targeting the field containing the hash string. The Regex used, <code>SHA256=([0-9A-Fa-f]{64})</code>, precisely identified and captured the 64-character SHA256 value. This ensured that only the relevant hash was extracted, preparing it for the next step in the automated workflow. [cite: 403, 404]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/41-regex-capture.png"
+                  alt="Regex Capture Group Screenshot"
+                  class="constrained-image"
+                  id="image-44"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                With the SHA256 hash successfully extracted, a lookup was performed on VirusTotal to gather reputation information about the Mimikatz executable. A "Get a hash report" action was set up within Shuffle. The extracted SHA256 hash was connected to the VirusTotal query. The Id field was populated with <code>$sha256_regex.group_0</code>, which pulled the hash directly from the previous parsing step. This ensured Shuffle automatically sent the correct hash to VirusTotal for reputation analysis, integrating external threat intelligence into the automated workflow. [cite: 405, 406]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/42-virustotal.png"
+                  alt="VirusTotal Lookup Screenshot"
+                  class="constrained-image"
+                  id="image-45"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <h3 class="project-details__content-title">Troubleshooting: VirusTotal API Error</h3>
+              <p class="project-details__desc-para">
+                After configuring the VirusTotal lookup, the workflow encountered an error. The screenshot showed a <code>status: 404</code> and an error message "Resource not found". This indicated that the API endpoint or the way the hash was being sent to VirusTotal was incorrect, preventing a successful lookup. [cite: 407, 408]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/43-404.png"
+                  alt="VirusTotal API Error Screenshot"
+                  class="constrained-image"
+                  id="image-46"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                To resolve the "Resource not found" error, the available VirusTotal API actions within Shuffle were reviewed. The correct endpoint for retrieving a hash report was identified as <code>GET /files/{id}</code>. The issue was resolved by correcting the regex to pick "list". [cite: 409, 410]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/44-issue-resolved.png"
+                  alt="Issue Resolved Screenshot"
+                  class="constrained-image"
+                  id="image-47"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                After correcting the API endpoint, the VirusTotal lookup within Shuffle showed a successful result. The output clearly indicated <code>malicious: 64</code> under <code>last_analysis_stats</code>, confirming that 64 out of the analyzed security vendors identified the file as malicious. This successful integration provides immediate, actionable threat intelligence directly within the automated workflow, verifying the malicious nature of the Mimikatz executable. [cite: 411, 412]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/45-virustotal-success.png"
+                  alt="VirusTotal Success Screenshot"
+                  class="constrained-image"
+                  id="image-48"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <h3 class="project-details__content-title">TheHive Integration</h3>
+              <p class="project-details__desc-para">
+                To begin integrating TheHive directly with Wazuh, the <code>/var/ossec/integrations</code> directory on the Wazuh Manager was navigated to. Listing the contents of this directory revealed existing integration scripts such as <code>shuffle.py</code>, <code>virustotal.py</code>, and <code>slack.py</code>. This step confirmed the location where custom integration scripts, like the one to be used for TheHive, are stored and executed by Wazuh. [cite: 413, 414]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/46-integrations-folder.png"
+                  alt="Integrations Folder Screenshot"
+                  class="constrained-image"
+                  id="image-49"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                To facilitate direct integration between Wazuh and TheHive, a new custom script named <code>custom-w2thive</code> was created within the <code>/var/ossec/integrations</code> directory. This Python script would act as the bridge, processing Wazuh alerts and forwarding them to TheHive. This custom solution allows for tailored incident creation and management directly from Wazuh, bypassing the need for an intermediary SOAR platform like Shuffle for this specific integration. [cite: 415, 416]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/47-script.png"
+                  alt="Custom Script Screenshot"
+                  class="constrained-image"
+                  id="image-50"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                The following commands were run to ensure correct permissions: [cite: 417]
+              </p>
+              <ul>
+                <li><code>sudo chmod 755 /var/ossec/integrations/custom-w2thive.py</code> [cite: 417]</li>
+                <li><code>sudo chmod 755 /var/ossec/integrations/custom-w2thive</code> [cite: 417]</li>
+                <li><code>sudo chown root:wazuh /var/ossec/integrations/custom-w2thive.py</code> [cite: 417]</li>
+                <li><code>sudo chown root:wazuh /var/ossec/integrations/custom-w2thive</code> [cite: 417]</li>
+              </ul>
+              <p class="project-details__desc-para">
+                To activate the direct integration, the <code>ossec.conf</code> file on the Wazuh Manager was modified, adding a new <code>&lt;integration&gt;</code> block for <code>custom-w2thive</code>. The configuration details included: the <code>hook_url</code> set to TheHive server's IP and port 9000, and a dedicated <code>api_key</code> for authentication. The <code>alert_format</code> was specified as <code>json</code> to ensure structured data transfer. [cite: 418, 419]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/48-api.png"
+                  alt="API Key Configuration Screenshot"
+                  class="constrained-image"
+                  id="image-51"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/49-api2.png"
+                  alt="API Key Configuration Screenshot 2"
+                  class="constrained-image"
+                  id="image-52"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                After restarting the Wazuh service, TheHive's alert dashboard was navigated to verify the integration. New alerts were successfully received from Wazuh. [cite: 420, 421]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/50-thehive-alert.png"
+                  alt="TheHive Alert Screenshot"
+                  class="constrained-image"
+                  id="image-53"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/51-thehive-alert2.png"
+                  alt="TheHive Alert Screenshot 2"
+                  class="constrained-image"
+                  id="image-54"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                After re-executing Mimikatz on the Windows 10 endpoint, TheHive's alert dashboard immediately displayed a new, critical alert. The alert was titled "Mimikatz Usage Detected!!!" and directly referenced the custom Wazuh rule (<code>rule.id: 100002</code>). This confirmed the seamless end-to-end integration: Wazuh detected the threat, and the custom integration script successfully forwarded the alert to TheHive for immediate case management. This automated alert creation significantly reduces response time and ensures critical incidents are promptly addressed. [cite: 422, 423, 424]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/52-mima.png"
+                  alt="Mimikatz Alert Screenshot"
+                  class="constrained-image"
+                  id="image-55"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/53-mima1.png"
+                  alt="Mimikatz Alert Screenshot 2"
+                  class="constrained-image"
+                  id="image-56"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/54-mima2.png"
+                  alt="Mimikatz Alert Screenshot 3"
+                  class="constrained-image"
+                  id="image-57"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <h3 class="project-details__content-title">Automated Notification: Sending Email to Analyst</h3>
+              <p class="project-details__desc-para">
+                To ensure the analyst is immediately notified of critical incidents, a "Send email shuffle" action was added to the workflow. The email configuration set the recipient to <code>test@outlook.com</code>, the subject line to "High Severity Alert!", and the body dynamically populated key alert details. This included the alert title (<code>$exec.title</code>), the original filename (<code>$exec.text.win.eventdata.originalFileName</code>), and the affected host (<code>$exec.text.win.system.computer</code>). This automated email ensures timely communication and prompts the analyst to begin their investigation in TheHive. [cite: 425, 426]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/55-email.png"
+                  alt="Email Configuration Screenshot"
+                  class="constrained-image"
+                  id="image-58"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+                After the full workflow execution, the successful delivery of the automated email notification to the analyst was observed. The email, sent by the "Shuffle Email App," had the subject "High Severity Alert!" and dynamically includes critical details: "Mimikatz Usage Detected!!! File name: mimikatz.exe activity on host DESKTOP-G6HR1ED". This final step in the SOAR playbook ensures that analysts are promptly informed of high-priority incidents, enabling them to initiate investigations swiftly. [cite: 427, 428]
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/56.email.png"
+                  alt="Email Delivery Screenshot"
+                  class="constrained-image"
+                  id="image-59"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer class="main-footer">
+      <div class="main-container">
+        <div class="main-footer__upper">
+          <div class="main-footer__row main-footer__row-1">
+            <h4 class="heading heading-sm text-lt">John Doe</h4>
+            <p class="main-footer__short-desc">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit facilis tempora explicabo quae quod deserunt
+            </p>
+          </div>
+        </div>
+        <div class="main-footer__lower">
+          <p class="text-primary" style="font-size: 1.6rem;">
+            &copy; Copyright 2021. Made by
+            <a rel="noreferrer" target="_blank" href="https://rammaheshwari.com">Ram Maheshwari</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+    <div id="image-modal" class="modal">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <img id="modal-img" class="modal-content" />
     </div>
-</body>
+    <script>
+      const images = document.querySelectorAll('.constrained-image');
+      const modal = document.getElementById("image-modal");
+      const modalImg = document.getElementById("modal-img");
+
+      modal.style.display = "none";
+
+      images.forEach(img => {
+        img.onload = () => {
+          if (img.naturalWidth > 1890 || img.naturalHeight > 1100) {
+            img.classList.add('larger');
+          }
+        };
+        img.onclick = () => showOriginal(img.id);
+      });
+
+      function showOriginal(imgId) {
+        const img = document.getElementById(imgId);
+        modalImg.src = img.src;
+        modal.style.display = "flex";
+      }
+
+      function closeModal() {
+        modal.style.display = "none";
+      }
+    </script>
+    <script src="./index.js"></script>
+  </body>
 </html>

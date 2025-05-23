@@ -114,7 +114,7 @@
           </ul>
           <div class="header__main-ham-menu-cont">
             <img src="./assets/svg/ham-menu.svg" alt="hamburger menu" class="header__main-ham-menu" />
-            <img src="./assets/svg/ham-menu-close.svg" alt="hamburger menu close" class="header__main-ham-menu-close d-none" />
+            <img src="./assets/svg/ham-menu-close.svg" alt="hamburger menu close d-none" class="header__main-ham-menu-close d-none" />
           </div>
         </div>
       </div>
@@ -160,43 +160,43 @@
             <div class="project-details__desc">
               <h3 class="project-details__content-title">Project Overview</h3>
               <p class="project-details__desc-para">
-                This project involved the setup and deployment of a fully automated Security Operations Center (SOC) within a virtual lab environment. The primary challenge addressed was the inherent inefficiency of manual incident detection and response. The solution integrates Wazuh (XDR/EDR) for thorough endpoint monitoring, TheHive (Incident Response) for organized incident management, and Shuffle (SOAR) for orchestrating automated workflows. By utilizing Sysmon logs and crafting custom rules, a robust system was built to simulate, detect, and respond to advanced threats like Mimikatz in real-time. This setup demonstrates a proactive approach, transforming raw security events into actionable intelligence and automating critical response actions. Wazuh detected the threat, and the custom integration script successfully forwarded the alert to TheHive for immediate case management. Furthermore, automated email notifications were sent to the SOC analyst, enabling rapid case management. This automated alert creation significantly reduces response time and ensures critical incidents are promptly addressed, showcasing the ability to build resilient and efficient security operations. [cite: 305, 306, 307, 308, 309, 310, 311, 312]
+                This project involved the setup and deployment of a fully automated Security Operations Center (SOC) within a virtual lab environment. The primary challenge addressed was the inherent inefficiency of manual incident detection and response. The solution integrates Wazuh (XDR/EDR) for thorough endpoint monitoring, TheHive (Incident Response) for organized incident management, and Shuffle (SOAR) for orchestrating automated workflows. By utilizing Sysmon logs and crafting custom rules, a robust system was built to simulate, detect, and respond to advanced threats like Mimikatz in real-time. This setup demonstrates a proactive approach, transforming raw security events into actionable intelligence and automating critical response actions. Wazuh detected the threat, and the custom integration script successfully forwarded the alert to TheHive for immediate case management. Furthermore, automated email notifications were sent to the SOC analyst, enabling rapid case management. This automated alert creation significantly reduces response time and ensures critical incidents are promptly addressed, showcasing the ability to build resilient and efficient security operations.
               </p>
             </div>
             <div class="project-details__subsections">
               <h3 class="project-details__content-title">Key Skills Demonstrated</h3>
               <p class="project-details__desc-para">
-                Wazuh, TheHive, Shuffle, Sysmon, SOAR, XDR, EDR, log analysis, alert automation, incident response, rule creation, virtualization, API integration, troubleshooting, playbook, and workflow orchestration. [cite: 313]
+                Wazuh, TheHive, Shuffle, Sysmon, SOAR, XDR, EDR, log analysis, alert automation, incident response, rule creation, virtualization, API integration, troubleshooting, playbook, and workflow orchestration.
               </p>
               <h3 class="project-details__content-title">Workflow</h3>
               <p class="project-details__desc-para">
-                The project workflow minimizes manual intervention, ensuring that critical security incidents are detected, enriched with threat intelligence, escalated for case management, and communicated to the response team with unparalleled speed and efficiency. The success of this project stems from a carefully designed automated workflow, ensuring rapid and consistent incident response. [cite: 314, 315]
+                The project workflow minimizes manual intervention, ensuring that critical security incidents are detected, enriched with threat intelligence, escalated for case management, and communicated to the response team with unparalleled speed and efficiency. The success of this project stems from a carefully designed automated workflow, ensuring rapid and consistent incident response.
               </p>
               <p class="project-details__desc-para">
-                Here's a breakdown of the automated process: [cite: 316]
+                Here's a breakdown of the automated process:
               </p>
               <h4>Endpoint Monitoring & Log Ingestion:</h4>
               <p class="project-details__desc-para">
-                A Windows 10 endpoint, equipped with Sysmon, generates security events. The Wazuh agent on the endpoint collects these Sysmon operational logs and forwards them to the Wazuh Manager. Wazuh is configured to ingest and archive all raw logs into Elasticsearch for comprehensive visibility and future analysis. [cite: 316, 317, 318]
+                A Windows 10 endpoint, equipped with Sysmon, generates security events. The Wazuh agent on the endpoint collects these Sysmon operational logs and forwards them to the Wazuh Manager. Wazuh is configured to ingest and archive all raw logs into Elasticsearch for comprehensive visibility and future analysis.
               </p>
               <h4>Threat Detection & Custom Rule Creation:</h4>
               <p class="project-details__desc-para">
-                To detect specific threats like Mimikatz, a custom Wazuh rule was developed and implemented. This rule precisely identifies Mimikatz execution based on <code>originalFileName</code> within Sysmon event data, assigning a critical severity level and linking it to MITRE ATT&CK T1003 (OS Credential Dumping). Upon Mimikatz execution, Wazuh immediately generates a high-fidelity alert. [cite: 319, 320, 321]
+                To detect specific threats like Mimikatz, a custom Wazuh rule was developed and implemented. This rule precisely identifies Mimikatz execution based on <code>originalFileName</code> within Sysmon event data, assigning a critical severity level and linking it to MITRE ATT&CK T1003 (OS Credential Dumping). Upon Mimikatz execution, Wazuh immediately generates a high-fidelity alert.
               </p>
               <h4>Automated Incident Creation in TheHive:</h4>
               <p class="project-details__desc-para">
-                A custom Python integration script was developed and deployed on the Wazuh Manager. This script is configured in <code>ossec.conf</code> to automatically forward critical Wazuh alerts, including Mimikatz detection, directly to TheHive. TheHive receives these alerts and automatically creates new cases for incident management, populating them with all relevant details from the Wazuh alert. [cite: 321, 322, 323]
+                A custom Python integration script was developed and deployed on the Wazuh Manager. This script is configured in <code>ossec.conf</code> to automatically forward critical Wazuh alerts, including Mimikatz detection, directly to TheHive. TheHive receives these alerts and automatically creates new cases for incident management, populating them with all relevant details from the Wazuh alert.
               </p>
               <h4>SOAR Orchestration & Threat Intelligence Enrichment (Shuffle):</h4>
               <p class="project-details__desc-para">
-                Wazuh alerts are also forwarded to Shuffle via a dedicated webhook. Shuffle's workflow automatically extracts the SHA256 hash from the Mimikatz alert data using a regex capture group. This extracted hash is then used to query VirusTotal via its API, enriching the alert with real-time threat intelligence and confirming the malicious nature of the executable. [cite: 324, 325, 326]
+                Wazuh alerts are also forwarded to Shuffle via a dedicated webhook. Shuffle's workflow automatically extracts the SHA256 hash from the Mimikatz alert data using a regex capture group. This extracted hash is then used to query VirusTotal via its API, enriching the alert with real-time threat intelligence and confirming the malicious nature of the executable.
               </p>
               <h4>Automated Analyst Notification:</h4>
               <p class="project-details__desc-para">
-                As the final step in the Shuffle workflow, an automated email notification is sent to the analyst. This email, containing critical alert details (e.g., alert title, filename, affected host), ensures immediate awareness and prompts the analyst to initiate their investigation in TheHive. [cite: 327, 328]
+                As the final step in the Shuffle workflow, an automated email notification is sent to the analyst. This email, containing critical alert details (e.g., alert title, filename, affected host), ensures immediate awareness and prompts the analyst to initiate their investigation in TheHive.
               </p>
               <p class="project-details__desc-para">
-                Let's get started! [cite: 329]
+                Let's get started!
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -208,11 +208,11 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                This diagram illustrates the lab's network setup: A Windows 10 endpoint generates security events, which are monitored by Wazuh (XDR/EDR). TheHive (incident management) and Shuffle (SOAR) are integrated to manage and automate responses, with the Analyst PC used for monitoring and analysis. [cite: 329, 330]
+                This diagram illustrates the lab's network setup: A Windows 10 endpoint generates security events, which are monitored by Wazuh (XDR/EDR). TheHive (incident management) and Shuffle (SOAR) are integrated to manage and automate responses, with the Analyst PC used for monitoring and analysis.
               </p>
               <h3 class="project-details__content-title">Installing Wazuh</h3>
               <p class="project-details__desc-para">
-                Installation of Wazuh, the XDR/EDR platform, was performed to establish core security monitoring and detection capabilities. The installation utilized the official Wazuh script: <code>curl -sO https://packages.wazuh.com/4.12/wazuh-install.sh && sudo bash ./wazuh-install.sh -a</code> [cite: 331, 332]
+                Installation of Wazuh, the XDR/EDR platform, was performed to establish core security monitoring and detection capabilities. The installation utilized the official Wazuh script: <code>curl -sO https://packages.wazuh.com/4.12/wazuh-install.sh && sudo bash ./wazuh-install.sh -a</code>
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -224,7 +224,7 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                To access the Wazuh dashboard, the IP address of the Wazuh service was confirmed. The <code>ifconfig</code> output showed <code>192.168.10.11</code> as the assigned IP, which was then used for web interface access. [cite: 333, 334]
+                To access the Wazuh dashboard, the IP address of the Wazuh service was confirmed. The <code>ifconfig</code> output showed <code>192.168.10.11</code> as the assigned IP, which was then used for web interface access.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -245,7 +245,7 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                With Wazuh installed, the next step was to deploy an agent to the Windows 10 endpoint. The dashboard initially showed no registered agents, prompting the "Deploy new agent" action to begin monitoring the endpoint. [cite: 334, 335]
+                With Wazuh installed, the next step was to deploy an agent to the Windows 10 endpoint. The dashboard initially showed no registered agents, prompting the "Deploy new agent" action to begin monitoring the endpoint.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -258,7 +258,7 @@
               </div>
               <h3 class="project-details__content-title">Configuring Agent Deployment</h3>
               <p class="project-details__desc-para">
-                For Wazuh agent deployment to the Windows 10 endpoint, the server address <code>192.168.10.11</code> was assigned. An agent name, <code>myLab</code>, was also provided to uniquely identify the endpoint within Wazuh. [cite: 336, 337]
+                For Wazuh agent deployment to the Windows 10 endpoint, the server address <code>192.168.10.11</code> was assigned. An agent name, <code>myLab</code>, was also provided to uniquely identify the endpoint within Wazuh.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -270,7 +270,7 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                The Wazuh dashboard provided specific PowerShell commands to download and install the agent on the Windows 10 endpoint. This included the <code>Invoke-WebRequest</code> command to retrieve the installer and <code>msiexec.exe</code> for silent installation, ensuring the agent connects to the Wazuh Manager at <code>192.168.10.11</code> and is named <code>myLab</code>. Following this, <code>NET START WazuhSvc</code> started the agent service. [cite: 338, 339, 340]
+                The Wazuh dashboard provided specific PowerShell commands to download and install the agent on the Windows 10 endpoint. This included the <code>Invoke-WebRequest</code> command to retrieve the installer and <code>msiexec.exe</code> for silent installation, ensuring the agent connects to the Wazuh Manager at <code>192.168.10.11</code> and is named <code>myLab</code>. Following this, <code>NET START WazuhSvc</code> started the agent service.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -282,7 +282,7 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                After running the deployment commands on the Windows 10 endpoint, the Wazuh agent successfully registered. The dashboard now displays "myLab" (<code>192.168.10.10</code>) as an active agent, confirming it is sending security data for monitoring. [cite: 341, 342]
+                After running the deployment commands on the Windows 10 endpoint, the Wazuh agent successfully registered. The dashboard now displays "myLab" (<code>192.168.10.10</code>) as an active agent, confirming it is sending security data for monitoring.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -295,7 +295,7 @@
               </div>
               <h3 class="project-details__content-title">Installing TheHive Dependencies (Java)</h3>
               <p class="project-details__desc-para">
-                Installation of TheHive, the incident response platform, commenced by ensuring all necessary Java dependencies were in place. TheHive relies on Apache Cassandra for its distributed database. Elasticsearch is another dependency for TheHive, providing powerful search and analytics capabilities for incident data. [cite: 343, 344, 345]
+                Installation of TheHive, the incident response platform, commenced by ensuring all necessary Java dependencies were in place. TheHive relies on Apache Cassandra for its distributed database. Elasticsearch is another dependency for TheHive, providing powerful search and analytics capabilities for incident data.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -325,7 +325,7 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                After installing TheHive, file permissions were correctly set to ensure proper operation and security. The <code>ls -la /opt/thp</code> output initially showed root as the owner. To align with TheHive's operational requirements, the file ownership for <code>/opt/thp</code> was changed recursively to <code>thehive:thehive</code> using the <code>chown -R thehive:thehive /opt/thp</code> command. [cite: 346, 347, 348]
+                After installing TheHive, file permissions were correctly set to ensure proper operation and security. The <code>ls -la /opt/thp</code> output initially showed root as the owner. To align with TheHive's operational requirements, the file ownership for <code>/opt/thp</code> was changed recursively to <code>thehive:thehive</code> using the <code>chown -R thehive:thehive /opt/thp</code> command.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -355,7 +355,7 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                With the installation, permission adjustments, and configurations complete, TheHive's web interface became accessible, confirming successful deployment and readiness for incident management operations. [cite: 349]
+                With the installation, permission adjustments, and configurations complete, TheHive's web interface became accessible, confirming successful deployment and readiness for incident management operations.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -367,7 +367,7 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                Default credentials for TheHive are: <code>admin@thehive.local - secret</code>. An error occurred when attempting to log in with these credentials. [cite: 350]
+                Default credentials for TheHive are: <code>admin@thehive.local - secret</code>. An error occurred when attempting to log in with these credentials.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -379,7 +379,7 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                Upon checking the Elasticsearch service, it was found to have failed to start due to being killed by the Out Of Memory (OOM) Killer, indicating insufficient available memory to run the service. [cite: 351]
+                Upon checking the Elasticsearch service, it was found to have failed to start due to being killed by the Out Of Memory (OOM) Killer, indicating insufficient available memory to run the service.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -392,15 +392,15 @@
               </div>
               <h4>Why does the OOM Killer activate?</h4>
               <p class="project-details__desc-para">
-                The OOM Killer is a mechanism in the Linux kernel that activates when the system is critically low on memory. It selects and terminates processes to free up memory and prevent the entire system from crashing or becoming unresponsive. Elasticsearch, especially with default configurations or when handling significant data, can be memory-intensive. [cite: 352, 353, 354]
+                The OOM Killer is a mechanism in the Linux kernel that activates when the system is critically low on memory. It selects and terminates processes to free up memory and prevent the entire system from crashing or becoming unresponsive. Elasticsearch, especially with default configurations or when handling significant data, can be memory-intensive.
               </p>
               <h4>How to solve this problem:</h4>
               <ol>
-                <li><strong>Increase Available Memory:</strong> The most direct solution is to provide more RAM to the machine running Elasticsearch. If possible, upgrade the system's memory. [cite: 355, 356]</li>
-                <li><strong>Reduce Elasticsearch Memory Usage:</strong> If increasing RAM is not possible, Elasticsearch needs to be configured to use less memory. This involves adjusting the JVM heap size that Elasticsearch uses. [cite: 356, 357]</li>
+                <li><strong>Increase Available Memory:</strong> The most direct solution is to provide more RAM to the machine running Elasticsearch. If possible, upgrade the system's memory.</li>
+                <li><strong>Reduce Elasticsearch Memory Usage:</strong> If increasing RAM is not possible, Elasticsearch needs to be configured to use less memory. This involves adjusting the JVM heap size that Elasticsearch uses.</li>
               </ol>
               <p class="project-details__desc-para">
-                The chosen solution was to increase the RAM of the VM. With the increased RAM, the Elasticsearch service now runs without OOM issues, allowing TheHive to start and authenticate correctly. [cite: 358, 359]
+                The chosen solution was to increase the RAM of the VM. With the increased RAM, the Elasticsearch service now runs without OOM issues, allowing TheHive to start and authenticate correctly.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -413,7 +413,7 @@
               </div>
               <h3 class="project-details__content-title">Configuring Wazuh in Win10 Machine</h3>
               <p class="project-details__desc-para">
-                To ingest Sysmon logs into Wazuh for comprehensive endpoint monitoring, the full name of the Sysmon operational log (<code>Microsoft-Windows-Sysmon/Operational</code>) was identified within the Event Viewer. [cite: 360]
+                To ingest Sysmon logs into Wazuh for comprehensive endpoint monitoring, the full name of the Sysmon operational log (<code>Microsoft-Windows-Sysmon/Operational</code>) was identified within the Event Viewer.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -425,7 +425,7 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                To integrate Sysmon logs with Wazuh, the <code>ossec.conf</code> file on the Windows 10 agent was modified. A <code>&lt;localfile&gt;</code> entry was added, pointing to the <code>Microsoft-Windows-Sysmon/Operational</code> event channel, ensuring these security events are collected and forwarded to the Wazuh Manager for analysis. [cite: 361, 362]
+                To integrate Sysmon logs with Wazuh, the <code>ossec.conf</code> file on the Windows 10 agent was modified. A <code>&lt;localfile&gt;</code> entry was added, pointing to the <code>Microsoft-Windows-Sysmon/Operational</code> event channel, ensuring these security events are collected and forwarded to the Wazuh Manager for analysis.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -437,7 +437,7 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                After modifying the <code>ossec.conf</code> file, the Wazuh agent service on the Windows 10 endpoint was restarted. This ensured configuration changes took effect immediately, allowing the agent to begin collecting Sysmon logs as configured. [cite: 363, 364]
+                After modifying the <code>ossec.conf</code> file, the Wazuh agent service on the Windows 10 endpoint was restarted. This ensured configuration changes took effect immediately, allowing the agent to begin collecting Sysmon logs as configured.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -449,7 +449,7 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                With the Wazuh agent restarted and properly configured, Sysmon logs were verified to be successfully ingested and displayed within the Wazuh dashboard. The search filter for "sysmon" confirmed that relevant events from the Windows 10 endpoint were actively flowing into the system for monitoring and analysis. [cite: 365, 366]
+                With the Wazuh agent restarted and properly configured, Sysmon logs were verified to be successfully ingested and displayed within the Wazuh dashboard. The search filter for "sysmon" confirmed that relevant events from the Windows 10 endpoint were actively flowing into the system for monitoring and analysis.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -461,7 +461,7 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                To simulate a real-world threat and test monitoring capabilities, Mimikatz—a tool commonly used for credential access—was executed on the Windows 10 endpoint. This action generated specific security events that Wazuh was configured to detect and log. [cite: 367, 368]
+                To simulate a real-world threat and test monitoring capabilities, Mimikatz—a tool commonly used for credential access—was executed on the Windows 10 endpoint. This action generated specific security events that Wazuh was configured to detect and log.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -473,7 +473,7 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                After executing Mimikatz, the Wazuh dashboard initially showed "No Results" for "mimikatz" alerts. This confirmed that while Sysmon logs were being collected, Wazuh's default ruleset did not yet contain specific detections for this type of threat, demonstrating the need for custom rule creation to enhance detection capabilities. [cite: 369, 370]
+                After executing Mimikatz, the Wazuh dashboard initially showed "No Results" for "mimikatz" alerts. This confirmed that while Sysmon logs were being collected, Wazuh's default ruleset did not yet contain specific detections for this type of threat, demonstrating the need for custom rule creation to enhance detection capabilities.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -485,7 +485,7 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                Before modifying Wazuh's core configuration, a backup of the existing <code>ossec.conf</code> file was created to ensure the ability to restore the original configuration if needed, minimizing disruption during rule development and testing. [cite: 371]
+                Before modifying Wazuh's core configuration, a backup of the existing <code>ossec.conf</code> file was created to ensure the ability to restore the original configuration if needed, minimizing disruption during rule development and testing.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -497,7 +497,7 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                To ensure all raw logs, including those that do not immediately trigger an alert, are stored for later analysis, the <code>ossec.conf</code> file was modified. Specifically, the <code>logall</code> and <code>logall_json</code> parameters were changed from "no" to "yes" within the global configuration. This enabled full fidelity logging, essential for detailed investigations and custom rule development. [cite: 372, 373, 374]
+                To ensure all raw logs, including those that do not immediately trigger an alert, are stored for later analysis, the <code>ossec.conf</code> file was modified. Specifically, the <code>logall</code> and <code>logall_json</code> parameters were changed from "no" to "yes" within the global configuration. This enabled full fidelity logging, essential for detailed investigations and custom rule development.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -512,7 +512,7 @@
                 <code>systemctl restart wazuh-manager.service</code>
               </p>
               <p class="project-details__desc-para">
-                To complement the full log collection enabled in Wazuh, the <code>filebeat.yml</code> configuration was modified. Specifically, <code>archives: enabled</code> was set to <code>true</code> under the <code>filebeat.modules.wazuh.alerts</code> section. This ensures that raw, non-alerting logs, critical for in-depth analysis and custom rule creation, are also ingested into Elasticsearch for comprehensive visibility. [cite: 375, 376, 377]
+                To complement the full log collection enabled in Wazuh, the <code>filebeat.yml</code> configuration was modified. Specifically, <code>archives: enabled</code> was set to <code>true</code> under the <code>filebeat.modules.wazuh.alerts</code> section. This ensures that raw, non-alerting logs, critical for in-depth analysis and custom rule creation, are also ingested into Elasticsearch for comprehensive visibility.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -527,7 +527,7 @@
                 <code>systemctl restart filebeat</code>
               </p>
               <p class="project-details__desc-para">
-                To prepare for analyzing the newly enabled full logs, "Dashboards Management" -> "Index patterns" was navigated within the Wazuh interface to create a new index pattern. This step ensures that the raw log data, including archival logs, is properly indexed and searchable for analysis. However, an error occurred. Creating a new index pattern with a single <code>*</code> resolved the issue. [cite: 378, 379, 380]
+                To prepare for analyzing the newly enabled full logs, "Dashboards Management" -> "Index patterns" was navigated within the Wazuh interface to create a new index pattern. This step ensures that the raw log data, including archival logs, is properly indexed and searchable for analysis. However, an error occurred. Creating a new index pattern with a single <code>*</code> resolved the issue.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -575,7 +575,7 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                To confirm that Sysmon successfully captured the Mimikatz execution and Wazuh archived the raw event, <code>cat archives.json</code> was piped through <code>grep -i mimikatz</code>. The output clearly showed the detailed Sysmon event logs related to the Mimikatz process, confirming that the comprehensive logging setup effectively collects even non-alerting security events. This data is now available for further analysis and custom rule creation. [cite: 381, 382, 383]
+                To confirm that Sysmon successfully captured the Mimikatz execution and Wazuh archived the raw event, <code>cat archives.json</code> was piped through <code>grep -i mimikatz</code>. The output clearly showed the detailed Sysmon event logs related to the Mimikatz process, confirming that the comprehensive logging setup effectively collects even non-alerting security events. This data is now available for further analysis and custom rule creation.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -587,7 +587,7 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                After enabling full log collection and verifying the raw <code>archives.json</code> file, the Wazuh dashboard's "wazuh-archives-*" index was searched for "mimikatz" events. The successful query, showing "11 hits" and displaying the detailed Sysmon logs related to Mimikatz execution, confirmed that the raw, non-alerting events are now fully searchable and accessible within the Wazuh interface. [cite: 384, 385]
+                After enabling full log collection and verifying the raw <code>archives.json</code> file, the Wazuh dashboard's "wazuh-archives-*" index was searched for "mimikatz" events. The successful query, showing "11 hits" and displaying the detailed Sysmon logs related to Mimikatz execution, confirmed that the raw, non-alerting events are now fully searchable and accessible within the Wazuh interface.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -599,7 +599,7 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                To create a custom rule for Mimikatz detection, "Server Management" -> "Rules" -> "Manage Rule Files" was navigated in the Wazuh dashboard. <code>0800-sysmon_id_1.xml</code> was identified as the appropriate file within the <code>ruleset/rules</code> directory. This is where the specific detection logic for Mimikatz activity would be added. [cite: 386, 387]
+                To create a custom rule for Mimikatz detection, "Server Management" -> "Rules" -> "Manage Rule Files" was navigated in the Wazuh dashboard. <code>0800-sysmon_id_1.xml</code> was identified as the appropriate file within the <code>ruleset/rules</code> directory. This is where the specific detection logic for Mimikatz activity would be added.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -611,7 +611,7 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                Before defining the custom detection rule, the archived Mimikatz logs in the Wazuh dashboard were analyzed. Specifically, the <code>data.win.eventdata.originalFileName</code> field, which contains "mimikatz.exe," was extracted. This unique and reliable indicator would be used as a key element in the custom rule to accurately detect future Mimikatz executions. [cite: 388]
+                Before defining the custom detection rule, the archived Mimikatz logs in the Wazuh dashboard were analyzed. Specifically, the <code>data.win.eventdata.originalFileName</code> field, which contains "mimikatz.exe," was extracted. This unique and reliable indicator would be used as a key element in the custom rule to accurately detect future Mimikatz executions.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -623,7 +623,7 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                With the relevant log data identified, a custom rule was crafted within <code>local_rules.xml</code> to detect Mimikatz execution. This rule is designed with the highest critical <code>level="15"</code> and specifically targets <code>originalFileName</code> for "mimikatz.exe" (case-insensitive). It was also linked to MITRE ATT&CK T1003 (OS Credential Dumping), providing immediate threat context. [cite: 389, 390]
+                With the relevant log data identified, a custom rule was crafted within <code>local_rules.xml</code> to detect Mimikatz execution. This rule is designed with the highest critical <code>level="15"</code> and specifically targets <code>originalFileName</code> for "mimikatz.exe" (case-insensitive). It was also linked to MITRE ATT&CK T1003 (OS Credential Dumping), providing immediate threat context.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -635,7 +635,7 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                After restarting the Wazuh manager and re-executing Mimikatz on the Windows 10 endpoint, the custom detection rule immediately triggered a high-severity alert. The Wazuh dashboard displayed a new event with <code>rule.mitre.id</code> as T1003 (Credential Access) and <code>rule.description</code> clearly stating "Mimikatz Usage Detected!!!". [cite: 391, 392]
+                After restarting the Wazuh manager and re-executing Mimikatz on the Windows 10 endpoint, the custom detection rule immediately triggered a high-severity alert. The Wazuh dashboard displayed a new event with <code>rule.mitre.id</code> as T1003 (Credential Access) and <code>rule.description</code> clearly stating "Mimikatz Usage Detected!!!".
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -648,7 +648,7 @@
               </div>
               <h3 class="project-details__content-title">Integrating SOAR</h3>
               <p class="project-details__desc-para">
-                To enable automated incident response, Shuffle, the SOAR platform, was integrated with Wazuh. The initial configuration within Shuffle involved setting up a new "Wazuh-alerts" webhook. The critical step was obtaining the unique "Webhook URI" (<code>https://shuffler.io/api/v1/hooks/webhook</code>), which would act as the communication channel for Wazuh alerts to be sent to Shuffle for orchestration and automation. This setup laid the groundwork for Shuffle to receive and process security alerts. [cite: 393, 394]
+                To enable automated incident response, Shuffle, the SOAR platform, was integrated with Wazuh. The initial configuration within Shuffle involved setting up a new "Wazuh-alerts" webhook. The critical step was obtaining the unique "Webhook URI" (<code>https://shuffler.io/api/v1/hooks/webhook</code>), which would act as the communication channel for Wazuh alerts to be sent to Shuffle for orchestration and automation. This setup laid the groundwork for Shuffle to receive and process security alerts.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -660,7 +660,7 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                To bridge Wazuh and Shuffle, the <code>ossec.conf</code> file on the Wazuh Manager was modified, adding an <code>&lt;integration&gt;</code> block. This configuration directs Wazuh to forward alerts to Shuffle's webhook URI, specifically including the custom Mimikatz alert (<code>rule_id 100002</code>). By specifying <code>alert_format</code> as <code>json</code>, alerts are ensured to be sent in a structured format, enabling seamless parsing and automation within Shuffle. [cite: 395, 396]
+                To bridge Wazuh and Shuffle, the <code>ossec.conf</code> file on the Wazuh Manager was modified, adding an <code>&lt;integration&gt;</code> block. This configuration directs Wazuh to forward alerts to Shuffle's webhook URI, specifically including the custom Mimikatz alert (<code>rule_id 100002</code>). By specifying <code>alert_format</code> as <code>json</code>, alerts are ensured to be sent in a structured format, enabling seamless parsing and automation within Shuffle.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -672,7 +672,7 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                Following the <code>ossec.conf</code> modifications and restarting the Wazuh service, the Shuffle webhook was initiated. The screenshot confirmed its successful activation, displaying "Webhook: running" and a notification indicating "Successfully started webhook". [cite: 397, 398]
+                Following the <code>ossec.conf</code> modifications and restarting the Wazuh service, the Shuffle webhook was initiated. The screenshot confirmed its successful activation, displaying "Webhook: running" and a notification indicating "Successfully started webhook".
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -684,7 +684,7 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                Mimikatz was re-executed on the Windows 10 endpoint. The screenshot confirmed that the alert was successfully ingested by Shuffle, showing a "FINISHED" status for the webhook event. The JSON payload revealed the custom <code>rule_id: "100002"</code>, a "Mimikatz Usage Detected!!!" title, and associated details like <code>severity: 3</code>. This validated the seamless flow of high-fidelity alerts from Wazuh to Shuffle, confirming the SOAR platform was ready to automate responses based on critical security events. [cite: 399, 400]
+                Mimikatz was re-executed on the Windows 10 endpoint. The screenshot confirmed that the alert was successfully ingested by Shuffle, showing a "FINISHED" status for the webhook event. The JSON payload revealed the custom <code>rule_id: "100002"</code>, a "Mimikatz Usage Detected!!!" title, and associated details like <code>severity: 3</code>. This validated the seamless flow of high-fidelity alerts from Wazuh to Shuffle, confirming the SOAR platform was ready to automate responses based on critical security events.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -696,7 +696,7 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                To enrich the alert data and facilitate threat intelligence lookups, the automated workflow needed specific details from the Mimikatz alert. The raw event data highlighted the <code>hashes</code> field which contained the SHA1 hash (D1F783...). Crucially, within the same log, the SHA256 hash was also present, which would be the primary identifier used for reputation checks. This extraction step is vital for context-rich incident analysis. [cite: 401, 402]
+                To enrich the alert data and facilitate threat intelligence lookups, the automated workflow needed specific details from the Mimikatz alert. The raw event data highlighted the <code>hashes</code> field which contained the SHA1 hash (D1F783...). Crucially, within the same log, the SHA256 hash was also present, which would be the primary identifier used for reputation checks. This extraction step is vital for context-rich incident analysis.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -708,7 +708,7 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                To automate the VirusTotal lookup, a "Regex capture group" action was implemented within Shuffle. This step extracted the SHA256 hash from the incoming Wazuh alert. The Input data was set to <code>$exec.text.win.eventdata.hashes</code>, targeting the field containing the hash string. The Regex used, <code>SHA256=([0-9A-Fa-f]{64})</code>, precisely identified and captured the 64-character SHA256 value. This ensured that only the relevant hash was extracted, preparing it for the next step in the automated workflow. [cite: 403, 404]
+                To automate the VirusTotal lookup, a "Regex capture group" action was implemented within Shuffle. This step extracted the SHA256 hash from the incoming Wazuh alert. The Input data was set to <code>$exec.text.win.eventdata.hashes</code>, targeting the field containing the hash string. The Regex used, <code>SHA256=([0-9A-Fa-f]{64})</code>, precisely identified and captured the 64-character SHA256 value. This ensured that only the relevant hash was extracted, preparing it for the next step in the automated workflow.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -720,7 +720,7 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                With the SHA256 hash successfully extracted, a lookup was performed on VirusTotal to gather reputation information about the Mimikatz executable. A "Get a hash report" action was set up within Shuffle. The extracted SHA256 hash was connected to the VirusTotal query. The Id field was populated with <code>$sha256_regex.group_0</code>, which pulled the hash directly from the previous parsing step. This ensured Shuffle automatically sent the correct hash to VirusTotal for reputation analysis, integrating external threat intelligence into the automated workflow. [cite: 405, 406]
+                With the SHA256 hash successfully extracted, a lookup was performed on VirusTotal to gather reputation information about the Mimikatz executable. A "Get a hash report" action was set up within Shuffle. The extracted SHA256 hash was connected to the VirusTotal query. The Id field was populated with <code>$sha256_regex.group_0</code>, which pulled the hash directly from the previous parsing step. This ensured Shuffle automatically sent the correct hash to VirusTotal for reputation analysis, integrating external threat intelligence into the automated workflow.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -733,7 +733,7 @@
               </div>
               <h3 class="project-details__content-title">Troubleshooting: VirusTotal API Error</h3>
               <p class="project-details__desc-para">
-                After configuring the VirusTotal lookup, the workflow encountered an error. The screenshot showed a <code>status: 404</code> and an error message "Resource not found". This indicated that the API endpoint or the way the hash was being sent to VirusTotal was incorrect, preventing a successful lookup. [cite: 407, 408]
+                After configuring the VirusTotal lookup, the workflow encountered an error. The screenshot showed a <code>status: 404</code> and an error message "Resource not found". This indicated that the API endpoint or the way the hash was being sent to VirusTotal was incorrect, preventing a successful lookup.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -745,7 +745,7 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                To resolve the "Resource not found" error, the available VirusTotal API actions within Shuffle were reviewed. The correct endpoint for retrieving a hash report was identified as <code>GET /files/{id}</code>. The issue was resolved by correcting the regex to pick "list". [cite: 409, 410]
+                To resolve the "Resource not found" error, the available VirusTotal API actions within Shuffle were reviewed. The correct endpoint for retrieving a hash report was identified as <code>GET /files/{id}</code>. The issue was resolved by correcting the regex to pick "list".
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -757,7 +757,7 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                After correcting the API endpoint, the VirusTotal lookup within Shuffle showed a successful result. The output clearly indicated <code>malicious: 64</code> under <code>last_analysis_stats</code>, confirming that 64 out of the analyzed security vendors identified the file as malicious. This successful integration provides immediate, actionable threat intelligence directly within the automated workflow, verifying the malicious nature of the Mimikatz executable. [cite: 411, 412]
+                After correcting the API endpoint, the VirusTotal lookup within Shuffle showed a successful result. The output clearly indicated <code>malicious: 64</code> under <code>last_analysis_stats</code>, confirming that 64 out of the analyzed security vendors identified the file as malicious. This successful integration provides immediate, actionable threat intelligence directly within the automated workflow, verifying the malicious nature of the Mimikatz executable.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -770,7 +770,7 @@
               </div>
               <h3 class="project-details__content-title">TheHive Integration</h3>
               <p class="project-details__desc-para">
-                To begin integrating TheHive directly with Wazuh, the <code>/var/ossec/integrations</code> directory on the Wazuh Manager was navigated to. Listing the contents of this directory revealed existing integration scripts such as <code>shuffle.py</code>, <code>virustotal.py</code>, and <code>slack.py</code>. This step confirmed the location where custom integration scripts, like the one to be used for TheHive, are stored and executed by Wazuh. [cite: 413, 414]
+                To begin integrating TheHive directly with Wazuh, the <code>/var/ossec/integrations</code> directory on the Wazuh Manager was navigated to. Listing the contents of this directory revealed existing integration scripts such as <code>shuffle.py</code>, <code>virustotal.py</code>, and <code>slack.py</code>. This step confirmed the location where custom integration scripts, like the one to be used for TheHive, are stored and executed by Wazuh.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -782,7 +782,7 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                To facilitate direct integration between Wazuh and TheHive, a new custom script named <code>custom-w2thive</code> was created within the <code>/var/ossec/integrations</code> directory. This Python script would act as the bridge, processing Wazuh alerts and forwarding them to TheHive. This custom solution allows for tailored incident creation and management directly from Wazuh, bypassing the need for an intermediary SOAR platform like Shuffle for this specific integration. [cite: 415, 416]
+                To facilitate direct integration between Wazuh and TheHive, a new custom script named <code>custom-w2thive</code> was created within the <code>/var/ossec/integrations</code> directory. This Python script would act as the bridge, processing Wazuh alerts and forwarding them to TheHive. This custom solution allows for tailored incident creation and management directly from Wazuh, bypassing the need for an intermediary SOAR platform like Shuffle for this specific integration.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -794,16 +794,16 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                The following commands were run to ensure correct permissions: [cite: 417]
+                The following commands were run to ensure correct permissions:
               </p>
               <ul>
-                <li><code>sudo chmod 755 /var/ossec/integrations/custom-w2thive.py</code> [cite: 417]</li>
-                <li><code>sudo chmod 755 /var/ossec/integrations/custom-w2thive</code> [cite: 417]</li>
-                <li><code>sudo chown root:wazuh /var/ossec/integrations/custom-w2thive.py</code> [cite: 417]</li>
-                <li><code>sudo chown root:wazuh /var/ossec/integrations/custom-w2thive</code> [cite: 417]</li>
+                <li><code>sudo chmod 755 /var/ossec/integrations/custom-w2thive.py</code></li>
+                <li><code>sudo chmod 755 /var/ossec/integrations/custom-w2thive</code></li>
+                <li><code>sudo chown root:wazuh /var/ossec/integrations/custom-w2thive.py</code></li>
+                <li><code>sudo chown root:wazuh /var/ossec/integrations/custom-w2thive</code></li>
               </ul>
               <p class="project-details__desc-para">
-                To activate the direct integration, the <code>ossec.conf</code> file on the Wazuh Manager was modified, adding a new <code>&lt;integration&gt;</code> block for <code>custom-w2thive</code>. The configuration details included: the <code>hook_url</code> set to TheHive server's IP and port 9000, and a dedicated <code>api_key</code> for authentication. The <code>alert_format</code> was specified as <code>json</code> to ensure structured data transfer. [cite: 418, 419]
+                To activate the direct integration, the <code>ossec.conf</code> file on the Wazuh Manager was modified, adding a new <code>&lt;integration&gt;</code> block for <code>custom-w2thive</code>. The configuration details included: the <code>hook_url</code> set to TheHive server's IP and port 9000, and a dedicated <code>api_key</code> for authentication. The <code>alert_format</code> was specified as <code>json</code> to ensure structured data transfer.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -824,7 +824,7 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                After restarting the Wazuh service, TheHive's alert dashboard was navigated to verify the integration. New alerts were successfully received from Wazuh. [cite: 420, 421]
+                After restarting the Wazuh service, TheHive's alert dashboard was navigated to verify the integration. New alerts were successfully received from Wazuh.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -845,7 +845,7 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                After re-executing Mimikatz on the Windows 10 endpoint, TheHive's alert dashboard immediately displayed a new, critical alert. The alert was titled "Mimikatz Usage Detected!!!" and directly referenced the custom Wazuh rule (<code>rule.id: 100002</code>). This confirmed the seamless end-to-end integration: Wazuh detected the threat, and the custom integration script successfully forwarded the alert to TheHive for immediate case management. This automated alert creation significantly reduces response time and ensures critical incidents are promptly addressed. [cite: 422, 423, 424]
+                After re-executing Mimikatz on the Windows 10 endpoint, TheHive's alert dashboard immediately displayed a new, critical alert. The alert was titled "Mimikatz Usage Detected!!!" and directly referenced the custom Wazuh rule (<code>rule.id: 100002</code>). This confirmed the seamless end-to-end integration: Wazuh detected the threat, and the custom integration script successfully forwarded the alert to TheHive for immediate case management. This automated alert creation significantly reduces response time and ensures critical incidents are promptly addressed.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -876,7 +876,7 @@
               </div>
               <h3 class="project-details__content-title">Automated Notification: Sending Email to Analyst</h3>
               <p class="project-details__desc-para">
-                To ensure the analyst is immediately notified of critical incidents, a "Send email shuffle" action was added to the workflow. The email configuration set the recipient to <code>test@outlook.com</code>, the subject line to "High Severity Alert!", and the body dynamically populated key alert details. This included the alert title (<code>$exec.title</code>), the original filename (<code>$exec.text.win.eventdata.originalFileName</code>), and the affected host (<code>$exec.text.win.system.computer</code>). This automated email ensures timely communication and prompts the analyst to begin their investigation in TheHive. [cite: 425, 426]
+                To ensure the analyst is immediately notified of critical incidents, a "Send email shuffle" action was added to the workflow. The email configuration set the recipient to <code>test@outlook.com</code>, the subject line to "High Severity Alert!", and the body dynamically populated key alert details. This included the alert title (<code>$exec.title</code>), the original filename (<code>$exec.text.win.eventdata.originalFileName</code>), and the affected host (<code>$exec.text.win.system.computer</code>). This automated email ensures timely communication and prompts the analyst to begin their investigation in TheHive.
               </p>
               <div class="project-details__img-cont">
                 <img
@@ -888,7 +888,7 @@
                 />
               </div>
               <p class="project-details__desc-para">
-                After the full workflow execution, the successful delivery of the automated email notification to the analyst was observed. The email, sent by the "Shuffle Email App," had the subject "High Severity Alert!" and dynamically includes critical details: "Mimikatz Usage Detected!!! File name: mimikatz.exe activity on host DESKTOP-G6HR1ED". This final step in the SOAR playbook ensures that analysts are promptly informed of high-priority incidents, enabling them to initiate investigations swiftly. [cite: 427, 428]
+                After the full workflow execution, the successful delivery of the automated email notification to the analyst was observed. The email, sent by the "Shuffle Email App," had the subject "High Severity Alert!" and dynamically includes critical details: "Mimikatz Usage Detected!!! File name: mimikatz.exe activity on host DESKTOP-G6HR1ED". This final step in the SOAR playbook ensures that analysts are promptly informed of high-priority incidents, enabling them to initiate investigations swiftly.
               </p>
               <div class="project-details__img-cont">
                 <img

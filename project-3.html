@@ -200,7 +200,7 @@
               </p>
               <h3 class="project-details__content-title">Network Setup Diagram</h3>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/0diagram.png" alt="Network Setup Diagram" class="constrained-image" id="image-1" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/0diagram.png" alt="Network Setup Diagram" class="constrained-image" id="image-1" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 This diagram illustrates the lab's network setup: A Windows 10 endpoint generates security events, which are monitored by Wazuh (XDR/EDR). TheHive (incident management) and Shuffle (SOAR) are integrated to manage and automate responses, with the Analyst PC used for monitoring and analysis.
@@ -210,93 +210,93 @@
                 Let's begin by installing Wazuh, the XDR/EDR platform, to establish core security monitoring and detection capabilities. The installation was performed using the official Wazuh script: <code>curl -sO https://packages.wazuh.com/4.12/wazuh-install.sh && sudo bash ./wazuh-install.sh -a</code>
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/1installing-wazuh.png" alt="Installing Wazuh" class="constrained-image" id="image-2" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/1installing-wazuh.png" alt="Installing Wazuh" class="constrained-image" id="image-2" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 To access the Wazuh dashboard, I first confirmed the IP address of the Wazuh service. The <code>ifconfig</code> output revealed <code>192.168.10.11</code> as the assigned IP, which was then used for web interface access.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/2ip.png" alt="Wazuh IP Address" class="constrained-image" id="image-3" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/2ip.png" alt="Wazuh IP Address" class="constrained-image" id="image-3" onclick="showOriginal(this)" />
               </div>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/3wazuh.png" alt="Wazuh Dashboard" class="constrained-image" id="image-4" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/3wazuh.png" alt="Wazuh Dashboard" class="constrained-image" id="image-4" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 With Wazuh installed, the next step is to deploy an agent to the Windows 10 endpoint. As seen here, the dashboard currently shows no registered agents, prompting the "Deploy new agent" action to begin monitoring the endpoint.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/4deploy-wazuh-agent.png" alt="Deploy new Wazuh agent" class="constrained-image" id="image-5" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/4deploy-wazuh-agent.png" alt="Deploy new Wazuh agent" class="constrained-image" id="image-5" onclick="showOriginal(this)" />
               </div>
               <h3 class="project-details__content-title">Configuring Agent Deployment</h3>
               <p class="project-details__desc-para">
                 To deploy the Wazuh agent to the Windows 10 endpoint, the server address <code>192.168.10.11</code> was assigned. An agent name, <code>myLab</code>, was also provided during this configuration step to uniquely identify the endpoint within Wazuh.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/5deploy-agent.png" alt="Configuring Agent Deployment" class="constrained-image" id="image-6" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/5deploy-agent.png" alt="Configuring Agent Deployment" class="constrained-image" id="image-6" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 The Wazuh dashboard provides the specific PowerShell commands to download and install the agent on the Windows 10 endpoint. This includes the <code>Invoke-WebRequest</code> command to retrieve the installer and <code>msiexec.exe</code> for silent installation, ensuring the agent connects to the Wazuh Manager at <code>192.168.10.11</code> and is named <code>myLab</code>. Following this, <code>NET START WazuhSvc</code> starts the agent service.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/6-deploying-command.png" alt="Wazuh Agent Deployment Command" class="constrained-image" id="image-7" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/6-deploying-command.png" alt="Wazuh Agent Deployment Command" class="constrained-image" id="image-7" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 After running the deployment commands on the Windows 10 endpoint, the Wazuh agent successfully registered. The dashboard now displays "myLab" (<code>192.168.10.10</code>) as an active agent, confirming it is now sending security data for monitoring.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/7-node.png" alt="Wazuh Agent Registered" class="constrained-image" id="image-8" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/7-node.png" alt="Wazuh Agent Registered" class="constrained-image" id="image-8" onclick="showOriginal(this)" />
               </div>
               <h3 class="project-details__content-title">Installing TheHive Dependencies (Java)</h3>
               <p class="project-details__desc-para">
                 Next, we proceed with installing TheHive, the incident response platform. We are going to follow the official guide of TheHive : <a href="https://docs.strangebee.com/thehive/installation/step-by-step-installation-guide/" target="_blank">https://docs.strangebee.com/thehive/installation/step-by-step-installation-guide/</a> This begins by ensuring all necessary Java dependencies are in place.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/8-java.png" alt="Installing Java Dependencies" class="constrained-image" id="image-9" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/8-java.png" alt="Installing Java Dependencies" class="constrained-image" id="image-9" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 TheHive relies on Apache Cassandra for its distributed database.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/9-cassandra-status.png" alt="Cassandra Status" class="constrained-image" id="image-10" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/9-cassandra-status.png" alt="Cassandra Status" class="constrained-image" id="image-10" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 Elasticsearch is another dependency for TheHive, providing powerful search and analytics capabilities for incident data.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/10-elasticsearch-status.png" alt="Elasticsearch Status" class="constrained-image" id="image-11" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/10-elasticsearch-status.png" alt="Elasticsearch Status" class="constrained-image" id="image-11" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 Now we are good to go for installing TheHive.After installing TheHive, it's crucial to correctly set file permissions to ensure proper operation and security. As shown in the <code>ls -la /opt/thp</code> output, the directory initially shows root as the owner. The official documentation mandates changing these permissions to <code>thehive:thehive</code>
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/11-root-owner.png" alt="TheHive File Ownership" class="constrained-image" id="image-12" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/11-root-owner.png" alt="TheHive File Ownership" class="constrained-image" id="image-12" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 To align with TheHive's operational requirements, the file ownership for <code>/opt/thp</code> was changed recursively to <code>thehive:thehive</code> using the <code>chown -R thehive:thehive /opt/thp</code> command.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/12-change-ownership.png" alt="Changing TheHive Ownership" class="constrained-image" id="image-13" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/12-change-ownership.png" alt="Changing TheHive Ownership" class="constrained-image" id="image-13" onclick="showOriginal(this)" />
               </div>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/13-change-ownershipU.png" alt="Changing TheHive Ownership" class="constrained-image" id="image-14" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/13-change-ownershipU.png" alt="Changing TheHive Ownership" class="constrained-image" id="image-14" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 With the installation, permission adjustments and configurations complete, TheHive's web interface is now accessible, confirming the successful deployment and readiness for incident management operations.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/14-thehive.png" alt="TheHive Web Interface" class="constrained-image" id="image-15" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/14-thehive.png" alt="TheHive Web Interface" class="constrained-image" id="image-15" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 Default cretendials for the hive are : <code>admin@thehive.local</code> - <code>secret</code> When i try to login with this credentials there's an error occuring so now we have to solve this.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/15-errorHive.png" alt="TheHive Login Error" class="constrained-image" id="image-16" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/15-errorHive.png" alt="TheHive Login Error" class="constrained-image" id="image-16" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 When i check the Elasticsearch service, i see that it failed to start due to it being killed by the Out Of Memory (OOM) Killer, indicating insufficient available memory to run the service.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/16-esError.png" alt="Elasticsearch OOM Error" class="constrained-image" id="image-17" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/16-esError.png" alt="Elasticsearch OOM Error" class="constrained-image" id="image-17" onclick="showOriginal(this)" />
               </div>
               <h3 class="project-details__content-title">Why does the OOM Killer activate?</h3>
               <p class="project-details__desc-para">
@@ -314,163 +314,163 @@
                 With the increased RAM, the Elasticsearch service now runs without OOM issues, allowing TheHive to start and authenticate correctly.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/17-theHiveLoggedin.png" alt="TheHive Logged In" class="constrained-image" id="image-18" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/17-theHiveLoggedin.png" alt="TheHive Logged In" class="constrained-image" id="image-18" onclick="showOriginal(this)" />
               </div>
               <h3 class="project-details__content-title">Configuring Wazuh in Win10 Machine</h3>
               <p class="project-details__desc-para">
                 To ingest Sysmon logs into Wazuh for comprehensive endpoint monitoring, the full name of the Sysmon operational log (<code>Microsoft-Windows-Sysmon/Operational</code>) is identified within the Event Viewer.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/18-sysmonPath.png" alt="Sysmon Log Path" class="constrained-image" id="image-19" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/18-sysmonPath.png" alt="Sysmon Log Path" class="constrained-image" id="image-19" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 To integrate Sysmon logs with Wazuh, I modified the <code>ossec.conf</code> file on the Windows 10 agent. Specifically, I added a <code>&lt;localfile&gt;</code> entry, pointing to the <code>Microsoft-Windows-Sysmon/Operational</code> event channel, ensuring these security events are now collected and forwarded to the Wazuh Manager for analysis.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/19-ossecConf.png" alt="ossec.conf Configuration" class="constrained-image" id="image-20" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/19-ossecConf.png" alt="ossec.conf Configuration" class="constrained-image" id="image-20" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 After modifying the <code>ossec.conf</code> file, I restarted the Wazuh agent service on the Windows 10 endpoint. This ensures the configuration changes take effect immediately, allowing the agent to begin collecting Sysmon logs as configured.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/20-restartWazuh.png" alt="Restart Wazuh Agent" class="constrained-image" id="image-21" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/20-restartWazuh.png" alt="Restart Wazuh Agent" class="constrained-image" id="image-21" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 With the Wazuh agent restarted and properly configured, I verified that Sysmon logs are now being successfully ingested and displayed within the Wazuh dashboard. The search filter for "sysmon" confirms that relevant events from the Windows 10 endpoint are actively flowing into the system for monitoring and analysis.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/21-sysmon-wazuh.png" alt="Sysmon Logs in Wazuh" class="constrained-image" id="image-22" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/21-sysmon-wazuh.png" alt="Sysmon Logs in Wazuh" class="constrained-image" id="image-22" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 To simulate a real-world threat and test our monitoring capabilities, I executed Mimikatz—a tool commonly used for credential access—on the Windows 10 endpoint. This action is for generating specific security events that Wazuh is configured to detect and log.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/22-run-mimikatz.png" alt="Running Mimikatz" class="constrained-image" id="image-23" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/22-run-mimikatz.png" alt="Running Mimikatz" class="constrained-image" id="image-23" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 After executing Mimikatz, the Wazuh dashboard initially showed "No Results" for "mimikatz" alerts. This confirmed that while Sysmon logs were being collected, Wazuh's default ruleset did not yet contain specific detections for this type of threat, demonstrating the need for custom rule creation to enhance detection capabilities.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/23-no-result.png" alt="No Mimikatz Results in Wazuh" class="constrained-image" id="image-24" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/23-no-result.png" alt="No Mimikatz Results in Wazuh" class="constrained-image" id="image-24" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 It's time to configure wazuh. But before modifying Wazuh's core configuration, I want to creat a backup of the existing <code>ossec.conf</code> file to ensure the ability to restore the original configuration if needed, minimizing disruption during rule development and testing.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/24-copy-conf.png" alt="Backup ossec.conf" class="constrained-image" id="image-25" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/24-copy-conf.png" alt="Backup ossec.conf" class="constrained-image" id="image-25" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 To ensure all raw logs, including those that do not immediately trigger an alert, are stored for later analysis, I modified the <code>ossec.conf</code> file. Specifically, I changed the <code>logall</code> and <code>logall_json</code> parameters from "no" to "yes" within the global configuration. This enables full fidelity logging, which is essential for detailed investigations and custom rule development.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/25-configured-file.png" alt="Configuring ossec.conf for full logging" class="constrained-image" id="image-26" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/25-configured-file.png" alt="Configuring ossec.conf for full logging" class="constrained-image" id="image-26" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 To complement the full log collection enabled in Wazuh, I modified the <code>filebeat.yml</code> configuration. Specifically, I set <code>archives: enabled</code> to <code>true</code> under the <code>filebeat.modules.wazuh.alerts</code> section. This ensures that raw, non-alerting logs, which are critical for in-depth analysis and custom rule creation, are also ingested into Elasticsearch for comprehensive visibility. <code>systemctl restart filebeat</code>
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/26-filebeat-conf.png" alt="Filebeat Configuration" class="constrained-image" id="image-27" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/26-filebeat-conf.png" alt="Filebeat Configuration" class="constrained-image" id="image-27" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 To prepare for analyzing the newly enabled full logs, I navigated to "Dashboards Management" -> "Index patterns" within the Wazuh interface, then selected "Index patterns" to create a new index pattern. This is the next step to ensure that the raw log data, including archival logs, is properly indexed and searchable for analysis.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/27-index1.png" alt="Wazuh Index Pattern 1" class="constrained-image" id="image-28" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/27-index1.png" alt="Wazuh Index Pattern 1" class="constrained-image" id="image-28" onclick="showOriginal(this)" />
               </div>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/27-index2.png" alt="Wazuh Index Pattern 2" class="constrained-image" id="image-29" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/27-index2.png" alt="Wazuh Index Pattern 2" class="constrained-image" id="image-29" onclick="showOriginal(this)" />
               </div>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/27-index3.png" alt="Wazuh Index Pattern 3" class="constrained-image" id="image-30" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/27-index3.png" alt="Wazuh Index Pattern 3" class="constrained-image" id="image-30" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 But this one gave me an error.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/28-index4Error.png" alt="Wazuh Index Pattern Error" class="constrained-image" id="image-31" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/28-index4Error.png" alt="Wazuh Index Pattern Error" class="constrained-image" id="image-31" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 I tried to create new index pattern with a single * then it worked.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/29-indexPattern.png" alt="Wazuh Index Pattern Fixed" class="constrained-image" id="image-32" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/29-indexPattern.png" alt="Wazuh Index Pattern Fixed" class="constrained-image" id="image-32" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 To confirm that Sysmon successfully captured the Mimikatz execution and Wazuh archived the raw event, I used <code>cat archives.json</code> piped through <code>grep -i mimikatz</code>. The output clearly shows the detailed Sysmon event logs related to the Mimikatz process, confirming that our comprehensive logging setup is effectively collecting even non-alerting security events. This data is now available for further analysis and custom rule creation.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/30-check-logs.png" alt="Checking Mimikatz Logs" class="constrained-image" id="image-33" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/30-check-logs.png" alt="Checking Mimikatz Logs" class="constrained-image" id="image-33" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 After enabling full log collection and verifying the raw <code>archives.json</code> file, I searched the Wazuh dashboard's "wazuh-archives-*" index for "mimikatz" events. The successful query, showing "11 hits" and displaying the detailed Sysmon logs related to Mimikatz execution, confirms that the raw, non-alerting events are now fully searchable and accessible within the Wazuh interface.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/31-wazuh-dashboard-hit.png" alt="Mimikatz Hits in Wazuh Dashboard" class="constrained-image" id="image-34" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/31-wazuh-dashboard-hit.png" alt="Mimikatz Hits in Wazuh Dashboard" class="constrained-image" id="image-34" onclick="showOriginal(this)" />
               </div>
               <h3 class="project-details__content-title">Creating Custom Rules for Mimikatz Detection</h3>
               <p class="project-details__desc-para">
                 To create a custom rule for Mimikatz detection, I navigated to "Server Management" -> "Rules" -> "Manage Rule Files" in the Wazuh dashboard.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/32-rule-creation.png" alt="Wazuh Rule Creation Menu" class="constrained-image" id="image-35" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/32-rule-creation.png" alt="Wazuh Rule Creation Menu" class="constrained-image" id="image-35" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 The next step in custom rule creation is to modify the <code>local_rules.xml</code> file. I added a new rule with <code>id="100002"</code>, level 12 (critical severity), and linked it to <code>MITRE ATT&CK T1003</code> (OS Credential Dumping). The rule is designed to trigger when the <code>win.eventdata.originalFileName</code> field contains "mimikatz.exe" within Sysmon events (<code>id="80702"</code> and <code>rule.id="80702"</code>). This ensures precise detection of Mimikatz execution.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/33-rules-file.png" alt="local_rules.xml" class="constrained-image" id="image-36" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/33-rules-file.png" alt="local_rules.xml" class="constrained-image" id="image-36" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 After adding the custom rule to <code>local_rules.xml</code>, I restarted the Wazuh service using <code>systemctl restart wazuh-manager</code>. This critical step ensures that the new detection logic is loaded and actively applied by the Wazuh Manager, enabling it to detect Mimikatz execution based on the newly defined rule.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/34-restartWazuhM.png" alt="Restarting Wazuh Manager" class="constrained-image" id="image-37" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/34-restartWazuhM.png" alt="Restarting Wazuh Manager" class="constrained-image" id="image-37" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 With the custom rule in place and the Wazuh Manager restarted, I re-executed Mimikatz on the Windows 10 endpoint to test the new detection. This action is intended to trigger the newly configured rule and generate a high-fidelity alert in Wazuh.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/35-executeMimikatz.png" alt="Re-executing Mimikatz" class="constrained-image" id="image-38" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/35-executeMimikatz.png" alt="Re-executing Mimikatz" class="constrained-image" id="image-38" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 After re-executing Mimikatz, the Wazuh dashboard now successfully displays a high-severity alert for "Mimikatz Usage Detected!" (Rule ID: 100002). This confirms that our custom rule is effectively detecting the threat, with the alert providing details such as the affected host, event source, and the original filename. This validates the enhanced detection capabilities of our Wazuh deployment.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/36-hit.png" alt="Mimikatz Detection Alert" class="constrained-image" id="image-39" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/36-hit.png" alt="Mimikatz Detection Alert" class="constrained-image" id="image-39" onclick="showOriginal(this)" />
               </div>
               <h3 class="project-details__content-title">TheHive Integration and Alert Forwarding</h3>
               <p class="project-details__desc-para">
                 To automate the creation of cases in TheHive from Wazuh alerts, I developed a Python script. This script is designed to parse Wazuh alerts and forward relevant details, including the alert title, description, and source, directly to TheHive API for incident creation.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/37-pythonScript.png" alt="Python Integration Script" class="constrained-image" id="image-40" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/37-pythonScript.png" alt="Python Integration Script" class="constrained-image" id="image-40" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 The Python script was placed in the <code>/var/ossec/integrations/</code> directory on the Wazuh Manager. After placing the script, its permissions were set to executable using <code>chmod 750 thehive.py</code>, and ownership was assigned to <code>root:wazuh</code> using <code>chown root:wazuh thehive.py</code>. These steps ensure the script has the necessary permissions to run and interact with Wazuh.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/38-permission.png" alt="Script Permissions" class="constrained-image" id="image-41" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/38-permission.png" alt="Script Permissions" class="constrained-image" id="image-41" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 To integrate the custom Python script with Wazuh's alert forwarding mechanism, I modified the <code>ossec.conf</code> file by adding a new integration entry. This entry specifies that alerts with a level of 12 or higher (e.g., our Mimikatz detection) should be processed by the <code>thehive.py</code> script, which will then automatically create a case in TheHive. The <code>alert_format</code> is set to <code>full_json</code> to ensure all relevant alert data is passed to the script.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/39-ossecConf-thehive.png" alt="ossec.conf for TheHive" class="constrained-image" id="image-42" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/39-ossecConf-thehive.png" alt="ossec.conf for TheHive" class="constrained-image" id="image-42" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 After modifying <code>ossec.conf</code>, I restarted the Wazuh Manager service. This ensures the newly configured integration with TheHive is activated, allowing Wazuh to automatically forward critical alerts to TheHive for incident creation and management.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/40-restartWazuhM.png" alt="Restart Wazuh Manager" class="constrained-image" id="image-43" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/40-restartWazuhM.png" alt="Restart Wazuh Manager" class="constrained-image" id="image-43" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 After re-executing Mimikatz to generate a new alert, TheHive successfully received the alert from Wazuh and automatically created a new case (case #22). This confirms the seamless end-to-end integration: Wazuh detected the threat, and the custom integration script successfully forwarded the alert to TheHive for immediate case management. This automated alert creation significantly reduces response time and ensures critical incidents are promptly addressed.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/41-thehive-alert.png" alt="TheHive Alert" class="constrained-image" id="image-44" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/41-thehive-alert.png" alt="TheHive Alert" class="constrained-image" id="image-44" onclick="showOriginal(this)" />
               </div>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/42-thehive-alert2.png" alt="TheHive Alert Details" class="constrained-image" id="image-45" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/42-thehive-alert2.png" alt="TheHive Alert Details" class="constrained-image" id="image-45" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 TheHive Integration and Alert Forwarding:
@@ -481,13 +481,13 @@
                 To ensure the analyst is immediately notified of critical incidents, I added a "Send email shuffle" action to our workflow. Here we can see the email configuration: the recipient is set to <code>test@outlook.com</code>, the subject line is "High Severity Alert!", and the body dynamically populates key alert details. This includes the alert title (<code>$exec.title</code>), the original filename (<code>$exec.text.win.eventdata.originalFileName</code>), and the affected host (<code>$exec.text.win.system.computer</code>). This automated email ensures timely communication and prompts the analyst to begin their investigation in TheHive.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/62-email.png" alt="Email Configuration" class="constrained-image" id="image-46" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/62-email.png" alt="Email Configuration" class="constrained-image" id="image-46" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 After the full workflow execution, here we can see the successful delivery of the automated email notification to the analyst. The email, sent by the "Shuffle Email App," has the subject "High Severity Alert!" and dynamically includes critical details: "Mimikatz Usage Detected!!! File name: mimikatz.exe activity on host DESKTOP-G6HR1ED." This final step in the SOAR playbook ensures that analysts are promptly informed of high-priority incidents, enabling them to initiate investigations swiftly.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR/63.email.png" alt="Email Notification Delivered" class="constrained-image" id="image-47" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/63.email.png" alt="Email Notification Delivered" class="constrained-image" id="image-47" onclick="showOriginal(this)" />
               </div>
             </div>
           </div>

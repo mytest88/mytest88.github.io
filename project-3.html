@@ -410,7 +410,7 @@
                 To create a custom rule for Mimikatz detection, I navigated to "Server Management" -> "Rules" -> "Manage Rule Files" in the Wazuh dashboard.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR Implementation/32-rule-creation.png" alt="Wazuh Rule Creation Menu" class="constrained-image" id="image-35" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/32-manage-rule.png" alt="Wazuh Rule Creation Menu" class="constrained-image" id="image-35" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 The next step in custom rule creation is to modify the <code>local_rules.xml</code> file. I added a new rule with <code>id="100002"</code>, level 12 (critical severity), and linked it to <code>MITRE ATT&CK T1003</code> (OS Credential Dumping). The rule is designed to trigger when the <code>win.eventdata.originalFileName</code> field contains "mimikatz.exe" within Sysmon events (<code>id="80702"</code> and <code>rule.id="80702"</code>). This ensures precise detection of Mimikatz execution.

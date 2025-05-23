@@ -266,7 +266,7 @@
                 <img src="./assets/Automated SOC with SOAR Implementation/10-elasticsearch-status.png" alt="Elasticsearch Status" class="constrained-image" id="image-11" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
-                Now we are good to go for installing TheHive.After installing TheHive, it's crucial to correctly set file permissions to ensure proper operation and security. As shown in the <code>ls -la /opt/thp</code> output, the directory initially shows root as the owner. The official documentation mandates changing these permissions to <code>thehive:thehive</code>
+                Now we are good to go for installing TheHive. After installing TheHive, it's crucial to correctly set file permissions to ensure proper operation and security. As shown in the <code>ls -la /opt/thp</code> output, the directory initially shows root as the owner. The official documentation mandates changing these permissions to <code>thehive:thehive</code>
               </p>
               <div class="project-details__img-cont">
                 <img src="./assets/Automated SOC with SOAR Implementation/11-root-owner.png" alt="TheHive File Ownership" class="constrained-image" id="image-12" onclick="showOriginal(this)" />
@@ -303,10 +303,8 @@
                 The OOM Killer is a mechanism in the Linux kernel that steps in when the system is critically low on memory. It selects and terminates processes to free up memory and prevent the entire system from crashing or becoming unresponsive. Elasticsearch, especially with default configurations or when handling significant data, can be memory-intensive.
               </p>
               <h3 class="project-details__content-title">How to solve this problem:</h3>
-              <ol>
-                <li>Increase Available Memory: The most direct solution is to provide more RAM to the machine running Elasticsearch. If possible, upgrade the system's memory.</li>
-                <li>Reduce Elasticsearch Memory Usage: If you can't increase the RAM, you need to configure Elasticsearch to use less memory. This involves adjusting the JVM heap size that Elasticsearch uses.</li>
-              </ol>
+              <p class="project-details__desc-para">Increase Available Memory: The most direct solution is to provide more RAM to the machine running Elasticsearch. If possible, upgrade the system's memory.</p>
+              <p class="project-details__desc-para">Reduce Elasticsearch Memory Usage: If you can't increase the RAM, you need to configure Elasticsearch to use less memory. This involves adjusting the JVM heap size that Elasticsearch uses.</p>
               <p class="project-details__desc-para">
                 My solution : I don't want to reduce the performance of Elasticsearch so i'm gonna increase the RAM of my VM.
               </p>

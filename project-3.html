@@ -778,59 +778,75 @@
 
               <h3 class="project-details__content-title">Threat Intelligence Enrichment (VirusTotal)</h3>
               <p class="project-details__desc-para">
-                To enrich the alert data and facilitate threat intelligence lookups, the automated workflow needs specific details from the Mimikatz alert. This screenshot displays the raw event data, highlighting the hashes field which contains the SHA1 hash (D1F783...). Crucially, within this same log, the SHA256 hash is also present, which will be the primary identifier used for reputation checks.
+                To enrich the alert data and facilitate threat intelligence lookups, the automated workflow needs specific details from the Mimikatz alert. This screenshot displays the raw event data, highlighting the hashes field which contains the SHA1 hash (D1F783...). Crucially, within this same log, the SHA256 hash is also present, which will be the primary identifier used for reputation checks. This extraction step is vital for context-rich incident analysis.
               </p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/Automated SOC with SOAR Implementation/45-hashes.png"
-                  alt="Hashes"
+                  src="./assets/Automated SOC with SOAR Implementation/45-hashes1.png"
+                  alt="Hashes 1"
                   class="constrained-image"
                   id="image-48"
                   onclick="showOriginal(this)"
                 />
               </div>
-              <p class="project-details__desc-para">
-                To accurately extract the SHA256 hash from the incoming Shuffle alert, a regex capture group was configured. The screenshot shows the regex pattern, which precisely targets the SHA256 value within the hashes field. This step is essential for parsing the raw alert data and isolating the specific piece of information needed for VirusTotal lookups.
-              </p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/Automated SOC with SOAR Implementation/46-regex-group.png"
-                  alt="Regex Group"
+                  src="./assets/Automated SOC with SOAR Implementation/45-hashes2.png"
+                  alt="Hashes 2"
                   class="constrained-image"
                   id="image-49"
                   onclick="showOriginal(this)"
                 />
               </div>
+
               <p class="project-details__desc-para">
-                With the SHA256 hash successfully extracted, the next step in the Shuffle workflow involves integrating with VirusTotal for threat intelligence enrichment. The screenshot shows the configuration of the "VirusTotal" action within Shuffle, which uses the extracted SHA256 hash as input to query VirusTotal's API. This enables automated reputation checks, providing immediate context on the maliciousness of detected files.
+                To automate the VirusTotal lookup, I implemented a "Regex capture group" action within Shuffle. This step is for extracting the SHA256 hash from the incoming Wazuh alert. As shown, the Input data is set to $exec.text.win.eventdata.hashes, targeting the field containing the hash string. The Regex used, SHA256=([0-9A-Fa-f]{64}), precisely identifies and captures the 64-character SHA256 value. This ensures that only the relevant hash is extracted, preparing it for the next step in our automated workflow.
               </p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/Automated SOC with SOAR Implementation/47-vt-integration.png"
-                  alt="VirusTotal Integration"
+                  src="./assets/Automated SOC with SOAR Implementation/46-regexsha.png"
+                  alt="Regex SHA"
                   class="constrained-image"
                   id="image-50"
                   onclick="showOriginal(this)"
                 />
               </div>
+
+              <p class="project-details__desc-para">
+                Here we can confirm extraction of the SHA256 hash.
+              </p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/Automated SOC with SOAR Implementation/48-vt-conf.png"
-                  alt="VT Conf"
+                  src="./assets/Automated SOC with SOAR Implementation/47-confirmhasg.png"
+                  alt="Confirm Hash"
                   class="constrained-image"
                   id="image-51"
                   onclick="showOriginal(this)"
                 />
               </div>
+
               <p class="project-details__desc-para">
-                The VirusTotal integration successfully retrieved a comprehensive report for the Mimikatz executable. The output includes crucial details such as file size, MD5, SHA1, and SHA256 hashes, along with the detection ratio (e.g., 64/73). This provides robust threat intelligence, enabling automated reputation analysis, weaving external threat intelligence right into our automated workflow.
+                With the SHA256 hash successfully extracted, I performed a lookup on VirusTotal to gather reputation information about the Mimikatz executable. It's time to use my VirusTotal API key to be able to parse this information.
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/48-lookup.png"
+                  alt="Lookup"
+                  class="constrained-image"
+                  id="image-52"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+
+              <p class="project-details__desc-para">
+                I set up a "Get a hash report" action within Shuffle. Here, I made sure to connect the extracted SHA256 hash to the VirusTotal query. You can see the Id field is populated with $sha256_regex.group_0, which pulls the hash directly from our previous parsing step. This ensures Shuffle automatically sends the right hash to VirusTotal for reputation analysis, weaving external threat intelligence right into our automated workflow.
               </p>
               <div class="project-details__img-cont">
                 <img
                   src="./assets/Automated SOC with SOAR Implementation/49-hashreport.png"
                   alt="Hash Report"
                   class="constrained-image"
-                  id="image-52"
+                  id="image-53"
                   onclick="showOriginal(this)"
                 />
               </div>

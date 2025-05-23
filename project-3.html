@@ -920,82 +920,99 @@
                 />
               </div>
 
-              <h3 class="project-details__content-title">Shuffle-TheHive Integration</h3>
+              <h3 class="project-details__content-title">TheHive Integration</h3>
+
               <p class="project-details__desc-para">
-                To ensure that detected incidents are automatically managed within TheHive, I added a "Add TheHive Alert" action to our Shuffle workflow. The screenshot shows the configuration, including the connection to the TheHive instance. This step ensures that every time a high-fidelity alert is generated (e.g., Mimikatz detection), a corresponding case is automatically created in TheHive for the SOC team to investigate.
+                Why do we need TheHive
               </p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/Automated SOC with SOAR Implementation/55-add-thehive-alert.png"
-                  alt="Add TheHive Alert"
-                  class="constrained-image"
-                  id="image-58"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <p class="project-details__desc-para">
-                To populate TheHive alerts with relevant details from the Wazuh alerts, I configured the alert template in Shuffle. The screenshot shows the mapping of fields such as the alert title, description, tags, and custom fields. This ensures that TheHive cases are automatically enriched with critical information, streamlining the incident response process and providing analysts with immediate context.
-              </p>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Automated SOC with SOAR Implementation/56-thehive-template.png"
-                  alt="TheHive Template"
+                  src="./assets/Automated SOC with SOAR Implementation/55-why.png"
+                  alt="Why TheHive"
                   class="constrained-image"
                   id="image-59"
                   onclick="showOriginal(this)"
                 />
               </div>
+
               <p class="project-details__desc-para">
-                The custom Python script, named custom-w2thive, is crucial for integrating Wazuh alerts with TheHive. The screenshot displays the script's content, which includes an HTTP POST request to TheHive's API, securely transmitting Wazuh alert data (e.g., rule ID, agent details, full log) to create new cases. This script acts as the bridge between Wazuh's detection capabilities and TheHive's incident management, ensuring seamless alert forwarding and automated case creation.
+                I am going to follow here : https://wazuh.com/blog/using-wazuh-and-thehive-for-threat-protection-and-incident-response/<br>To begin integrating TheHive directly with Wazuh, I first navigated to the /var/ossec/integrations directory on the Wazuh Manager. Listing the contents of this directory, as shown, reveals the existing integration scripts such as shuffle.py, virustotal.py, and slack.py. This step confirms the location where custom integration scripts, like the one we'll use for TheHive, are stored and executed by Wazuh.
               </p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/Automated SOC with SOAR Implementation/57-w2thive.png"
-                  alt="W2thive"
+                  src="./assets/Automated SOC with SOAR Implementation/56-file.png"
+                  alt="Integrations File"
                   class="constrained-image"
                   id="image-60"
                   onclick="showOriginal(this)"
                 />
               </div>
+
               <p class="project-details__desc-para">
-                To enable Wazuh to execute the custom Python integration script that forwards alerts to TheHive, I modified the ossec.conf file on the Wazuh Manager, adding a new &lt;integration&gt; block for custom-w2thive. Here we can see the configuration details: the hook_url is set to TheHive server's IP and port 9000, and a dedicated api_key is provided for authentication. The alert_format is specified as json to ensure structured data transfer.
+                To facilitate direct integration between Wazuh and TheHive, I created a new custom script named custom-w2thive within the /var/ossec/integrations directory. This script, written in Python, will act as the bridge, processing Wazuh alerts and forwarding them to TheHive. This custom solution allows for tailored incident creation and management directly from Wazuh, bypassing the need for an intermediary SOAR platform like Shuffle for this specific integration.
               </p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/Automated SOC with SOAR Implementation/58-configure-wazuh.png"
-                  alt="Configure Wazuh"
+                  src="./assets/Automated SOC with SOAR Implementation/57-creation.png"
+                  alt="Script Creation"
                   class="constrained-image"
                   id="image-61"
                   onclick="showOriginal(this)"
                 />
               </div>
+
+              <p class="project-details__desc-para">
+                Here's the file i created.
+              </p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/Automated SOC with SOAR Implementation/59-configure.png"
-                  alt="Configure"
+                  src="./assets/Automated SOC with SOAR Implementation/58-hereis.png"
+                  alt="Custom Script Content"
                   class="constrained-image"
                   id="image-62"
                   onclick="showOriginal(this)"
                 />
               </div>
+
               <p class="project-details__desc-para">
-                After restarting the Wazuh service, I navigated to TheHive's alert dashboard to verify the integration. The screenshot confirms that the Mimikatz alert was successfully received and a new case was created in TheHive. This confirms the seamless end-to-end integration: Wazuh detected the threat, and the custom integration script successfully forwarded the alert to TheHive for immediate case management. This automated alert creation significantly reduces response time and ensures critical incidents are promptly addressed.
+                It need the correct permissions, so i have to run these commands :<br><code>sudo chmod 755 /var/ossec/integrations/custom-w2thive.py</code><br><code>sudo chmod 755 /var/ossec/integrations/custom-w2thive</code><br><code>sudo chown root:wazuh /var/ossec/integrations/custom-w2thive.py</code><br><code>sudo chown root:wazuh /var/ossec/integrations/custom-w2thive</code>
+              </p>
+
+              <p class="project-details__desc-para">
+                To activate the direct integration, I modified the ossec.conf file on the Wazuh Manager, adding a new &lt;integration&gt; block for custom-w2thive. Here we can see the configuration details: the hook_url is set to TheHive server's IP and port 9000, and a dedicated api_key is provided for authentication. The alert_format is specified as json to ensure structured data transfer.
               </p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/Automated SOC with SOAR Implementation/60-thehive-alert-received.png"
-                  alt="TheHive Alert Received"
+                  src="./assets/Automated SOC with SOAR Implementation/59-configure.png"
+                  alt="Configure Wazuh Integration"
                   class="constrained-image"
                   id="image-63"
                   onclick="showOriginal(this)"
                 />
               </div>
+
+              <p class="project-details__desc-para">
+                After restarting the Wazuh service, I navigated to TheHive's alert dashboard to verify the integration. Here we can see new alerts successfully received from Wazuh.
+              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Automated SOC with SOAR Implementation/60-alerts.png"
+                  alt="TheHive Alerts"
+                  class="constrained-image"
+                  id="image-64"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+
+              <p class="project-details__desc-para">
+                After re-executing Mimikatz on the Windows 10 endpoint, TheHive's alert dashboard immediately displayed a new, critical alert. As highlighted, the alert is titled "Mimikatz Usage Detected!!!" and directly references our custom Wazuh rule (rule.id: 100002). This confirms the seamless end-to-end integration: Wazuh detected the threat, and the custom integration script successfully forwarded the alert to TheHive for immediate case management. This automated alert creation significantly reduces response time and ensures critical incidents are promptly addressed.
+              </p>
               <div class="project-details__img-cont">
                 <img
                   src="./assets/Automated SOC with SOAR Implementation/61-mima1.png"
                   alt="Mimikatz Alert in TheHive 1"
                   class="constrained-image"
-                  id="image-64"
+                  id="image-65"
                   onclick="showOriginal(this)"
                 />
               </div>
@@ -1004,7 +1021,7 @@
                   src="./assets/Automated SOC with SOAR Implementation/61-mima2.png"
                   alt="Mimikatz Alert in TheHive 2"
                   class="constrained-image"
-                  id="image-65"
+                  id="image-66"
                   onclick="showOriginal(this)"
                 />
               </div>

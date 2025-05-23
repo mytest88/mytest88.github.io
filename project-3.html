@@ -416,59 +416,59 @@
                 The next step in custom rule creation is to modify the <code>local_rules.xml</code> file. I added a new rule with <code>id="100002"</code>, level 12 (critical severity), and linked it to <code>MITRE ATT&CK T1003</code> (OS Credential Dumping). The rule is designed to trigger when the <code>win.eventdata.originalFileName</code> field contains "mimikatz.exe" within Sysmon events (<code>id="80702"</code> and <code>rule.id="80702"</code>). This ensures precise detection of Mimikatz execution.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR Implementation/33-rules-file.png" alt="local_rules.xml" class="constrained-image" id="image-36" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/33-copy-sample.png" alt="local_rules.xml" class="constrained-image" id="image-36" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 After adding the custom rule to <code>local_rules.xml</code>, I restarted the Wazuh service using <code>systemctl restart wazuh-manager</code>. This critical step ensures that the new detection logic is loaded and actively applied by the Wazuh Manager, enabling it to detect Mimikatz execution based on the newly defined rule.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR Implementation/34-restartWazuhM.png" alt="Restarting Wazuh Manager" class="constrained-image" id="image-37" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/34-paste-sample.png" alt="Restarting Wazuh Manager" class="constrained-image" id="image-37" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 With the custom rule in place and the Wazuh Manager restarted, I re-executed Mimikatz on the Windows 10 endpoint to test the new detection. This action is intended to trigger the newly configured rule and generate a high-fidelity alert in Wazuh.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR Implementation/35-executeMimikatz.png" alt="Re-executing Mimikatz" class="constrained-image" id="image-38" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/35-original-name.png" alt="Re-executing Mimikatz" class="constrained-image" id="image-38" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 After re-executing Mimikatz, the Wazuh dashboard now successfully displays a high-severity alert for "Mimikatz Usage Detected!" (Rule ID: 100002). This confirms that our custom rule is effectively detecting the threat, with the alert providing details such as the affected host, event source, and the original filename. This validates the enhanced detection capabilities of our Wazuh deployment.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR Implementation/36-hit.png" alt="Mimikatz Detection Alert" class="constrained-image" id="image-39" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/36-local-rule.png" alt="Mimikatz Detection Alert" class="constrained-image" id="image-39" onclick="showOriginal(this)" />
               </div>
               <h3 class="project-details__content-title">TheHive Integration and Alert Forwarding</h3>
               <p class="project-details__desc-para">
                 To automate the creation of cases in TheHive from Wazuh alerts, I developed a Python script. This script is designed to parse Wazuh alerts and forward relevant details, including the alert title, description, and source, directly to TheHive API for incident creation.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR Implementation/37-pythonScript.png" alt="Python Integration Script" class="constrained-image" id="image-40" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/37-beforeRe.png" alt="Python Integration Script" class="constrained-image" id="image-40" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 The Python script was placed in the <code>/var/ossec/integrations/</code> directory on the Wazuh Manager. After placing the script, its permissions were set to executable using <code>chmod 750 thehive.py</code>, and ownership was assigned to <code>root:wazuh</code> using <code>chown root:wazuh thehive.py</code>. These steps ensure the script has the necessary permissions to run and interact with Wazuh.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR Implementation/38-permission.png" alt="Script Permissions" class="constrained-image" id="image-41" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/38-exeMimikatz.png" alt="Script Permissions" class="constrained-image" id="image-41" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 To integrate the custom Python script with Wazuh's alert forwarding mechanism, I modified the <code>ossec.conf</code> file by adding a new integration entry. This entry specifies that alerts with a level of 12 or higher (e.g., our Mimikatz detection) should be processed by the <code>thehive.py</code> script, which will then automatically create a case in TheHive. The <code>alert_format</code> is set to <code>full_json</code> to ensure all relevant alert data is passed to the script.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR Implementation/39-ossecConf-thehive.png" alt="ossec.conf for TheHive" class="constrained-image" id="image-42" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/39-afterRe.png" alt="ossec.conf for TheHive" class="constrained-image" id="image-42" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 After modifying <code>ossec.conf</code>, I restarted the Wazuh Manager service. This ensures the newly configured integration with TheHive is activated, allowing Wazuh to automatically forward critical alerts to TheHive for incident creation and management.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR Implementation/40-restartWazuhM.png" alt="Restart Wazuh Manager" class="constrained-image" id="image-43" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/40-shuffleURI.png" alt="Restart Wazuh Manager" class="constrained-image" id="image-43" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 After re-executing Mimikatz to generate a new alert, TheHive successfully received the alert from Wazuh and automatically created a new case (case #22). This confirms the seamless end-to-end integration: Wazuh detected the threat, and the custom integration script successfully forwarded the alert to TheHive for immediate case management. This automated alert creation significantly reduces response time and ensures critical incidents are promptly addressed.
               </p>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR Implementation/41-thehive-alert.png" alt="TheHive Alert" class="constrained-image" id="image-44" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/41-configure-ossec.png" alt="TheHive Alert" class="constrained-image" id="image-44" onclick="showOriginal(this)" />
               </div>
               <div class="project-details__img-cont">
-                <img src="./assets/Automated SOC with SOAR Implementation/42-thehive-alert2.png" alt="TheHive Alert Details" class="constrained-image" id="image-45" onclick="showOriginal(this)" />
+                <img src="./assets/Automated SOC with SOAR Implementation/42-running.png" alt="TheHive Alert Details" class="constrained-image" id="image-45" onclick="showOriginal(this)" />
               </div>
               <p class="project-details__desc-para">
                 TheHive Integration and Alert Forwarding:

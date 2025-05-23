@@ -589,30 +589,35 @@
                   onclick="showOriginal(this)"
                 />
               </div>
-              <p class="project-details__desc-para">
-                To resolve this issue, I performed a fresh installation of the Wazuh instance, ensuring all configurations were correctly applied from the beginning, which successfully fixed the problem.
+<p class="project-details__desc-para">
+                To confirm that Sysmon successfully captured the Mimikatz execution and Wazuh archived the raw event, I used cat archives.json piped through grep -i mimikatz. The output clearly shows the detailed Sysmon event logs related to the Mimikatz process, confirming that our comprehensive logging setup is effectively collecting even non-alerting security events. This data is now available for further analysis and custom rule creation.
               </p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/Automated SOC with SOAR Implementation/30-solution.png"
-                  alt="Solution"
+                  src="./assets/Automated SOC with SOAR Implementation/30-check-logs.png"
+                  alt="Check Logs"
                   class="constrained-image"
                   id="image-33"
                   onclick="showOriginal(this)"
                 />
               </div>
+
               <p class="project-details__desc-para">
-                To enhance Wazuh's threat detection, I navigated to "Server Management" -> "Rules" -> "Manage Rule Files" in the Wazuh dashboard. Here, I identified 0800-sysmon_id_1.xml as the appropriate file within the ruleset/rules directory. This is where we'll add our specific detection logic for the Mimikatz activity.
+                After enabling full log collection and verifying the raw archives.json file, I searched the Wazuh dashboard's "wazuh-archives-*" index for "mimikatz" events. The successful query, showing "11 hits" and displaying the detailed Sysmon logs related to Mimikatz execution, confirms that the raw, non-alerting events are now fully searchable and accessible within the Wazuh interface.
               </p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/Automated SOC with SOAR Implementation/31-sysmon_id_1.png"
-                  alt="Sysmon ID 1"
+                  src="./assets/Automated SOC with SOAR Implementation/31-wazuh-dashboard-hit.png"
+                  alt="Wazuh Dashboard Hit"
                   class="constrained-image"
                   id="image-34"
                   onclick="showOriginal(this)"
                 />
               </div>
+
+              <p class="project-details__desc-para">
+                To create a custom rule for Mimikatz detection, I navigated to "Server Management" -> "Rules" -> "Manage Rule Files" in the Wazuh dashboard. Here, I identified 0800-sysmon_id_1.xml as the appropriate file within the ruleset/rules directory. This is where we'll add our specific detection logic for the Mimikatz activity.
+              </p>
               <div class="project-details__img-cont">
                 <img
                   src="./assets/Automated SOC with SOAR Implementation/32-manage-rule.png"

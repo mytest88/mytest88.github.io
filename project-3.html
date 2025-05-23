@@ -713,22 +713,21 @@
                   onclick="showOriginal(this)"
                 />
               </div>
-              <p class="project-details__desc-para">
-                The Shuffle web interface is now accessible, confirming its successful deployment and readiness for building automated security workflows.
+<p class="project-details__desc-para">
+                Integrating SOAR <br> Now, to enable automated incident response, I'm integrating Shuffle, our SOAR platform, with Wazuh. This screenshot shows the initial configuration within Shuffle, where I'm setting up a new "Wazuh-alerts" webhook. The critical step here is obtaining the unique "Webhook URI" (https://shuffler.io/api/v1/hooks/webhook), which will act as the communication channel for Wazuh alerts to be sent to Shuffle for orchestration and automation. This setup lays the groundwork for Shuffle to receive and process security alerts.<br>I'm going to follow https://wazuh.com/blog/integrating-wazuh-with-shuffle/
               </p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/Automated SOC with SOAR Implementation/40-shuffle-interface.png"
-                  alt="Shuffle Interface"
+                  src="./assets/Automated SOC with SOAR Implementation/40-shuffleURI.png"
+                  alt="Shuffle URI"
                   class="constrained-image"
                   id="image-43"
                   onclick="showOriginal(this)"
                 />
               </div>
 
-              <h3 class="project-details__content-title">Wazuh-Shuffle Integration</h3>
               <p class="project-details__desc-para">
-                To integrate Wazuh alerts directly into Shuffle, I modified the ossec.conf file on the Wazuh Manager, adding a new &lt;integration&gt; block. This configuration ensures that critical Wazuh alerts are automatically forwarded to Shuffle via a dedicated webhook, enabling automated responses. Here we can see the configuration details: the hook_url is set to Shuffle's IP and port 5001, and a dedicated api_key is provided for authentication. The alert_format is specified as json to ensure structured data transfer. A custom alert_by_level is configured to forward only alerts with severity 12 or higher (critical alerts).
+                To bridge Wazuh and Shuffle, I modified the ossec.conf file on the Wazuh Manager, adding an &lt;integration&gt; block. As highlighted, this configuration directs Wazuh to forward alerts to Shuffle's webhook URI, specifically including our custom Mimikatz alert (rule_id 100002). By specifying alert_format as json, we ensure the alerts are sent in a structured format, enabling seamless parsing and automation within Shuffle.
               </p>
               <div class="project-details__img-cont">
                 <img

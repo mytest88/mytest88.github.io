@@ -287,7 +287,7 @@ This actually is same case with the previous one.              </p>
 I need to ckeck SIEM for detailed endpoint logs to see if there is any unusual behavior. When i check siem i see that there's only two events for this host and everything looks normal. So, it means firewall has fully blocked the connection and user had no more interaction with the malicious site. Now it's time to write my report.              </p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/SocSim/8-siem2.pngg"
+                  src="./assets/SocSim/8-siem2.png"
                   alt="Splunk Endpoint Index Creation Screenshot"
                   class="constrained-image"
                   id="image-12"
@@ -340,8 +340,8 @@ After investigating SIEM, i can clearly say that user has attempted to reach out
 <strong>* List of Affected Entities </strong>
 <br>User: c.allen@thetrydaily.thm (Recipient of the phishing email)
 <br>User's Endpoint: SourceIP: 10.20.2.25 (Accessed the malicious URL)
-<br>Email Domain (Impersonated): m1microsoftsupport.co (Sender of the phishing email)</p>
-<br>Malicious URL: https://m1microsoftsupport.co/login
+<br>Email Domain (Impersonated): m1microsoftsupport.co (Sender of the phishing email)
+<br>Malicious URL: https://m1microsoftsupport.co/login</p>
 <p class="project-details__desc-para">
 <strong>* Reason for Classifying as True Positive</strong>
 <br>The email impersonates Microsoft (m1microsoftsupport.co instead of microsoft.com) and uses social engineering tactics ("Unusual Sign-In Activity") to trick the recipient. Investigation confirmed that the user clicked the malicious link, and the connection was ALLOWED by the firewall.</p>
@@ -379,20 +379,20 @@ There we go!              </p>
             <div class="project-details__tools-used">
               <h3 class="project-details__content-title">Tools Used</h3>
               <div class="skills">
-                <div class="skills__skill">Active Directory (AD DS)</div>
+                <div class="skills__skill">Incident Analysis & Triage</div>
                 <div class="skills__skill">Splunk SIEM</div>
-                <div class="skills__skill">Universal Forwarders</div>
-                <div class="skills__skill">Sysmon</div>
-                <div class="skills__skill">Kali Linux</div>
-                <div class="skills__skill">Hydra</div>
-                <div class="skills__skill">Atomic Red Team</div>
-                <div class="skills__skill">PowerShell</div>
-                <div class="skills__skill">Network Configuration</div>
+                <div class="skills__skill">SIEM Operations</div>
+                <div class="skills__skill">Alert Queue Management</div>
                 <div class="skills__skill">Log Analysis</div>
-                <div class="skills__skill">Threat Simulation</div>
+                <div class="skills__skill">Threat Intelligence Utilization</div>
+                <div class="skills__skill">Phishing Detection & Analysis</div>
+                <div class="skills__skill">Typosquatting Identification</div>
+                <div class="skills__skill">Security Awareness Principles</div>
+                <div class="skills__skill">Incident Reporting (Five Ws Framework)</div>
+                <div class="skills__skill">Remediation Planning & Recommendation</div>
                 <div class="skills__skill">Incident Detection</div>
-                <div class="skills__skill">Troubleshooting</div>
-                <div class="skills__skill">Forensic Evidence Collection</div>
+                <div class="skills__skill">False Positive/True Positive Classification</div>
+                <div class="skills__skill">Firewall Log Analysis</div>
                 <div class="skills__skill">Threat Detection</div>
                 <div class="skills__skill">Incident Response</div>
               </div>

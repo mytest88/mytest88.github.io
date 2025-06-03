@@ -240,19 +240,36 @@ I can see that fortunately the firewall has blocked this connection. Now, it's t
                   onclick="showOriginal(this)"
                 />
               </div>
-              <h3 class="project-details__content-title">Installing Splunk Universal Forwarder on Windows Endpoints</h3>
-              <p class="project-details__desc-para">
-                To collect security logs from the Windows machines (the Windows Server and Windows 10 Endpoint), the Splunk Universal Forwarder was installed on them. A key step in the Universal Forwarder setup wizard was configuring the "Receiving Indexer" by providing the hostname or IP address of the Splunk server, which is <code>192.168.10.12</code>, and the default receiving port, <code>9997</code>. This configuration ensures that the forwarder knows where to send the collected log data for analysis by Splunk.
-              </p>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/9-forwarder.png"
-                  alt="Splunk Universal Forwarder Installation Screenshot"
-                  class="constrained-image"
-                  id="image-10"
-                  onclick="showOriginal(this)"
-                />
-              </div>
+              <h3 class="project-details__content-title">The 'True Positive' Report</h3>
+ <p class="project-details__desc-para">
+* Time of activity
+06/02/2025 12:38:07.791 UTC (Email Receipt)
+User attempted access to malicious URL at 06/02/2025 12:39:21.791 UTC </p>
+<p class="project-details__desc-para">
+* List of Affected Entities
+User: h.harris@thedailytry.thm (Recipient of the phishing email)
+Email Domain (Impersonated): amazon.biz (Sender of the phishing email)
+Malicious URL: http://bit.ly/3sHkX3da12340
+User's Endpoint: SourceIP: 10.20.2.17 (Attempted to access the malicious URL)</p>
+<p class="project-details__desc-para">
+* Reason for Classifying as True Positive
+After the investigation, it is shown that the link "http[:]//bit[.]ly/3sHkX3da12340" is malicious.</p>
+<p class="project-details__desc-para">
+* Reason for Escalating the Alert
+The alert can be an indicator of a major cyberattack (phishing) requiring deeper investigation, even though the malicious link was blocked by the firewall. Remediation actions are required to ensure the user is aware and the threat is contained.</p>
+<p class="project-details__desc-para">
+* Recommended Remediation Actions 
+Email Removal: Remove the malicious email from h.harris@thedailytry.thm's inbox to prevent further user interaction.
+User Notification/Awareness: Inform h.harris about the phishing attempt, emphasize that the link was blocked, and reinforce phishing awareness training. This is crucial for user education since they did click the link.
+URL Blacklisting: Ensure http://bit.ly/3sHkX3da12340 and amazon.biz (if not already) are blacklisted across relevant security controls (firewall, proxy, email filters) to prevent future access or similar attacks.
+Endpoint Verification: Confirm no other malicious activity originated from SourceIP: 10.20.2.17</p>
+<p class="project-details__desc-para">
+* List of Attack Indicators
+Sender Impersonation: urgents@amazon.biz (not official amazon.com)
+Malicious URL: http://bit.ly/3sHkX3da12340 (confirmed malicious by analysis and blocked by firewall rule Blocked Websites).
+Social Engineering: Urgent subject ("Action Required"), threat of package return, generic greeting ("Dear Customer").
+Phishing Lure: Undelivered package notification.
+User Interaction: User h.harris attempted to access the malicious URL (from SourceIP: 10.20.2.17), leading to a firewall block.</p>
               <h3 class="project-details__content-title">Configuring Windows Event Log Inputs for Splunk</h3>
               <p class="project-details__desc-para">
     To ensure comprehensive log collection from the Windows machines, the <code>code-input.conf</code> file located at <code>C:\Program Files\SplunkUniversalForwarder\etc\system\local</code> was modified. This configuration directs the Splunk Universal Forwarder to collect specific Windows Event Logs and forward them to the Splunk indexer. As seen in the configuration, the collection of:

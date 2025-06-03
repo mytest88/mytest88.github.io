@@ -270,461 +270,111 @@ I can see that fortunately the firewall has blocked this connection. Now, it's t
 <br>Social Engineering: Urgent subject ("Action Required"), threat of package return, generic greeting ("Dear Customer").
 <br>Phishing Lure: Undelivered package notification.
 <br>User Interaction: User h.harris attempted to access the malicious URL (from SourceIP: 10.20.2.17), leading to a firewall block.</p>
-              <h3 class="project-details__content-title">Configuring Windows Event Log Inputs for Splunk</h3>
+              <h3 class="project-details__content-title">Investigating the Third Alert: Blacklisted URL Access</h3>
               <p class="project-details__desc-para">
-    To ensure comprehensive log collection from the Windows machines, the <code>code-input.conf</code> file located at <code>C:\Program Files\SplunkUniversalForwarder\etc\system\local</code> was modified. This configuration directs the Splunk Universal Forwarder to collect specific Windows Event Logs and forward them to the Splunk indexer. As seen in the configuration, the collection of:
-              </p>
-
-              <p class="project-details__desc-para">
-    Application Logs (<code>WindowsEventLog://Application</code>)
-              </p>
-
-              <p class="project-details__desc-para">
-    Security Logs (<code>WindowsEventLog://Security</code>)
-              </p>
-
-              <p class="project-details__desc-para">
-    System Logs (<code>WindowsEventLog://System</code>)
-              </p>
-
-              <p class="project-details__desc-para">
-    Sysmon Operational Logs (<code>WindowsEventLog://Microsoft-Windows-Sysmon/Operational</code>)
-              </p>
-
-              <p class="project-details__desc-para">
-    For each of these, <code>index = endpoint</code> was set to route the data to a dedicated index in Splunk, and <code>disabled = false</code> was set to ensure they are actively collected. Notably, for Sysmon logs, <code>renderXml = true</code> and <code>source = XmlWinEventLog:Microsoft-Windows-Sysmon/Operational</code> were also set to ensure the detailed XML structure of Sysmon events is preserved for richer analysis in Splunk. This setup is crucial for gaining deep visibility into endpoint activities.
-              </p>
+This actually is same case with the previous one.              </p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/10-inputs-file.png"
+                  src="./assets/SocSim/7-third-alert.png"
                   alt="Windows Event Log Inputs Configuration Screenshot"
                   class="constrained-image"
                   id="image-11"
                   onclick="showOriginal(this)"
                 />
               </div>
-              <h3 class="project-details__content-title">Creating a New Index in Splunk for Endpoint Logs</h3>
+              
               <p class="project-details__desc-para">
-                To properly store and analyze the logs collected from the Windows Universal Forwarders, a new dedicated index was created in Splunk. Navigation to "Settings" -> "Indexes" occurred, and "New Index" was clicked. The new index was named <code>endpoint</code>. This ensures that all the Windows event logs (Application, Security, System, and Sysmon) are stored in a specific, organized location within Splunk, making it easier to search, analyze, and manage the data.
-              </p>
+I need to ckeck SIEM for detailed endpoint logs to see if there is any unusual behavior. When i check siem i see that there's only two events for this host and everything looks normal. So, it means firewall has fully blocked the connection and user had no more interaction with the malicious site. Now it's time to write my report.              </p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/11-index-endpoint.png"
+                  src="./assets/SocSim/8-siem2.pngg"
                   alt="Splunk Endpoint Index Creation Screenshot"
                   class="constrained-image"
                   id="image-12"
                   onclick="showOriginal(this)"
                 />
               </div>
-              <p class="project-details__desc-para">
-                A search in Splunk was performed using <code>index="endpoint"</code>. The search results, showing 341 events, confirm that the Windows Application, Security, System, and Sysmon logs are now actively flowing into the Splunk instance. This critical step validates the entire data collection pipeline, making the logs available for analysis and threat hunting.
-              </p>
+ 
+              <h3 class="project-details__content-title">The 'True Positive' Report</h3>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/12-logs-showing.png"
-                  alt="Splunk Endpoint Logs Screenshot 1"
-                  class="constrained-image"
-                  id="image-13"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/12-logs-showing2.png"
-                  alt="Splunk Endpoint Logs Screenshot 2"
-                  class="constrained-image"
-                  id="image-14"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <h3 class="project-details__content-title">Active Directory Server Log Ingestion Confirmed</h3>
-              <p class="project-details__desc-para">
-                After repeating the Splunk Universal Forwarder installation and configuration process for the Active Directory server, it was verified that its logs are successfully flowing into Splunk. A search was performed using <code>index=ADserver</code>, which is the dedicated index created for the domain controller's logs. This establishes full visibility into the domain environment.
-              </p>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/13-AD-splunk0.png"
+                  src="./assets/SocSim/9-report.png"
                   alt="Splunk AD Server Logs Screenshot 0"
                   class="constrained-image"
                   id="image-15"
                   onclick="showOriginal(this)"
                 />
               </div>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/13-AD-splunk1.png"
-                  alt="Splunk AD Server Logs Screenshot 1"
-                  class="constrained-image"
-                  id="image-16"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/13-AD-splunk2.png"
-                  alt="Splunk AD Server Logs Screenshot 2"
-                  class="constrained-image"
-                  id="image-17"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/13-AD-splunk3.png"
-                  alt="Splunk AD Server Logs Screenshot 3"
-                  class="constrained-image"
-                  id="image-18"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/13-AD-splunk4.png"
-                  alt="Splunk AD Server Logs Screenshot 4"
-                  class="constrained-image"
-                  id="image-19"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <h3 class="project-details__content-title">Active Directory Domain Setup</h3>
+  
+              <h3 class="project-details__content-title">Investigating the Fourth Alert: Microsoft Typosquatting and Malicious Link</h3>
               <p class="project-details__desc-para">
-                Active Directory Domain Services (AD DS) was installed on the Windows Server and it was promoted to a domain controller, creating the <code>hanlab.local</code> forest. New domain user accounts were created within Active Directory. The Windows 10 endpoint's DNS settings were configured to point to the AD server, and it was successfully joined to the <code>hanlab.local</code> domain.
-              </p>
-              <h3 class="project-details__content-title">Installing Active Directory Domain Services</h3>
-              <p class="project-details__desc-para">
-                Now that Splunk is set up and collecting logs, the Active Directory (AD) server configuration was started. The first step in this process is installing the Active Directory Domain Services (AD DS) role. The "Add Roles and Features Wizard" in Server Manager was opened, and "Active Directory Domain Services" was selected from the list of available server roles. This foundational step establishes the domain controller, which is essential for managing user accounts, computers, and other network resources in the lab environment.
-              </p>
+Finally, I moved to the last alert (ID 8817), which presented a clear case of typosquatting and an impersonation attack. The sender's domain, m1crosoftsupport.co, was a deliberate misspelling designed to mimic legitimate Microsoft support. This is a classic phishing tactic. The email also contained a link and upon investigation with threat intelligence tools the link was confirmed to be malicious.               </p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/14-install-ad.png"
+                  src="./assets/SocSim/10-last-alert.png"
                   alt="Installing Active Directory Domain Services Screenshot"
                   class="constrained-image"
                   id="image-20"
                   onclick="showOriginal(this)"
                 />
               </div>
-              <h3 class="project-details__content-title">Promoting to Domain Controller: Creating a New Forest</h3>
+  
               <p class="project-details__desc-para">
-                After installing the Active Directory Domain Services role, the server was promoted to a domain controller using the "Active Directory Domain Services Configuration Wizard". In the "Deployment Configuration" step, "Add a new forest" was selected, as this is the first domain controller in the lab environment. The "Root domain name" was then specified as <code>hanlab.local</code>. This action establishes the foundational Active Directory structure, creating the new domain and making the server a functioning domain controller. Active Directory Domain Services (AD DS) was successfully installed and the server was promoted to a domain controller.
-              </p>
+After investigating SIEM, i can clearly say that user has attempted to reach out the malicious link, and unfortunately firewall "allowed" this access. Now it's time to write my report for this case.              </p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/15-dc.png"
+                  src="./assets/SocSim/11-siem3.png"
                   alt="Promoting to Domain Controller Screenshot"
                   class="constrained-image"
                   id="image-21"
                   onclick="showOriginal(this)"
                 />
               </div>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/16-adds.png"
-                  alt="Active Directory Domain Services Installed Screenshot"
-                  class="constrained-image"
-                  id="image-22"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <h3 class="project-details__content-title">Creating a New Active Directory User</h3>
+
+              <h3 class="project-details__content-title">The 'True Positive' Report</h3>
+         <p class="project-details__desc-para">
+<strong>* Time of activity</strong>
+<br>06/02/2025 12:40:25.791 UTC (Email Received)
+<br>User attempted access to malicious URL at 06/02/2025 12:41:34.791 UTC</p>
+<p class="project-details__desc-para">
+<strong>* List of Affected Entities </strong>
+<br>User: c.allen@thetrydaily.thm (Recipient of the phishing email)
+<br>User's Endpoint: SourceIP: 10.20.2.25 (Accessed the malicious URL)
+<br>Email Domain (Impersonated): m1microsoftsupport.co (Sender of the phishing email)</p>
+<br>Malicious URL: https://m1microsoftsupport.co/login
+<p class="project-details__desc-para">
+<strong>* Reason for Classifying as True Positive</strong>
+<br>The email impersonates Microsoft (m1microsoftsupport.co instead of microsoft.com) and uses social engineering tactics ("Unusual Sign-In Activity") to trick the recipient. Investigation confirmed that the user clicked the malicious link, and the connection was ALLOWED by the firewall.</p>
+<p class="project-details__desc-para">
+<strong>* Reason for Escalating the Alert</strong>
+<br>This is a confirmed successful phishing attempt where the user clicked a malicious link, and the connection was allowed. This indicates potential credential compromise or malware download, requiring immediate DFIR (Digital Forensics and Incident Response) and extensive remediation actions.</p>
+<p class="project-details__desc-para">
+<strong>* Recommended Remediation Actions</strong>
+<br>Immediate User Contact to verify if they entered credentials on the fake site.
+<br>Password Reset: Force password reset for c.allen's Microsoft account and any other accounts using the same or similar credentials.
+<br>Endpoint Isolation/Investigation: Isolate SourceIP: 10.20.2.25 from the network. Conduct a full forensic investigation of the endpoint for malware, persistence mechanisms, and further compromise.
+<br>Email Removal: Remove the malicious email from c.allen@thetrydaily.thm's inbox
+<br>URL and Domain Blacklisting: Immediately blacklist m1microsoftsupport.co and https://m1microsoftsupport.co/login across all security controls (email gateway, firewall, proxy, EDR).
+<br>Review M365 Logs: Check Microsoft 365/Azure AD logs for suspicious logins, password changes, or other activity from c.allen's account.</p>
+<p class="project-details__desc-para">
+<strong>* List of Attack Indicators</strong>
+<br>Sender Impersonation: no-reply@m1microsoftsupport.co (not official Microsoft domain).
+<br>Social Engineering: Urgent subject ("Unusual Sign-In Activity"), fear tactics, call to action ("secure your account immediately").
+<br>Malicious URL: https://m1microsoftsupport.co/login (fraudulent login page).
+<br>User Compromise Indicator: User c.allen clicked the malicious link from SourceIP: 10.20.2.25, and the connection was allowed by the firewall.</p>
+
               <p class="project-details__desc-para">
-                With the Active Directory domain controller up and running, it was populated with users and groups for the simulation. Here are the steps showing the process of creating a new user account.
-              </p>
+There we go!              </p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/17-create0.png"
+                  src="./assets/SocSim/11-task.png"
                   alt="Creating New Active Directory User Screenshot"
                   class="constrained-image"
                   id="image-23"
                   onclick="showOriginal(this)"
                 />
               </div>
-              <h3 class="project-details__content-title">Configuring DNS for Domain Join on Windows 10 Endpoint</h3>
-              <p class="project-details__desc-para">
-                To successfully join the Windows 10 endpoint to the <code>hanlab.local</code> Active Directory domain, it first needed to be able to resolve the domain controller. Since the Windows 10 machine wouldn't inherently know how to find <code>HANLAB.LOCAL</code>, its DNS settings were manually configured.
-              </p>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/18-conf-dns.png"
-                  alt="Configuring DNS Screenshot 1"
-                  class="constrained-image"
-                  id="image-24"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/18-conf-dns1.png"
-                  alt="Configuring DNS Screenshot 2"
-                  class="constrained-image"
-                  id="image-25"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <h3 class="project-details__content-title">Joining Windows 10 Endpoint to the Active Directory Domain</h3>
-              <p class="project-details__desc-para">
-                With the DNS configured correctly, the Windows 10 endpoint was joined to the Active Directory domain. Navigation to System Properties, then "Computer Name/Domain Changes," occurred, and "Domain" was selected. <code>HANLAB.LOCAL</code> was entered as the domain name.
-              </p>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/19-join.png"
-                  alt="Joining Windows 10 to Domain Screenshot"
-                  class="constrained-image"
-                  id="image-26"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <h3 class="project-details__content-title">Logging In with a Domain User</h3>
-              <p class="project-details__desc-para">
-                The "Sign in to: HANLAB" prompt confirms authentication against the Active Directory domain controller.
-              </p>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/20-login-du.png"
-                  alt="Domain User Login Screenshot"
-                  class="constrained-image"
-                  id="image-27"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <h3 class="project-details__content-title">Preparing for Brute-Force Attack: Password List</h3>
-              <p class="project-details__desc-para">
-                Now that the Active Directory environment is set up with a domain user, a common attack was simulated: a brute-force password attempt. Here it shows the <code>passwords.txt</code> file used for this attack. A list of common and weak passwords was prepared, with the actual password for the <code>micardi</code> user placed at the very bottom of the list. This text file will be fed into a brute-forcing tool on the Kali machine to attempt to guess the user's password, generating authentication logs that will later be analyzed in Splunk.
-              </p>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/21-passwordtxt.png"
-                  alt="Password List Screenshot"
-                  class="constrained-image"
-                  id="image-28"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <h3 class="project-details__content-title">Enabling Remote Desktop for Brute-Force Simulation</h3>
-              <p class="project-details__desc-para">
-                To perform a brute-force attack using Hydra with the RDP protocol, Remote Desktop was first enabled on the Windows 10 target machine.
-              </p>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/22-open-rdp.png"
-                  alt="Enable Remote Desktop Screenshot"
-                  class="constrained-image"
-                  id="image-29"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <h3 class="project-details__content-title">Granting Remote Desktop Access to Domain Users</h3>
-              <p class="project-details__desc-para">
-                After enabling Remote Desktop, it was necessary to specify which users are permitted to connect.
-              </p>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/23-rdp-users.png"
-                  alt="RDP Users Configuration Screenshot"
-                  class="constrained-image"
-                  id="image-30"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <h3 class="project-details__content-title">Troubleshooting RDP Brute-Force: Network Level Authentication (NLA)</h3>
-              <p class="project-details__desc-para">
-                When the RDP brute-force attack using Hydra was first attempted, an error was encountered: "account on <code>192.168.10.10</code> might be valid but account not active for remote desktop". This indicated a successful username enumeration but a failure to establish the RDP connection. The problem was due to Network Level Authentication (NLA) being enabled on the Windows 10 target. To resolve this, navigation back to the "Remote" tab in System Properties on the Windows 10 machine occurred. The option "Only allow connections from computers running Remote Desktop with Network Level Authentication (recommended)" was unchecked. Disabling NLA allowed Hydra to proceed with the brute-force attempts without this initial authentication hurdle, enabling the simulation to continue as planned.
-              </p>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/24-error.png"
-                  alt="RDP Brute-Force Error Screenshot"
-                  class="constrained-image"
-                  id="image-31"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/25-tshoot.png"
-                  alt="RDP Troubleshooting Screenshot"
-                  class="constrained-image"
-                  id="image-32"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <h3 class="project-details__content-title">Successful RDP Brute-Force with Hydra</h3>
-              <p class="project-details__desc-para">
-                After troubleshooting the Network Level Authentication (NLA) issue, the Hydra brute-force attack was re-run against the Windows 10 endpoint's RDP service. As seen in the output, Hydra successfully identified the correct password for the <code>micardi</code> user on <code>192.168.10.10</code>.
-              </p>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/26-findpw.png"
-                  alt="Successful Hydra Brute-Force Screenshot"
-                  class="constrained-image"
-                  id="image-33"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <h3 class="project-details__content-title">Analyzing Brute-Force Attempts in Splunk: Event Code 4625</h3>
-              <p class="project-details__desc-para">
-                Following the successful RDP brute-force attack, immediate attention was turned to Splunk to analyze the generated security logs. A search was performed using <code>index="endpoint" micardi EventCode=4625</code>. This query specifically looks for failed login attempts (<code>Event Code 4625</code>) associated with the <code>micardi</code> user on the Windows 10 endpoint.
-              </p>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/27-splunk-bf.png"
-                  alt="Splunk Brute-Force Analysis Screenshot"
-                  class="constrained-image"
-                  id="image-34"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <h3 class="project-details__content-title">Detailed Analysis of Failed Logon Attempt in Splunk</h3>
-              <p class="project-details__desc-para">
-                Delving deeper into the <code>Event Code 4625</code> logs in Splunk, this screenshot provides crucial details about the failed logon attempt. The "Network Information" section, in particular, clearly shows the source of the brute-force attack. It identifies the Workstation Name as <code>kali</code> and, more importantly, the Source Network Address as <code>192.168.10.13</code>. This directly correlates with the Kali machine's IP address, confirming that the brute-force attack originated from the simulated attacker's workstation. This level of detail in Splunk's logs is vital for understanding the attack's origin and for subsequent incident response.
-              </p>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/28-splunk-kali.png"
-                  alt="Splunk Failed Logon Analysis Screenshot"
-                  class="constrained-image"
-                  id="image-35"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <h3 class="project-details__content-title">Preparing for Atomic Red Team: Setting PowerShell Execution Policy</h3>
-              <p class="project-details__desc-para">
-                To simulate various attacks using Atomic Red Team, the PowerShell execution policy on the Windows 10 endpoint was first adjusted. The execution policy was set to <code>Bypass</code> for the <code>CurrentUser</code> scope using the command <code>Set-ExecutionPolicy Bypass CurrentUser</code>. This step is essential because Atomic Red Team often uses PowerShell scripts to execute its simulated attacks, and a restricted execution policy would prevent these scripts from running. By bypassing it, the environment for realistic threat emulation was enabled.
-              </p>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/29-atom.png"
-                  alt="PowerShell Execution Policy Screenshot"
-                  class="constrained-image"
-                  id="image-36"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <h3 class="project-details__content-title">Configuring Windows Defender Exclusion for Atomic Red Team</h3>
-              <p class="project-details__desc-para">
-                To ensure that Microsoft Defender Antivirus doesn't interfere with the execution of Atomic Red Team tests, an exclusion was added for the Atomic Red Team installation folder. An exclusion was added for the C:\ drive (or more specifically, the folder where Atomic Red Team will be installed).
-              </p>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/30-exclusion-windef.png"
-                  alt="Windows Defender Exclusion Screenshot"
-                  class="constrained-image"
-                  id="image-37"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <h3 class="project-details__content-title">Installing Atomic Red Team</h3>
-              <p class="project-details__desc-para">
-                With the PowerShell execution policy adjusted and Windows Defender exclusions in place, Atomic Red Team was installed on the Windows 10 endpoint. The installation script was executed directly from GitHub using <code>IEX (IWR https://raw.githubusercontent.com/redcanaryco/invoke-atomicredteam/master/install-atomicredteam.ps1 -UseBasicParsing)</code>.
-              </p>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/31-install-art.png"
-                  alt="Atomic Red Team Installation Screenshot"
-                  class="constrained-image"
-                  id="image-38"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <h3 class="project-details__content-title">Troubleshooting Atomic Red Team: Command Not Recognized</h3>
-              <p class="project-details__desc-para">
-                When attempting to execute the Atomic Red Team technique <code>T1136.001</code> (Create Account - Local Account) using <code>Invoke-AtomicTest T1136.001</code>, an error stating, "The term '<code>Invoke-AtomicTest</code>' is not recognized as the name of a cmdlet, function, script file, or operable program" was encountered. This indicates that PowerShell cannot find the <code>Invoke-AtomicTest</code> function, likely because the Atomic Red Team module is not properly loaded or its path is not in the PowerShell session's <code>$env:PSModulePath</code>. To resolve this, it was necessary to ensure that the PowerShell session was aware of where the <code>Invoke-AtomicTest</code> function resides. This typically involves importing the module or navigating to the directory where it's located before executing the command. The correct path to <code>Invoke-AtomicTest</code> will be provided to ensure the command runs successfully.
-              </p>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/32-art-error.png"
-                  alt="Atomic Red Team Error Screenshot"
-                  class="constrained-image"
-                  id="image-39"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <h3 class="project-details__content-title">Executing Atomic Red Team: T1136.001 (Create Account - Local Account)</h3>
-              <p class="project-details__desc-para">
-                To resolve the "command not recognized" error and successfully execute Atomic Red Team techniques, the <code>Invoke-AtomicRedTeam</code> module was explicitly imported. <code>Import-Module "C:\AtomicRedTeam\invoke-atomicredteam\Invoke-AtomicRedTeam.psd1"</code> was run to load the module into the PowerShell session. Following this, <code>Invoke-AtomicTest T1136.001</code> was re-executed to simulate creating a local account. There are some various sub-tests within this technique. While one test initially failed due to password policy requirements, other tests, such as "Create a new user in PowerShell" and "Create a new Windows admin user," completed successfully, as indicated by <code>Exit code: 0</code> and messages like "The command completed successfully". This demonstrates that Atomic Red Team is now correctly installed and capable of performing simulated attacks within the lab environment.
-              </p>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/33-art-running.png"
-                  alt="Atomic Red Team Execution Screenshot"
-                  class="constrained-image"
-                  id="image-40"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <h3 class="project-details__content-title">Analyzing Atomic Red Team Execution: New Local User Creation in Splunk</h3>
-              <p class="project-details__desc-para">
-                After successfully running the Atomic Red Team technique <code>T1136.001</code> to create a local account, the activity was verified in Splunk. A search was performed using <code>index="endpoint" NewLocalUser</code>. This query specifically targets the endpoint index and looks for events related to the "NewLocalUser" account created by Atomic Red Team. Here it can be seen that Splunk successfully identified 12 events associated with the creation of this new local user. These events, particularly those with <code>Event Code 4720</code> (A user account was created) and <code>4728</code> (A member was added to a security-enabled global group), provide crucial forensic evidence of the simulated attack. This confirms that the <code>SIEM</code> is effectively capturing and logging the actions performed by Atomic Red Team, allowing detection and analysis of adversary emulation activities. It means if an attacker compromised the server and created a new user account, that activity can be detected as the telemetry generated can be seen.
-              </p>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/34-art-splunk.png"
-                  alt="Splunk New Local User Analysis Screenshot"
-                  class="constrained-image"
-                  id="image-41"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <h3 class="project-details__content-title">Simulating Data Exfiltration (C2): Atomic Red Team T1041</h3>
-              <p class="project-details__desc-para">
-                To further simulate advanced threats, the Atomic Red Team technique <code>T1041</code>, which focuses on "C2 Data Exfiltration," was executed. <code>Invoke-AtomicTest T1041</code> was run. The first sub-test, "<code>T1041-1 C2 Data Exfiltration</code>," attempted to use <code>Invoke-WebRequest</code> to send data to <code>example.com</code>. This particular test resulted in an "Access Denied" error, indicating that the simulated exfiltration to an external server was blocked, likely by network controls or the target server itself. The second sub-test, "<code>T1041-2 Text Based Data Exfiltration using DNS subdomains</code>," also encountered an error, specifically "<code>DNS name contains an invalid character</code>". This indicates an issue with the format of the DNS query used for exfiltration. Despite these specific failures, the execution of these tests is valuable. It generates relevant network and system logs that can now be analyzed in Splunk to identify patterns and indicators of attempted data exfiltration, even if the exfiltration itself was unsuccessful. This helps in validating the <code>SIEM</code>'s detection capabilities for such sophisticated attacks.
-              </p>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/35-art-c2.png"
-                  alt="Atomic Red Team C2 Data Exfiltration Screenshot"
-                  class="constrained-image"
-                  id="image-42"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <h3 class="project-details__content-title">Analyzing Data Exfiltration Attempts in Splunk</h3>
-              <p class="project-details__desc-para">
-                After simulating the <code>T1041</code> (Data Exfiltration over C2) Atomic Red Team technique, immediate attention was turned to Splunk to analyze the resulting telemetry. A search was performed using <code>index="endpoint" example.com</code> to specifically look for any activity related to the attempted exfiltration to <code>example.com</code>.
-              </p>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/Active Directory Threat Simulation and SIEM Analysis/36-c2-splunk.png"
-                  alt="Splunk C2 Data Exfiltration Analysis Screenshot"
-                  class="constrained-image"
-                  id="image-43"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <p class="project-details__desc-para">
-    Here it can be seen that Splunk successfully captured 4 events related to this activity, even though the actual exfiltration attempt previously resulted in an "Access Denied" error. This is incredibly important. The logs, specifically <code>Sysmon</code> events, provide crucial details:
-              </p>
-
-              <p class="project-details__desc-para">
-    They show the <code>CommandLine</code> used, indicating <code>powershell.exe</code> attempting to connect to <code>example.com</code>.
-              </p>
-
-              <p class="project-details__desc-para">
-    They contain fields like <code>exfiltratedData</code> and <code>encodedData</code>, revealing the content that was attempted to be exfiltrated (e.g., "<code>SecretDataToExfiltrate</code>" in its encoded form).
-              </p>
-
-              <p class="project-details__desc-para">
-    The ability to see this telemetry in Splunk is vital for the analyst. Even if an attack is unsuccessful due to network controls or misconfigurations, the fact that our <code>SIEM</code> (Splunk) and endpoint logging (Sysmon via Universal Forwarder) capture these attempts provides:
-              </p>
-
-              <p class="project-details__desc-para">
-    Early Warning: These logs serve as critical indicators of compromise (<code>IOCs</code>) and an attacker's intent, allowing detection of malicious activity before it succeeds.
-              </p>
-
-              <p class="project-details__desc-para">
-    Forensic Evidence: The detailed information within these logs (source IP, command line, attempted data) is invaluable for post-incident analysis and understanding the adversary's techniques.
-              </p>
-
-              <p class="project-details__desc-para">
-    Validation of Controls: It confirms that our logging infrastructure is functioning correctly and that our <code>SIEM</code> is effectively collecting and indexing the necessary data to identify sophisticated attacks like data exfiltration attempts.
-              </p>
-
-              <p class="project-details__desc-para">
-    Opportunity for Refinement: This telemetry can be used to develop or refine detection rules, ensuring that future, similar attempts are immediately flagged and alerted upon.
-              </p>
-
-              <p class="project-details__desc-para">
-      This demonstrates the power of a well-configured <code>SIEM</code> in providing deep visibility into endpoint activities, regardless of the attack's success, which is fundamental for effective threat detection and incident response.
-              </p>
+  
             </div>
             <div class="project-details__tools-used">
               <h3 class="project-details__content-title">Tools Used</h3>

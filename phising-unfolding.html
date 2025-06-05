@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>SOC Simulator Walkthrough (TryHackMe)</title>
+    <meta name="description" content="Case study page of SOC Simulator Walkthrough (TryHackMe)" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap" rel="stylesheet" />
+    <style>
+      .constrained-image {
+        display: block;
+        width: 100%;
+        height: auto;
+        cursor: pointer; /* Add a pointer cursor on hover */
+        transition: transform 0.2s ease;
+      }
+
+      .constrained-image.larger {
+        max-width: 1890px;
+        max-height: 1100px;
+      }
+
+      .constrained-image:hover {
+        transform: scale(1.03);
+      }
+
+      .project-details__img-cont {
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+
+      /* The Modal (background) */
+      .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1000; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgba(0, 0, 0, 0.9); /* Black with opacity */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* Modal Content (image) */
+      .modal-content {
+        /* margin: auto; */
+        display: block;
+        /* width: 80%; */
+        max-width: 90%;
+        max-height: 90%;
+      }
+
+      /* Close Button */
+      .close {
+        position: absolute;
+        top: 15px;
+        right: 35px;
+        color: #f1f1f1;
+        font-size: 40px;
+        font-weight: bold;
+        transition: color 0.3s;
+        cursor: pointer;
+      }
+
+      .close:hover,
+      .close:focus {
+        color: #bbb;
+        text-decoration: none;
+      }
+      code {
+        background-color: #eee; /* Light background for code */
+        padding: 2px 4px;
+        border-radius: 3px;
+        font-family: 'Source Code Pro', monospace; /* Monospaced font for code */
+        font-size: 0.9em; /* Slightly smaller than surrounding text */
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="header__content">
+        <div class="header__logo-container">
+          <a href="./index.html">
+            <div class="header__logo-img-cont">
+              <img src="./assets/png/john-doe.png" alt="Ram Maheshwari Logo Image" class="header__logo-img" />
+            </div>
+            <span class="header__logo-sub">HAN YETI</span>
+          </a>
+        </div>
+        <div class="header__main">
+          <ul class="header__links">
+            <li class="header__link-wrapper">
+              <a href="./index.html" class="header__link"> Home </a>
+            </li>
+            <li class="header__link-wrapper">
+              <a href="./index.html#about" class="header__link">About </a>
+            </li>
+            <li class="header__link-wrapper">
+              <a href="./index.html#projects" class="header__link">
+                Projects
+              </a>
+            </li>
+            <li class="header__link-wrapper">
+              <a href="./index.html#contact" class="header__link"> Contact </a>
+            </li>
+          </ul>
+          <div class="header__main-ham-menu-cont">
+            <img src="./assets/svg/ham-menu.svg" alt="hamburger menu" class="header__main-ham-menu" />
+            <img src="./assets/svg/ham-menu-close.svg" alt="hamburger menu close" class="header__main-ham-menu-close d-none" />
+          </div>
+        </div>
+      </div>
+      <div class="header__sm-menu">
+        <div class="header__sm-menu-content">
+          <ul class="header__sm-menu-links">
+            <li class="header__sm-menu-link">
+              <a href="./index.html"> Home </a>
+            </li>
+            <li class="header__sm-menu-link">
+              <a href="./index.html#about"> About </a>
+            </li>
+            <li class="header__sm-menu-link">
+              <a href="./index.html#projects"> Projects </a>
+            </li>
+            <li class="header__sm-menu-link">
+              <a href="./index.html#contact"> Contact </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </header>
+    <section class="project-cs-hero">
+      <div class="project-cs-hero__content">
+        <h1 class="heading-primary">Phising Unfolding (TryHackMe)</h1>
+        <div class="project-cs-hero__info">
+          <p class="text-primary">
+This walkthrough documents my experience with a real-word scneario of phising unfolding, focusing on the process of detailed incident analysis and reporting.          </p>
+        </div>
+      <!--  <div class="project-cs-hero__cta">
+          <a href="#" class="btn btn--bg" target="_blank">Live Link</a>
+        </div> -->
+      </div>
+    </section>
+    <section class="project-details">
+      <div class="main-container">
+        <div class="project-details__content">
+          <div class="project-details__showcase-img-cont">
+            <img src="./assets/jpeg/project-mockup-example.jpeg" alt="Project Image" class="project-details__showcase-img" />
+          </div>
+          <div class="project-details__content-main">
+            <div class="project-details__desc">
+              <h3 class="project-details__content-title">Overview</h3>
+              <p class="project-details__desc-para">
+We are here to resolve the "Phising Unfolding" room from TryHackMe. This project is all about walking through a real-world phishing incident from start to finish. I'll be detailing my entire investigation process, from the moment a suspicious email alert popped up in our SIEM, right through to tracking the attacker's every move in Splunk. My goal here is to lay out how I approached this, what evidence I found, and how I pieced together the full attack chain to formulate a concrete remediation plan.            </div>
+            <div class="project-details__subsections">
+              <h3 class="project-details__content-title">Key Skills Demonstrated</h3>
+              <p class="project-details__desc-para">
+Cyber Kill Chain , Incident Response, Threat Hunting, Alert Triage, SIEM (Splunk), Log Analysis , Digital Forensics, Endpoint Analysis, Threat Intelligence, Understanding of TTPs, PowerShell Script Analysis, Network Analysis, Remediation and Mitigation Planning, 
+Regulatory Compliance Awareness, Documentation  
+                <h3 class="project-details__content-title">Suspicious Email Alert</h3>
+<p>Here we can see the SIEM alert for a suspicious email. It includes an attachment named <code>ImportantInvoice-February.zip</code>, which was sent to <code>michael.ascot@tryhatme.com</code> from <code>john@hatmakereurope.xyz</code> with the subject "Important: Pending Invoice!". This email served as the initial entry point for the attack.</p>
+                <img
+                  src="./assets/SocSim2/1-email.png"
+                  alt="Network Configuration Screenshot"
+                  class="constrained-image"
+                  id="image-2"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <h3 class="project-details__content-title">Checking the Attachment</h3>
+              <p class="project-details__desc-para">
+<p>After opening the <code>ImportantInvoice-February.zip</code> on the analyst VM, I saw was the <code>invoice.pdf.lnk</code> file. Knowing that these shortcut files can be tricky and often hide malicious commands, my immediate thought was to grab its file hashes. I used PowerShell to get the SHA256 and MD5 hashes of <code>invoice.pdf.lnk</code>. This way, I can quickly check these hashes against threat intelligence platforms to see if anyone else has seen this file before and if it's known to be bad. It's a quick way to get some initial context.</p>
+                <img
+                  src="./assets/SocSim2/2-att.png"
+                  alt="Netplan Apply Screenshot"
+                  class="constrained-image"
+                  id="image-3"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <h3 class="project-details__content-title">Initial Threat Intelligence Check</h3>
+              <p class="project-details__desc-para">
+<p>So, after getting the hashes for <code>invoice.pdf.lnk</code>, I immediately popped these hashes into a threat intelligence platform. As you can see in the screenshot, it came back with no results in every search, meaning no one had reported this specific hash before. Now, it's really important to remember that just because a hash isn't found doesn't mean the file isn't malicious. This could just mean it's a very new variant, or perhaps it's highly targeted and hasn't been widely seen. It actually makes me even more suspicious, as attackers often try to generate unique hashes to evade detection. So, while this was a quick check, it certainly wasn't the end of my investigation.</p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/SocSim/3-first-alert.png"
+                  alt="Mounting Shared Folder Screenshot"
+                  class="constrained-image"
+                  id="image-5"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <h3 class="project-details__content-title">Analysis and Reporting: Classifying the Alert</h3>
+              <p class="project-details__desc-para">
+After leveraging the threat intelligence tools provided within the simulator, I was able to confirm that the hrconnex.thm domain was not malicious. Based on this finding, the alert was classified as a 'False Positive'. Here you can see my final report entry.              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/SocSim/4-first-report.png"
+                  alt="Splunk Installation Screenshot"
+                  class="constrained-image"
+                  id="image-6"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <h3 class="project-details__content-title">Investigating the Second Alert: Suspicious Amazon Email</h3>
+              <p class="project-details__desc-para">
+Moving on to the next alert, I immediately noticed some unusual characteristics. The sender's domain, amazon.biz, appeared to be an impersonation attempt of a legitimate service. Furthermore, the email itself contained a shortened link, which is often a tactic used in malicious campaigns.              </p>
+             <p class="project-details__desc-para"> 
+             I started my initial checks with threat intelligence tools and it indicated that amazon.biz itself wasn't directly flagged as malicious. But this does not mean that we can automatically classify the alert as a false positive. My investigation then shifted to the shortened link within the email. My further analysis with threat intelligence tools confirmed that this link was indeed malicious.</p>
+             <p class="project-details__desc-para"> 
+             At this critical point, the next step of mine was to determine if the recipient, h.harris@thetrydaily.thm, had clicked on this malicious link and visited the associated address. To investigate this, I will definitely be leveraging the SIEM to examine relevant logs.</p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/SocSim/5-second-alert.png"
+                  alt="Splunk Account Creation Screenshot"
+                  class="constrained-image"
+                  id="image-7"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <p class="project-details__desc-para">
+I can see that fortunately the firewall has blocked this connection. Now, it's time to write my report.              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/SocSim/6-siem1.png"
+                  alt="Splunk Boot-Start Configuration Screenshot"
+                  class="constrained-image"
+                  id="image-8"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <h3 class="project-details__content-title">The 'True Positive' Report</h3>
+ <p class="project-details__desc-para">
+<strong>* Time of activity</strong>
+<br>06/02/2025 12:38:07.791 UTC (Email Receipt)
+<br>User attempted access to malicious URL at 06/02/2025 12:39:21.791 UTC </p>
+<p class="project-details__desc-para">
+<strong>* List of Affected Entities</strong>
+<br>User: h.harris@thedailytry.thm (Recipient of the phishing email)
+<br>Email Domain (Impersonated): amazon.biz (Sender of the phishing email)
+<br>Malicious URL: http://bit.ly/3sHkX3da12340
+<br>User's Endpoint: SourceIP: 10.20.2.17 (Attempted to access the malicious URL)</p>
+<p class="project-details__desc-para">
+<strong>* Reason for Classifying as True Positive</strong>
+<br>After the investigation, it is shown that the link "http[:]//bit[.]ly/3sHkX3da12340" is malicious.</p>
+<p class="project-details__desc-para">
+<strong>* Reason for Escalating the Alert</strong>
+<br>The alert can be an indicator of a major cyberattack (phishing) requiring deeper investigation, even though the malicious link was blocked by the firewall. Remediation actions are required to ensure the user is aware and the threat is contained.</p>
+<p class="project-details__desc-para">
+<strong>* Recommended Remediation Actions</strong>
+<br>Email Removal: Remove the malicious email from h.harris@thedailytry.thm's inbox to prevent further user interaction.
+<br>User Notification/Awareness: Inform h.harris about the phishing attempt, emphasize that the link was blocked, and reinforce phishing awareness training. This is crucial for user education since they did click the link.
+<br>URL Blacklisting: Ensure http://bit.ly/3sHkX3da12340 and amazon.biz (if not already) are blacklisted across relevant security controls (firewall, proxy, email filters) to prevent future access or similar attacks.
+<br>Endpoint Verification: Confirm no other malicious activity originated from SourceIP: 10.20.2.17</p>
+<p class="project-details__desc-para">
+<strong>* List of Attack Indicators</strong>
+<br>Sender Impersonation: urgents@amazon.biz (not official amazon.com)
+<br>Malicious URL: http://bit.ly/3sHkX3da12340 (confirmed malicious by analysis and blocked by firewall rule Blocked Websites).
+<br>Social Engineering: Urgent subject ("Action Required"), threat of package return, generic greeting ("Dear Customer").
+<br>Phishing Lure: Undelivered package notification.
+<br>User Interaction: User h.harris attempted to access the malicious URL (from SourceIP: 10.20.2.17), leading to a firewall block.</p>
+              <h3 class="project-details__content-title">Investigating the Third Alert: Blacklisted URL Access</h3>
+              <p class="project-details__desc-para">
+This actually is same case with the previous one.              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/SocSim/7-third-alert.png"
+                  alt="Windows Event Log Inputs Configuration Screenshot"
+                  class="constrained-image"
+                  id="image-11"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              
+              <p class="project-details__desc-para">
+I need to ckeck SIEM for detailed endpoint logs to see if there is any unusual behavior. When i check siem i see that there's only two events for this host and everything looks normal. So, it means firewall has fully blocked the connection and user had no more interaction with the malicious site. Now it's time to write my report.              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/SocSim/8-siem2.png"
+                  alt="Splunk Endpoint Index Creation Screenshot"
+                  class="constrained-image"
+                  id="image-12"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+ 
+              <h3 class="project-details__content-title">The 'True Positive' Report</h3>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/SocSim/9-report.png"
+                  alt="Splunk AD Server Logs Screenshot 0"
+                  class="constrained-image"
+                  id="image-15"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+  
+              <h3 class="project-details__content-title">Investigating the Fourth Alert: Microsoft Typosquatting and Malicious Link</h3>
+              <p class="project-details__desc-para">
+Finally, I moved to the last alert (ID 8817), which presented a clear case of typosquatting and an impersonation attack. The sender's domain, m1crosoftsupport.co, was a deliberate misspelling designed to mimic legitimate Microsoft support. This is a classic phishing tactic. The email also contained a link and upon investigation with threat intelligence tools the link was confirmed to be malicious.               </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/SocSim/10-last-alert.png"
+                  alt="Installing Active Directory Domain Services Screenshot"
+                  class="constrained-image"
+                  id="image-20"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+  
+              <p class="project-details__desc-para">
+After investigating SIEM, i can clearly say that user has attempted to reach out the malicious link, and unfortunately firewall "allowed" this access. Now it's time to write my report for this case.              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/SocSim/11-siem3.png"
+                  alt="Promoting to Domain Controller Screenshot"
+                  class="constrained-image"
+                  id="image-21"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+
+              <h3 class="project-details__content-title">The 'True Positive' Report</h3>
+         <p class="project-details__desc-para">
+<strong>* Time of activity</strong>
+<br>06/02/2025 12:40:25.791 UTC (Email Received)
+<br>User attempted access to malicious URL at 06/02/2025 12:41:34.791 UTC</p>
+<p class="project-details__desc-para">
+<strong>* List of Affected Entities </strong>
+<br>User: c.allen@thetrydaily.thm (Recipient of the phishing email)
+<br>User's Endpoint: SourceIP: 10.20.2.25 (Accessed the malicious URL)
+<br>Email Domain (Impersonated): m1microsoftsupport.co (Sender of the phishing email)
+<br>Malicious URL: https://m1microsoftsupport.co/login</p>
+<p class="project-details__desc-para">
+<strong>* Reason for Classifying as True Positive</strong>
+<br>The email impersonates Microsoft (m1microsoftsupport.co instead of microsoft.com) and uses social engineering tactics ("Unusual Sign-In Activity") to trick the recipient. Investigation confirmed that the user clicked the malicious link, and the connection was ALLOWED by the firewall.</p>
+<p class="project-details__desc-para">
+<strong>* Reason for Escalating the Alert</strong>
+<br>This is a confirmed successful phishing attempt where the user clicked a malicious link, and the connection was allowed. This indicates potential credential compromise or malware download, requiring immediate DFIR (Digital Forensics and Incident Response) and extensive remediation actions.</p>
+<p class="project-details__desc-para">
+<strong>* Recommended Remediation Actions</strong>
+<br>Immediate User Contact to verify if they entered credentials on the fake site.
+<br>Password Reset: Force password reset for c.allen's Microsoft account and any other accounts using the same or similar credentials.
+<br>Endpoint Isolation/Investigation: Isolate SourceIP: 10.20.2.25 from the network. Conduct a full forensic investigation of the endpoint for malware, persistence mechanisms, and further compromise.
+<br>Email Removal: Remove the malicious email from c.allen@thetrydaily.thm's inbox
+<br>URL and Domain Blacklisting: Immediately blacklist m1microsoftsupport.co and https://m1microsoftsupport.co/login across all security controls (email gateway, firewall, proxy, EDR).
+<br>Review M365 Logs: Check Microsoft 365/Azure AD logs for suspicious logins, password changes, or other activity from c.allen's account.</p>
+<p class="project-details__desc-para">
+<strong>* List of Attack Indicators</strong>
+<br>Sender Impersonation: no-reply@m1microsoftsupport.co (not official Microsoft domain).
+<br>Social Engineering: Urgent subject ("Unusual Sign-In Activity"), fear tactics, call to action ("secure your account immediately").
+<br>Malicious URL: https://m1microsoftsupport.co/login (fraudulent login page).
+<br>User Compromise Indicator: User c.allen clicked the malicious link from SourceIP: 10.20.2.25, and the connection was allowed by the firewall.</p>
+
+              <p class="project-details__desc-para">
+There we go!              </p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/SocSim/11-task.png"
+                  alt="Creating New Active Directory User Screenshot"
+                  class="constrained-image"
+                  id="image-23"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+  
+            </div>
+            <div class="project-details__tools-used">
+              <h3 class="project-details__content-title">Tools Used</h3>
+              <div class="skills">
+                <div class="skills__skill">Incident Analysis & Triage</div>
+                <div class="skills__skill">Splunk SIEM</div>
+                <div class="skills__skill">SIEM Operations</div>
+                <div class="skills__skill">Alert Queue Management</div>
+                <div class="skills__skill">Log Analysis</div>
+                <div class="skills__skill">Threat Intelligence Utilization</div>
+                <div class="skills__skill">Phishing Detection & Analysis</div>
+                <div class="skills__skill">Typosquatting Identification</div>
+                <div class="skills__skill">Security Awareness Principles</div>
+                <div class="skills__skill">Incident Reporting (Five Ws Framework)</div>
+                <div class="skills__skill">Remediation Planning & Recommendation</div>
+                <div class="skills__skill">Incident Detection</div>
+                <div class="skills__skill">False Positive/True Positive Classification</div>
+                <div class="skills__skill">Firewall Log Analysis</div>
+                <div class="skills__skill">Threat Detection</div>
+                <div class="skills__skill">Incident Response</div>
+              </div>
+            </div>
+          <!--  <div class="project-details__links">
+              <h3 class="project-details__content-title">See Live</h3>
+              <a href="#" class="btn btn--med btn--theme project-details__links-btn" target="_blank">Live Link</a>
+              <a href="#" class="btn btn--med btn--theme-inv project-details__links-btn" target="_blank">Code Link</a>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer class="main-footer">
+      <div class="main-container">
+        <div class="main-footer__upper">
+          <div class="main-footer__row main-footer__row-1">
+            <h2 class="heading heading-sm main-footer__heading-sm">
+              <span>Social</span>
+            </h2>
+            <div class="main-footer__social-cont">
+              <a target="_blank" rel="noreferrer" href="https://www.linkedin.com/in/han-yeti/">
+                <img class="main-footer__icon" src="./assets/png/linkedin-ico.png" alt="icon" />
+              </a>
+              <a target="_blank" rel="noreferrer" href="https://github.com/hanyeti">
+                <img class="main-footer__icon" src="./assets/png/github-ico.png" alt="icon" />
+              </a>
+              <!---<a target="_blank" rel="noreferrer" href="#">
+                <img class="main-footer__icon" src="./assets/png/twitter-ico.png" alt="icon" />
+              </a>-->
+              <a target="_blank" rel="noreferrer" href="https://www.youtube.com/@HYeti">
+                <img class="main-footer__icon" src="./assets/png/yt-ico.png" alt="icon" />
+              </a>
+              <!---<a target="_blank" rel="noreferrer" href="#">
+                <img class="main-footer__icon main-footer__icon--mr-none" src="./assets/png/insta-ico.png" alt="icon" />
+              </a>-->
+            </div>
+          </div>
+          <div class="main-footer__row main-footer__row-2">
+            <h4 class="heading heading-sm text-lt">Han Yeti</h4>
+            <p class="main-footer__short-desc">
+              Certified Cybersecurity Professional
+            </p>
+          </div>
+        </div>
+       
+      </div>
+    </footer>
+    <div id="image-modal" class="modal">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <img id="modal-img" class="modal-content" />
+    </div>
+    <script>
+      const images = document.querySelectorAll('.constrained-image');
+      const modal = document.getElementById("image-modal");
+      const modalImg = document.getElementById("modal-img");
+
+      modal.style.display = "none";
+
+      images.forEach(img => {
+        img.onload = () => {
+          if (img.naturalWidth > 1890 || img.naturalHeight > 1100) {
+            img.classList.add('larger');
+          }
+        };
+        img.onclick = () => showOriginal(img.id);
+      });
+
+      function showOriginal(imgId) {
+        const img = document.getElementById(imgId);
+        modalImg.src = img.src;
+        modal.style.display = "flex";
+      }
+
+      function closeModal() {
+        modal.style.display = "none";
+      }
+    </script>
+  </body>
+</html>

@@ -166,7 +166,7 @@ We are here to resolve the "Phising Unfolding" room from TryHackMe. This project
 Cyber Kill Chain , Incident Response, Threat Hunting, Alert Triage, SIEM (Splunk), Log Analysis , Digital Forensics, Endpoint Analysis, Threat Intelligence, Understanding of TTPs, PowerShell Script Analysis, Network Analysis, Remediation and Mitigation Planning, 
 Regulatory Compliance Awareness, Documentation  
                 <h3 class="project-details__content-title">Suspicious Email Alert</h3>
-<p>Here we can see the SIEM alert for a suspicious email. It includes an attachment named <code>ImportantInvoice-February.zip</code>, which was sent to <code>michael.ascot@tryhatme.com</code> from <code>john@hatmakereurope.xyz</code> with the subject "Important: Pending Invoice!". This email served as the initial entry point for the attack.</p>
+Here we can see the SIEM alert for a suspicious email. It includes an attachment named <code>ImportantInvoice-February.zip</code>, which was sent to <code>michael.ascot@tryhatme.com</code> from <code>john@hatmakereurope.xyz</code> with the subject "Important: Pending Invoice!". This email served as the initial entry point for the attack.
                 <img
                   src="./assets/SocSim2/1-email.png"
                   alt="Network Configuration Screenshot"
@@ -177,7 +177,7 @@ Regulatory Compliance Awareness, Documentation
               </div>
               <h3 class="project-details__content-title">Checking the Attachment</h3>
               <p class="project-details__desc-para">
-<p>After opening the <code>ImportantInvoice-February.zip</code> on the analyst VM, I saw was the <code>invoice.pdf.lnk</code> file. Knowing that these shortcut files can be tricky and often hide malicious commands, my immediate thought was to grab its file hashes. I used PowerShell to get the SHA256 and MD5 hashes of <code>invoice.pdf.lnk</code>. This way, I can quickly check these hashes against threat intelligence platforms to see if anyone else has seen this file before and if it's known to be bad. It's a quick way to get some initial context.</p>
+After opening the <code>ImportantInvoice-February.zip</code> on the analyst VM, I saw was the <code>invoice.pdf.lnk</code> file. Knowing that these shortcut files can be tricky and often hide malicious commands, my immediate thought was to grab its file hashes. I used PowerShell to get the SHA256 and MD5 hashes of <code>invoice.pdf.lnk</code>. This way, I can quickly check these hashes against threat intelligence platforms to see if anyone else has seen this file before and if it's known to be bad. It's a quick way to get some initial context.
                 <img
                   src="./assets/SocSim2/2-att.png"
                   alt="Netplan Apply Screenshot"
@@ -188,7 +188,7 @@ Regulatory Compliance Awareness, Documentation
               </div>
               <h3 class="project-details__content-title">Initial Threat Intelligence Check</h3>
               <p class="project-details__desc-para">
-<p>So, after getting the hashes for <code>invoice.pdf.lnk</code>, I immediately popped these hashes into a threat intelligence platform. As you can see in the screenshot, it came back with no results in every search, meaning no one had reported this specific hash before. Now, it's really important to remember that just because a hash isn't found doesn't mean the file isn't malicious. This could just mean it's a very new variant, or perhaps it's highly targeted and hasn't been widely seen. It actually makes me even more suspicious, as attackers often try to generate unique hashes to evade detection. So, while this was a quick check, it certainly wasn't the end of my investigation.</p>
+So, after getting the hashes for <code>invoice.pdf.lnk</code>, I immediately popped these hashes into a threat intelligence platform. As you can see in the screenshot, it came back with no results in every search, meaning no one had reported this specific hash before. Now, it's really important to remember that just because a hash isn't found doesn't mean the file isn't malicious. This could just mean it's a very new variant, or perhaps it's highly targeted and hasn't been widely seen. It actually makes me even more suspicious, as attackers often try to generate unique hashes to evade detection. So, while this was a quick check, it certainly wasn't the end of my investigation.
               <div class="project-details__img-cont">
                 <img
                   src="./assets/SocSim/3-first-alert.png"

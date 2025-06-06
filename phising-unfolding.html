@@ -139,10 +139,10 @@
     </header>
     <section class="project-cs-hero">
       <div class="project-cs-hero__content">
-        <h1 class="heading-primary">Phising Unfolding (TryHackMe)</h1>
+        <h1 class="heading-primary">SOC Simulator Walkthrough (TryHackMe)</h1>
         <div class="project-cs-hero__info">
           <p class="text-primary">
-This walkthrough documents my experience with a real-word scneario of phising unfolding, focusing on the process of detailed incident analysis and reporting.          </p>
+This walkthrough documents my experience with the TryHackMe SOC Simulator, focusing on the process of incident analysis and reporting.          </p>
         </div>
       <!--  <div class="project-cs-hero__cta">
           <a href="#" class="btn btn--bg" target="_blank">Live Link</a>
@@ -159,14 +159,16 @@ This walkthrough documents my experience with a real-word scneario of phising un
             <div class="project-details__desc">
               <h3 class="project-details__content-title">Overview</h3>
               <p class="project-details__desc-para">
-We are here to resolve the "Phising Unfolding" room from TryHackMe. This project is all about walking through a real-world phishing incident from start to finish. I'll be detailing my entire investigation process, from the moment a suspicious email alert popped up in our SIEM, right through to tracking the attacker's every move in Splunk. My goal here is to lay out how I approached this, what evidence I found, and how I pieced together the full attack chain to formulate a concrete remediation plan.            </div>
+We are here to resolve the "<code>Phishing Unfolding</code>" room from <code>TryHackMe</code>. This project is all about walking through a real-world phishing incident from start to finish. I'll be detailing my entire investigation process, from the moment a suspicious email alert popped up in our <code>SIEM</code>, right through to tracking the attacker's every move in <code>Splunk</code>. My goal here is to lay out how I approached this, what evidence I found, and how I pieced together the full attack chain to formulate a concrete remediation plan.            </div>
             <div class="project-details__subsections">
               <h3 class="project-details__content-title">Key Skills Demonstrated</h3>
               <p class="project-details__desc-para">
 Cyber Kill Chain , Incident Response, Threat Hunting, Alert Triage, SIEM (Splunk), Log Analysis , Digital Forensics, Endpoint Analysis, Threat Intelligence, Understanding of TTPs, PowerShell Script Analysis, Network Analysis, Remediation and Mitigation Planning, 
-Regulatory Compliance Awareness, Documentation  
-                <h3 class="project-details__content-title">Suspicious Email Alert</h3>
-Here we can see the SIEM alert for a suspicious email. It includes an attachment named <code>ImportantInvoice-February.zip</code>, which was sent to <code>michael.ascot@tryhatme.com</code> from <code>john@hatmakereurope.xyz</code> with the subject "Important: Pending Invoice!". This email served as the initial entry point for the attack.
+Regulatory Compliance Awareness, Documentation                                            </p>        
+              <h3 class="project-details__content-title">Suspicious Email Alert</h3>
+              <p class="project-details__desc-para">
+Here we can see the <code>SIEM</code> alert for a suspicious email. It includes an attachment named <code>ImportantInvoice-February.zip</code>, which was sent to <code>michael.ascot@tryhatme.com</code> from <code>john@hatmakereurope.xyz</code> with the subject "Important: Pending Invoice!". This email served as the initial entry point for the attack.              </p>
+              <div class="project-details__img-cont">
                 <img
                   src="./assets/SocSim2/1-email.png"
                   alt="Network Configuration Screenshot"
@@ -175,20 +177,21 @@ Here we can see the SIEM alert for a suspicious email. It includes an attachment
                   onclick="showOriginal(this)"
                 />
               </div>
-              <h3 class="project-details__content-title">Checking the Attachment</h3>
+              <h3 class="project-details__content-title">Navigating the SIEM Dashboard: The Alert Queue</h3>
               <p class="project-details__desc-para">
-After opening the <code>ImportantInvoice-February.zip</code> on the analyst VM, I saw was the <code>invoice.pdf.lnk</code> file. Knowing that these shortcut files can be tricky and often hide malicious commands, my immediate thought was to grab its file hashes. I used PowerShell to get the SHA256 and MD5 hashes of <code>invoice.pdf.lnk</code>. This way, I can quickly check these hashes against threat intelligence platforms to see if anyone else has seen this file before and if it's known to be bad. It's a quick way to get some initial context.
+Upon entering the SOC Simulator, my primary interface for identifying potential threats was the SIEM (Security Information and Event Management) dashboard. Here, I'm viewing the 'Alert queue,' which provides a centralized list of security alerts generated by various systems. This view allowed me to quickly assess incoming incidents, noting their ID, alert rule, severity, type, and the time they were generated.              </p>
+              <div class="project-details__img-cont">
                 <img
-                  src="./assets/SocSim2/2-att.png"
+                  src="./assets/SocSim/2-dashboard.png"
                   alt="Netplan Apply Screenshot"
                   class="constrained-image"
                   id="image-3"
                   onclick="showOriginal(this)"
                 />
               </div>
-              <h3 class="project-details__content-title">Initial Threat Intelligence Check</h3>
+              <h3 class="project-details__content-title">Investigating the First Alert: Inbound Email Analysis</h3>
               <p class="project-details__desc-para">
-So, after getting the hashes for <code>invoice.pdf.lnk</code>, I immediately popped these hashes into a threat intelligence platform. As you can see in the screenshot, it came back with no results in every search, meaning no one had reported this specific hash before. Now, it's really important to remember that just because a hash isn't found doesn't mean the file isn't malicious. This could just mean it's a very new variant, or perhaps it's highly targeted and hasn't been widely seen. It actually makes me even more suspicious, as attackers often try to generate unique hashes to evade detection. So, while this was a quick check, it certainly wasn't the end of my investigation.
+Beginning with the earliest alert in the queue, I initiated the investigation process. This particular alert flagged an inbound email containing a suspicious external link. There's no attachment on the email so all we have is the sender's domain name. So, let's focus on this.              </p>
               <div class="project-details__img-cont">
                 <img
                   src="./assets/SocSim/3-first-alert.png"

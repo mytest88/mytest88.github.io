@@ -304,6 +304,149 @@ Combined, these two commands clearly indicate the attacker is actively gathering
                   onclick="showOriginal(this)"
                 />
               </div>
+
+              <h3 class="project-details__content-title">Splunk Investigation: 06/04/2025 1:01:36.540 PM - PowerView.ps1 Downloaded</h3>
+              <p class="project-details__desc-para">
+At <code>1:01:36.540 PM</code>, I found a <code>sysmon FileCreate</code> event showing <code>PowerView.ps1</code> being downloaded to <code>C:\Users\michael.ascot\Downloads\PowerView.ps1</code>. This file was created by <code>powershell.exe</code> (PID <code>9060</code>), which we know is the attacker's reverse shell session.</p>
+              <p class="project-details__desc-para">
+<code>PowerView.ps1</code> is a well-known <code>PowerShell</code> script from the <code>PowerSploit</code> framework, specifically designed for <code>Active Directory</code> reconnaissance. Attackers love it because it helps them enumerate users, groups, computers, and other <code>Active Directory</code> objects to find valuable targets and understand the network's layout. This definitely confirms the attacker is systematically gathering information about the environment, looking for juicy targets or privileged accounts to compromise. This is a very common tool in advanced attacks.</p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/SocSim2/11-pview.png"
+                  alt="Splunk AD Server Logs Screenshot 0"
+                  class="constrained-image"
+                  id="image-23"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+
+              <h3 class="project-details__content-title">Splunk Investigation: 06/04/2025 1:01:49.540 PM - PowerShell Execution Policy Bypass</h3>
+              <p class="project-details__desc-para">
+Here the attacker is attempting to bypass <code>PowerShell</code>'s execution policy. Normally, <code>PowerShell</code> has security policies in place to prevent unsigned or untrusted scripts from running. By setting <code>ExecutionPolicy Bypass</code>, they're essentially telling <code>PowerShell</code>, "just run whatever I give you, don't worry about the security checks." This is a common tactic for attackers to ensure their malicious scripts, like <code>PowerView.ps1</code> or the <code>reverse shell</code>, can execute freely on the compromised system without being blocked by these built-in security features. It's a clear sign of malicious intent and preparatory steps for further actions.</p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/SocSim2/12-bypass.png"
+                  alt="Installing Active Directory Domain Services Screenshot"
+                  class="constrained-image"
+                  id="image-24"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+
+              <h3 class="project-details__content-title">Splunk Investigation: 06/04/2025 1:01:57.540 PM - PowerView.ps1 Execution</h3>
+              <p class="project-details__desc-para">
+Here I see that the <code>PowerView.ps1</code> script, which the attacker downloaded earlier, is now being executed on <code>win-3450</code>. The <code>message</code> and <code>powershell.file.script_block_text</code> might look a bit obfuscated with the <code>Reflection.Emit.ModuleBuilder</code> and <code>Reflection.Assembly</code> calls, but this is a common way <code>PowerShell</code> scripts, especially sophisticated ones like <code>PowerView</code>, are invoked. It's essentially running the script in memory to avoid leaving direct command-line traces. The <code>winlog.process.pid: 3728</code> indicates the <code>PowerShell</code> process that's running it. This is the attacker actively performing network reconnaissance, likely enumerating <code>Active Directory</code> to find valuable targets like file servers or domain controllers. They're mapping out the environment and looking for the data they want to steal.</p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/SocSim2/13-pw.png"
+                  alt="Installing Active Directory Domain Services Screenshot"
+                  class="constrained-image"
+                  id="image-25"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+
+              <h3 class="project-details__content-title">Splunk Investigation: 06/04/2025 1:02:25.540 PM - PowerView's Reconnaissance Actions</h3>
+              <p class="project-details__desc-para">
+This <code>powershell</code> event is still showing <code>PowerView.ps1</code> in action. While the previous log confirmed its execution, this one gives us a glimpse into the actual code or script block it's running. The <code>message</code> and <code>powershell.file.script_block_text</code> show functions like <code>Test-Connection</code> (which is like pinging) and <code>LDAPProperty</code>.</p>
+              <p class="project-details__desc-para">
+This confirms that <code>PowerView.ps1</code> isn't just sitting there; it's actively trying to identify and enumerate hosts on the network, likely through pinging, and then querying <code>Active Directory</code> (using <code>LDAP</code>) to gather details about these systems. It's looking for hostnames, properties, and generally mapping out the network environment. This is exactly what a reconnaissance tool does – preparing the attacker for the next phase, which is typically identifying valuable data or further targets. The <code>process.pid: 3728</code> confirms it's the same <code>PowerShell</code> process we saw executing <code>PowerView</code> earlier. They're definitely looking for something specific now.</p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/SocSim2/14-ldap.png"
+                  alt="Splunk AD Server Logs Screenshot 0"
+                  class="constrained-image"
+                  id="image-26"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+
+              <h3 class="project-details__content-title">Splunk Investigation: 06/04/2025 1:03:31.540 PM - Network Share Mapped: Accessing Financial Records!</h3>
+              <p class="project-details__desc-para">
+Here we see that the attacker, still using the same <code>powershell.exe</code> process (PID <code>3728</code>) that was running <code>PowerView</code>, has just created a new directory named <code>exfiltration</code> within <code>Michael Ascot</code>'s Downloads folder. This is a classic staging area. Attackers often create a dedicated folder to collect all the sensitive data they plan to steal before they actually send it out. This confirms that the attacker has completed their reconnaissance and is now moving into the data staging (the attacker prepares the data for exfiltration) phase, getting ready for exfiltration. This is a very critical step in the attack chain.</p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/SocSim2/16-financialr.png"
+                  alt="Installing Active Directory Domain Services Screenshot"
+                  class="constrained-image"
+                  id="image-26"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+
+              <h3 class="project-details__content-title">Splunk Investigation: 06/04/2025 1:04:18.540 PM - Data Copied to Exfiltration Folder via Robocopy</h3>
+              <p class="project-details__desc-para">
+These two <code>sysmon FileCreate</code> events are the definitive proof of data theft to the staging directory. We can see two files being created within our previously identified <code>exfiltration</code> folder:</p>
+              <p class="project-details__desc-para">
+<code>C:\Users\michael.ascot\Downloads\exfiltration\InvestorPresentation2023.pptx</code><br><code>C:\Users\michael.ascot\Downloads\exfiltration\ClientPortfolioSummary.xlsx</code></p>
+              <p class="project-details__desc-para">
+I can also see that the attacker is using <code>Robocopy</code>, a robust Windows utility for copying files and directories. It's often favored by attackers because it's built-in, versatile, and can handle large transfers efficiently.</p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/SocSim2/17-twomore.png"
+                  alt="Splunk AD Server Logs Screenshot 0"
+                  class="constrained-image"
+                  id="image-27"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+
+              <h3 class="project-details__content-title">Robocopy Command Confirmed</h3>
+              <p class="project-details__desc-para">
+Here we can see this command tells <code>Robocopy</code> to copy files to the <code>C:\Users\michael.ascot\downloads\exfiltration</code> directory. The <code>/E</code> flag is interesting because it means "copy subdirectories, including empty ones," suggesting the attacker might have intended to copy more than just the two files we saw, or was being thorough.</p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/SocSim2/18-copy.png"
+                  alt="Installing Active Directory Domain Services Screenshot"
+                  class="constrained-image"
+                  id="image-28"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+
+              <h3 class="project-details__content-title">Network Share Disconnected</h3>
+              <p class="project-details__desc-para">
+Here I found a <code>sysmon Process Create</code> event that shows the command <code>C:\Windows\system32\net.exe use Z: /delete</code>. This is another <code>net.exe</code> command, but this time with the <code>/delete</code> flag, executed again by <code>powershell.exe</code> (PID <code>3728</code>).</p>
+              <p class="project-details__desc-para">
+What this means is that immediately after copying the files from the <code>SSF-FinancialRecords</code> network share to the local <code>exfiltration</code> directory, the attacker is now disconnecting the <code>Z:</code> drive mapping. This is a common defensive evasion tactic. By disconnecting the network share, they are trying to remove a direct link to the source of the stolen data, making it slightly harder to trace their activity back to the file server if an analyst were to look at active network connections. It's a quick cleanup step after they've gotten what they needed.</p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/SocSim2/19-disconnect.png"
+                  alt="Splunk AD Server Logs Screenshot 0"
+                  class="constrained-image"
+                  id="image-29"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+
+              <h3 class="project-details__content-title">Staged Data Compressed into exfilt8me.zip</h3>
+              <p class="project-details__desc-para">
+This is a crucial step in the data theft process. The attacker, still operating under the <code>powershell.exe</code> process (PID <code>3728</code>), has now taken the sensitive files they copied into the <code>exfiltration</code> folder and compressed them into a <code>ZIP</code> archive named <code>exfilt8me.zip</code>. Compressing data makes it much easier and faster to exfiltrate, especially when dealing with multiple files or large datasets, and it can also help to reduce the chances of detection by some network monitoring tools. This confirms they are now fully prepared for the actual data exfiltration.</p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/SocSim2/20-exfiltr8.png"
+                  alt="Installing Active Directory Domain Services Screenshot"
+                  class="constrained-image"
+                  id="image-30"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+
+              <h3 class="project-details__content-title">Data Exfiltration via DNS Tunneling Confirmed!</h3>
+              <p class="project-details__desc-para">
+Here when we're looking closely, the message shows a complex <code>PowerShell</code> command that essentially reads the <code>exfilt8me.zip</code> file (which contains our stolen financial data!) using <code>[System.IO.File]::ReadAllBytes()</code>, then converts it to <code>Base64</code> using <code>[System.Convert]::ToBase64String()</code>. After that, it splits the <code>Base64</code> string into chunks and, crucially, uses <code>nslookup</code> to send each chunk to <code>haz4rdw4re.io</code>. The attacker is encoding the sensitive data and sending it out in small pieces through <code>DNS</code> queries, which can often bypass traditional firewalls and intrusion detection systems because <code>DNS</code> traffic is typically allowed.</p>
+              <p class="project-details__desc-para">
+This is the definitive evidence of <code>DNS tunneling</code> in action. The attacker is encoding the stolen <code>exfilt8me.zip</code> data and sending it out of our network in small pieces disguised as legitimate <code>DNS</code> queries to their controlled domain, <code>haz4rdw4re.io</code>. This is a highly stealthy way to exfiltrate data and bypass traditional firewalls. This log confirms the data breach is successful.</p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/SocSim2/21-transfer.png"
+                  alt="Splunk AD Server Logs Screenshot 0"
+                  class="constrained-image"
+                  id="image-31"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+
   
             </div>
             <div class="project-details__tools-used">

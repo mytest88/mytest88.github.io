@@ -486,21 +486,21 @@ However, the message also contains <code>Stop-Process</code>. This indicates tha
 <p class="project-details__desc-para">Alright, let's map out this whole incident using the classic <code>Cyber Kill Chain</code> framework. This helps me organize the attack and identify key points where we could have, or can still, implement defenses.</p>
 
 <ol>
-    <li>
+    
         <h4>Reconnaissance:</h4>
         <p class="project-details__desc-para">What Happened: The attacker performed initial reconnaissance to identify <code>michael.ascot@tryhatme.com</code> as a suitable target for their phishing campaign. (While we don't have direct logs for this external recon, the targeted nature of the email implies it.)</p>
         <p class="project-details__desc-para">Our Evidence: The phishing email itself, specifically its recipient.</p>
-    </li>
-    <li>
+    
+    
         <h4>Weaponization:</h4>
         <p class="project-details__desc-para">What Happened: The adversary created <code>ImportantInvoice-February.zip</code> containing <code>invoice.pdf.lnk</code>, which was crafted to execute a malicious <code>PowerShell</code> command (downloading <code>powermac.ps1</code>).</p>
         <p class="project-details__desc-para">Our Evidence: The identification of <code>invoice.pdf.lnk</code> within the <code>ZIP</code>, and its subsequent analysis showing the embedded <code>PowerShell</code>.</p>
-    </li>
-    <li>
+    
+    
         <h4>Delivery:</h4>
-        <p class="project-details_desc-para">What Happened: The weaponized <code>ImportantInvoice-February.zip</code> was delivered to <code>michael.ascot@tryhatme.com</code> via an email.</p>
-        <p class="project-details_desc-para">Our Evidence: The initial <code>SIEM</code> email alert (<code>06/04/2025 13:40:06.540</code>) and the <code>Splunk</code> log showing the <code>ZIP</code> file landing in <code>michael.ascot</code>'s <code>Outlook</code> cache (<code>06/04/2025 14:00:13.540</code>).</p>
-    </li>
+        <p class="project-details__desc-para">What Happened: The weaponized <code>ImportantInvoice-February.zip</code> was delivered to <code>michael.ascot@tryhatme.com</code> via an email.</p>
+        <p class="project-details__desc-para">Our Evidence: The initial <code>SIEM</code> email alert (<code>06/04/2025 13:40:06.540</code>) and the <code>Splunk</code> log showing the <code>ZIP</code> file landing in <code>michael.ascot</code>'s <code>Outlook</code> cache (<code>06/04/2025 14:00:13.540</code>).</p>
+  
     <li>
         <h4>Exploitation:</h4>
         <p class="project-details_desc-para">What Happened: <code>Michael Ascot</code> interacted with the malicious attachment, causing <code>invoice.pdf.lnk</code> to be extracted and executed, which then launched a <code>PowerShell</code> process.</p>

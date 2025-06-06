@@ -487,12 +487,12 @@ However, the message also contains <code>Stop-Process</code>. This indicates tha
 
 <ol>
     <li>
-        <h4 class="project-details__content-title">Reconnaissance:</h4>
+        <h4 class="project-details__content-title">1. Reconnaissance:</h4>
         <p class="project-details__desc-para">What Happened: The attacker performed initial reconnaissance to identify <code>michael.ascot@tryhatme.com</code> as a suitable target for their phishing campaign. (While we don't have direct logs for this external recon, the targeted nature of the email implies it.)</p>
         <p class="project-details__desc-para">Our Evidence: The phishing email itself, specifically its recipient.</p>
     </li>
     <li>
-        <h4 class="project-details__content-title">Weaponization:</h4>
+        <h4 class="project-details__content-title">2. Weaponization:</h4>
         <p class="project-details__desc-para">What Happened: The adversary created <code>ImportantInvoice-February.zip</code> containing <code>invoice.pdf.lnk</code>, which was crafted to execute a malicious <code>PowerShell</code> command (downloading <code>powermac.ps1</code>).</p>
         <p class="project-details__desc-para">Our Evidence: The identification of <code>invoice.pdf.lnk</code> within the <code>ZIP</code>, and its subsequent analysis showing the embedded <code>PowerShell</code>.</p>
     </li>

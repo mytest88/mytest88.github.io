@@ -226,76 +226,30 @@ Looking closer at the <code>process.command_line</code>, I can see <code>nslooku
                   onclick="showOriginal(this)"
                 />
               </div>
+        
+              <h3 class="project-details__content-title">Pivoting to Splunk: Focusing on the Compromised Host</h3>
               <p class="project-details__desc-para">
-I can see that fortunately the firewall has blocked this connection. Now, it's time to write my report.              </p>
+Given the critical alerts coming from <code>win-3450</code> and the clear indicators of compromise, it was time to move beyond the high-level alerts and really dig into the raw data. My next step was to pivot over to <code>Splunk</code>. My plan was to filter the logs specifically for the compromised host, <code>win-3450</code>, to see all activity originating from or targeting it.</p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/SocSim/6-siem1.png"
-                  alt="Splunk Boot-Start Configuration Screenshot"
-                  class="constrained-image"
-                  id="image-8"
-                  onclick="showOriginal(this)"
-                />
-              </div>
-              <h3 class="project-details__content-title">The 'True Positive' Report</h3>
- <p class="project-details__desc-para">
-<strong>* Time of activity</strong>
-<br>06/02/2025 12:38:07.791 UTC (Email Receipt)
-<br>User attempted access to malicious URL at 06/02/2025 12:39:21.791 UTC </p>
-<p class="project-details__desc-para">
-<strong>* List of Affected Entities</strong>
-<br>User: h.harris@thedailytry.thm (Recipient of the phishing email)
-<br>Email Domain (Impersonated): amazon.biz (Sender of the phishing email)
-<br>Malicious URL: http://bit.ly/3sHkX3da12340
-<br>User's Endpoint: SourceIP: 10.20.2.17 (Attempted to access the malicious URL)</p>
-<p class="project-details__desc-para">
-<strong>* Reason for Classifying as True Positive</strong>
-<br>After the investigation, it is shown that the link "http[:]//bit[.]ly/3sHkX3da12340" is malicious.</p>
-<p class="project-details__desc-para">
-<strong>* Reason for Escalating the Alert</strong>
-<br>The alert can be an indicator of a major cyberattack (phishing) requiring deeper investigation, even though the malicious link was blocked by the firewall. Remediation actions are required to ensure the user is aware and the threat is contained.</p>
-<p class="project-details__desc-para">
-<strong>* Recommended Remediation Actions</strong>
-<br>Email Removal: Remove the malicious email from h.harris@thedailytry.thm's inbox to prevent further user interaction.
-<br>User Notification/Awareness: Inform h.harris about the phishing attempt, emphasize that the link was blocked, and reinforce phishing awareness training. This is crucial for user education since they did click the link.
-<br>URL Blacklisting: Ensure http://bit.ly/3sHkX3da12340 and amazon.biz (if not already) are blacklisted across relevant security controls (firewall, proxy, email filters) to prevent future access or similar attacks.
-<br>Endpoint Verification: Confirm no other malicious activity originated from SourceIP: 10.20.2.17</p>
-<p class="project-details__desc-para">
-<strong>* List of Attack Indicators</strong>
-<br>Sender Impersonation: urgents@amazon.biz (not official amazon.com)
-<br>Malicious URL: http://bit.ly/3sHkX3da12340 (confirmed malicious by analysis and blocked by firewall rule Blocked Websites).
-<br>Social Engineering: Urgent subject ("Action Required"), threat of package return, generic greeting ("Dear Customer").
-<br>Phishing Lure: Undelivered package notification.
-<br>User Interaction: User h.harris attempted to access the malicious URL (from SourceIP: 10.20.2.17), leading to a firewall block.</p>
-              <h3 class="project-details__content-title">Investigating the Third Alert: Blacklisted URL Access</h3>
-              <p class="project-details__desc-para">
-This actually is same case with the previous one.              </p>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/SocSim/7-third-alert.png"
+                  src="./assets/SocSim2/6-splunk.png"
                   alt="Windows Event Log Inputs Configuration Screenshot"
                   class="constrained-image"
                   id="image-11"
                   onclick="showOriginal(this)"
                 />
               </div>
-              
-              <p class="project-details__desc-para">
-I need to ckeck SIEM for detailed endpoint logs to see if there is any unusual behavior. When i check siem i see that there's only two events for this host and everything looks normal. So, it means firewall has fully blocked the connection and user had no more interaction with the malicious site. Now it's time to write my report.              </p>
-              <div class="project-details__img-cont">
-                <img
-                  src="./assets/SocSim/8-siem2.png"
-                  alt="Splunk Endpoint Index Creation Screenshot"
-                  class="constrained-image"
-                  id="image-12"
-                  onclick="showOriginal(this)"
-                />
-              </div>
+      
  
-              <h3 class="project-details__content-title">The 'True Positive' Report</h3>
+              <h3 class="project-details__content-title">Splunk Investigation: 06/04/2025 01:00:13.540 PM - Phishing Attachment Detected</h3>
+              <p class="project-details__desc-para">
+      Okay, so the first interesting log I pulled from <code>Splunk</code> after filtering for <code>win-3450</code> really ties back to the very beginning of the incident. This <code>sysmon</code> event, specifically <code>event.action: File created (rule: Filecreate)</code>, shows that the <code>ImportantInvoice-February.zip</code> file landed in <code>Michael Ascot</code>'s Outlook temporary internet cache.</p>
+              <p class="project-details__desc-para">
+  The <code>file.path: C:\Users\michael.ascot\AppData\Local\Microsoft\Windows\INetCache\Content.Outlook\R4WK02QB\ImportantInvoice-February.zip</code> clearly indicates it was an attachment from an email, and the <code>process.name: OUTLOOK.EXE</code> confirms it was received via Outlook. This log entry at <code>1:00:13.540 PM</code> (June 4, 2025) perfectly corroborates the initial <code>SIEM</code> alert we saw about the suspicious email. This is basically the system confirming the malicious <code>ZIP</code> file made it onto the host.</p>
+
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/SocSim/9-report.png"
+                  src="./assets/SocSim2/7-email.png"
                   alt="Splunk AD Server Logs Screenshot 0"
                   class="constrained-image"
                   id="image-15"

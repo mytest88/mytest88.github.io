@@ -257,71 +257,50 @@ Given the critical alerts coming from <code>win-3450</code> and the clear indica
                 />
               </div>
   
-              <h3 class="project-details__content-title">Investigating the Fourth Alert: Microsoft Typosquatting and Malicious Link</h3>
+              <h3 class="project-details__content-title">Splunk Investigation: 06/04/2025 1:00:24.540 PM - The LNK File is Extracted</h3>
               <p class="project-details__desc-para">
-Finally, I moved to the last alert (ID 8817), which presented a clear case of typosquatting and an impersonation attack. The sender's domain, m1crosoftsupport.co, was a deliberate misspelling designed to mimic legitimate Microsoft support. This is a classic phishing tactic. The email also contained a link and upon investigation with threat intelligence tools the link was confirmed to be malicious.               </p>
+Following the initial email attachment, this <code>sysmon</code> event at <code>1:00:24.540 PM</code> tells me that <code>explorer.exe</code> (PID <code>3180</code>) created a file stream for <code>invoice.pdf.lnk</code>. This is a pretty significant step because it means the <code>invoice.pdf.lnk</code> file, which was inside that malicious <code>ZIP</code>, has now been extracted to a temporary folder: <code>C:\Users\michael.ascot\AppData\Local\Temp\5\Temp\_ImportantInvoice-Febrary.zip\ImportantInvoice-Febrary\invoice.pdf.lnk</code>. This extraction, initiated by <code>explorer.exe</code>, is very likely what happened right after <code>Michael Ascot</code> clicked on or opened the <code>ZIP</code> file. This is the moment the malicious <code>.lnk</code> file is actually on the file system and ready to be executed. This is the point where the initial payload is about to run!</p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/SocSim/10-last-alert.png"
+                  src="./assets/SocSim2/8-runthefile.png"
                   alt="Installing Active Directory Domain Services Screenshot"
                   class="constrained-image"
                   id="image-20"
                   onclick="showOriginal(this)"
                 />
               </div>
-  
+              
+                <h3 class="project-details__content-title">Splunk Investigation: 06/04/2025 1:00:25.540 PM - Initial Payload Execution and Reverse Shell Attempt!</h3>
               <p class="project-details__desc-para">
-After investigating SIEM, i can clearly say that user has attempted to reach out the malicious link, and unfortunately firewall "allowed" this access. Now it's time to write my report for this case.              </p>
+This log entry, just seconds after the <code>.lnk</code> file was extracted at <code>1:00:25.540 PM</code>, is exactly what I was looking for. It's a <code>sysmon Process Create</code> event, showing <code>explorer.exe</code> (PID <code>3180</code>) spawning <code>powershell.exe</code> (PID <code>3880</code>). This confirms that clicking the <code>invoice.pdf.lnk</code> file directly led to <code>PowerShell</code> being executed.</p>
+              <p class="project-details__desc-para">
+But the real kicker is the <code>process.command_line</code>. It's a classic malicious <code>PowerShell</code> one-liner: it uses <code>IEX (New-Object System.Net.WebClient).DownloadString()</code> to pull <code>powermac.ps1</code> from a <code>GitHub</code> repository (<code>https://raw.githubusercontent.com/besimorhino/powercat/master/powercat.ps1</code>). Immediately after that, it attempts to establish a <code>reverse shell</code> connection using <code>powercat</code> – which is a <code>PowerShell</code> version of <code>Netcat</code>, used for network debugging and creating reverse shells – to <code>2.tcp.ngrok.io</code> on port <code>19282</code>. This is the attacker getting their initial foothold and trying to set up remote access. This log unequivocally confirms the initial compromise described in the incident report!</p>
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/SocSim/11-siem3.png"
-                  alt="Promoting to Domain Controller Screenshot"
+                  src="./assets/SocSim2/9-powercat.png"
+                  alt="Splunk AD Server Logs Screenshot 0"
                   class="constrained-image"
-                  id="image-21"
+                  id="image-15"
                   onclick="showOriginal(this)"
                 />
               </div>
 
-              <h3 class="project-details__content-title">The 'True Positive' Report</h3>
-         <p class="project-details__desc-para">
-<strong>* Time of activity</strong>
-<br>06/02/2025 12:40:25.791 UTC (Email Received)
-<br>User attempted access to malicious URL at 06/02/2025 12:41:34.791 UTC</p>
-<p class="project-details__desc-para">
-<strong>* List of Affected Entities </strong>
-<br>User: c.allen@thetrydaily.thm (Recipient of the phishing email)
-<br>User's Endpoint: SourceIP: 10.20.2.25 (Accessed the malicious URL)
-<br>Email Domain (Impersonated): m1microsoftsupport.co (Sender of the phishing email)
-<br>Malicious URL: https://m1microsoftsupport.co/login</p>
-<p class="project-details__desc-para">
-<strong>* Reason for Classifying as True Positive</strong>
-<br>The email impersonates Microsoft (m1microsoftsupport.co instead of microsoft.com) and uses social engineering tactics ("Unusual Sign-In Activity") to trick the recipient. Investigation confirmed that the user clicked the malicious link, and the connection was ALLOWED by the firewall.</p>
-<p class="project-details__desc-para">
-<strong>* Reason for Escalating the Alert</strong>
-<br>This is a confirmed successful phishing attempt where the user clicked a malicious link, and the connection was allowed. This indicates potential credential compromise or malware download, requiring immediate DFIR (Digital Forensics and Incident Response) and extensive remediation actions.</p>
-<p class="project-details__desc-para">
-<strong>* Recommended Remediation Actions</strong>
-<br>Immediate User Contact to verify if they entered credentials on the fake site.
-<br>Password Reset: Force password reset for c.allen's Microsoft account and any other accounts using the same or similar credentials.
-<br>Endpoint Isolation/Investigation: Isolate SourceIP: 10.20.2.25 from the network. Conduct a full forensic investigation of the endpoint for malware, persistence mechanisms, and further compromise.
-<br>Email Removal: Remove the malicious email from c.allen@thetrydaily.thm's inbox
-<br>URL and Domain Blacklisting: Immediately blacklist m1microsoftsupport.co and https://m1microsoftsupport.co/login across all security controls (email gateway, firewall, proxy, EDR).
-<br>Review M365 Logs: Check Microsoft 365/Azure AD logs for suspicious logins, password changes, or other activity from c.allen's account.</p>
-<p class="project-details__desc-para">
-<strong>* List of Attack Indicators</strong>
-<br>Sender Impersonation: no-reply@m1microsoftsupport.co (not official Microsoft domain).
-<br>Social Engineering: Urgent subject ("Unusual Sign-In Activity"), fear tactics, call to action ("secure your account immediately").
-<br>Malicious URL: https://m1microsoftsupport.co/login (fraudulent login page).
-<br>User Compromise Indicator: User c.allen clicked the malicious link from SourceIP: 10.20.2.25, and the connection was allowed by the firewall.</p>
-
+                <h3 class="project-details__content-title">Splunk Investigation: 06/04/2025 1:00:49.540 PM and 1:00:41.540 PM - Initial Reconnaissance</h3>
               <p class="project-details__desc-para">
-There we go!              </p>
+These next couple of <code>sysmon Process Create</code> events tell me the attacker is starting their reconnaissance. Both of these processes are spawned by <code>powershell.exe</code> (PID <code>9060</code>), which is the attacker's initial shell on the system.</p>
+              <p class="project-details__desc-para">
+The first log, at <code>1:00:49.540 PM</code>, shows <code>whoami.exe</code> being executed. This is a super common first step for an attacker – they want to know what user context they're operating under on the compromised machine. It's their way of figuring out their current privileges.</p>
+              <p class="project-details__desc-para">
+Then, just a few seconds earlier at <code>1:00:41.540 PM</code>, I see <code>systeminfo.exe</code> being run. This command provides detailed configuration information about the operating system, hardware, and installed hotfixes. Attackers use this to understand the system's patching level, potential vulnerabilities, and overall environment.</p>
+              <p class="project-details__desc-para">
+Combined, these two commands clearly indicate the attacker is actively gathering information about the <code>win-3450</code> host. They're trying to map out the environment and see what they've landed on, which is a classic move in the reconnaissance phase of an attack.</p>
+     
               <div class="project-details__img-cont">
                 <img
-                  src="./assets/SocSim/11-task.png"
-                  alt="Creating New Active Directory User Screenshot"
+                  src="./assets/SocSim2/10-recon.png"
+                  alt="Splunk AD Server Logs Screenshot 0"
                   class="constrained-image"
-                  id="image-23"
+                  id="image-15"
                   onclick="showOriginal(this)"
                 />
               </div>

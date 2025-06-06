@@ -487,12 +487,12 @@ However, the message also contains <code>Stop-Process</code>. This indicates tha
 
 <ol>
     <li>
-        <h4>Reconnaissance:</h4>
+        <h4 class="project-details__content-title">Reconnaissance:</h4>
         <p class="project-details__desc-para">What Happened: The attacker performed initial reconnaissance to identify <code>michael.ascot@tryhatme.com</code> as a suitable target for their phishing campaign. (While we don't have direct logs for this external recon, the targeted nature of the email implies it.)</p>
         <p class="project-details__desc-para">Our Evidence: The phishing email itself, specifically its recipient.</p>
     </li>
     <li>
-        <h4>Weaponization:</h4>
+        <h4 class="project-details__content-title">Weaponization:</h4>
         <p class="project-details__desc-para">What Happened: The adversary created <code>ImportantInvoice-February.zip</code> containing <code>invoice.pdf.lnk</code>, which was crafted to execute a malicious <code>PowerShell</code> command (downloading <code>powermac.ps1</code>).</p>
         <p class="project-details__desc-para">Our Evidence: The identification of <code>invoice.pdf.lnk</code> within the <code>ZIP</code>, and its subsequent analysis showing the embedded <code>PowerShell</code>.</p>
     </li>
@@ -530,12 +530,12 @@ However, the message also contains <code>Stop-Process</code>. This indicates tha
         <p class="project-details__desc-para">What Happened: This is where the attacker achieved their primary goals: internal reconnaissance, data staging, and data exfiltration.</p>
         <p class="project-details__desc-para">Our Evidence:</p>
         <ul>
-            <li class="project-details__desc-para">Internal Reconnaissance:
-                <ul>
-                    <li class="project-details__desc-para">Execution of <code>whoami.exe</code> and <code>systeminfo.exe</code> (<code>06/04/2025 1:00:49.540 PM</code> and <code>1:00:41.540 PM</code>).</li>
+            
+                
+                    <li class="project-details__desc-para">Internal Reconnaissance: Execution of <code>whoami.exe</code> and <code>systeminfo.exe</code> (<code>06/04/2025 1:00:49.540 PM</code> and <code>1:00:41.540 PM</code>).</li>
                     <li class="project-details__desc-para">Download (<code>06/04/2025 1:01:36.540 PM</code>) and execution of <code>PowerView.ps1</code> (<code>06/04/2025 1:01:57.540 PM</code> and <code>1:02:25.540 PM</code>), along with the <code>ExecutionPolicy Bypass</code> (<code>06/04/2025 1:01:49.540 PM</code>).</li>
-                </ul>
-            </li>
+                
+            
             <li class="project-details__desc-para">Data Staging:
                 <ul>
                     <li class="project-details__desc-para">Creation of <code>C:\Users\michael.ascot\Downloads\exfiltration</code> directory (<code>06/04/2025 1:03:24.540 PM</code>).</li>

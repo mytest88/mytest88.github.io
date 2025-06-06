@@ -480,6 +480,94 @@ However, the message also contains <code>Stop-Process</code>. This indicates tha
                 />
               </div>
 
+<!--- ********************************* --->
+
+<h3 class="project-details_content-title">Cyber Kill Chain Analysis of the <code>win-3450</code> Phising Incident</h3>
+<p class="project-details_desc-para">Alright, let's map out this whole incident using the classic <code>Cyber Kill Chain</code> framework. This helps me organize the attack and identify key points where we could have, or can still, implement defenses.</p>
+
+<ol>
+    <li>
+        <h4>Reconnaissance:</h4>
+        <p class="project-details_desc-para">What Happened: The attacker performed initial reconnaissance to identify <code>michael.ascot@tryhatme.com</code> as a suitable target for their phishing campaign. (While we don't have direct logs for this external recon, the targeted nature of the email implies it.)</p>
+        <p class="project-details_desc-para">Our Evidence: The phishing email itself, specifically its recipient.</p>
+    </li>
+    <li>
+        <h4>Weaponization:</h4>
+        <p class="project-details_desc-para">What Happened: The adversary created <code>ImportantInvoice-February.zip</code> containing <code>invoice.pdf.lnk</code>, which was crafted to execute a malicious <code>PowerShell</code> command (downloading <code>powermac.ps1</code>).</p>
+        <p class="project-details_desc-para">Our Evidence: The identification of <code>invoice.pdf.lnk</code> within the <code>ZIP</code>, and its subsequent analysis showing the embedded <code>PowerShell</code>.</p>
+    </li>
+    <li>
+        <h4>Delivery:</h4>
+        <p class="project-details_desc-para">What Happened: The weaponized <code>ImportantInvoice-February.zip</code> was delivered to <code>michael.ascot@tryhatme.com</code> via an email.</p>
+        <p class="project-details_desc-para">Our Evidence: The initial <code>SIEM</code> email alert (<code>06/04/2025 13:40:06.540</code>) and the <code>Splunk</code> log showing the <code>ZIP</code> file landing in <code>michael.ascot</code>'s <code>Outlook</code> cache (<code>06/04/2025 14:00:13.540</code>).</p>
+    </li>
+    <li>
+        <h4>Exploitation:</h4>
+        <p class="project-details_desc-para">What Happened: <code>Michael Ascot</code> interacted with the malicious attachment, causing <code>invoice.pdf.lnk</code> to be extracted and executed, which then launched a <code>PowerShell</code> process.</p>
+        <p class="project-details_desc-para">Our Evidence:</p>
+        <ul>
+            <li class="project-details_desc-para"><code>invoice.pdf.lnk</code>'s presence after opening the <code>ZIP</code> (my analyst <code>VM</code> observation and hash check).</li>
+            <li class="project-details_desc-para"><code>Splunk</code> log: <code>File Stream Created</code> for <code>invoice.pdf.lnk</code> (<code>06/04/2025 1:00:24.540 PM</code>).</li>
+            <li class="project-details_desc-para"><code>Splunk</code> log: <code>Process Create</code> where <code>explorer.exe</code> spawned <code>powershell.exe</code> with the malicious download command (<code>06/04/2025 1:00:25.540 PM</code>).</li>
+        </ul>
+    </li>
+    <li>
+        <h4>Installation:</h4>
+        <p class="project-details_desc-para">What Happened: The attacker installed a backdoor, attempting to establish a persistent <code>reverse shell</code> connection to <code>2.tcp.ngrok.io</code> by downloading and executing <code>powermac.ps1</code> (<code>Powercat</code>).</p>
+        <p class="project-details_desc-para">Our Evidence: <code>Splunk</code> log: The <code>Process Create</code> for <code>PowerShell</code> showing the <code>IEX</code> command to download <code>powermac.ps1</code> and initiate the <code>powercat</code> connection (<code>06/04/2025 1:00:25.540 PM</code>).</p>
+    </li>
+    <li>
+        <h4>Command and Control (C2):</h4>
+        <p class="project-details_desc-para">What Happened: The attacker maintained remote access and control over <code>win-3450</code> endpoint through the established <code>reverse shell</code> connection to <code>2.tcp.ngrok.io</code>.</p>
+        <p class="project-details_desc-para">Our Evidence:</p>
+        <ul>
+            <li class="project-details_desc-para">The repeated attempts to connect to <code>2.tcp.ngrok.io</code> (implied success by subsequent attacker actions).</li>
+            <li class="project-details_desc-para">The last log showing another attempt to establish the <code>reverse shell</code>, confirming ongoing <code>C2</code> capability (<code>06/04/2025 1:05:41.540 PM</code>).</li>
+        </ul>
+    </li>
+    <li>
+        <h4>Actions on Objectives:</h4>
+        <p class="project-details_desc-para">What Happened: This is where the attacker achieved their primary goals: internal reconnaissance, data staging, and data exfiltration.</p>
+        <p class="project-details_desc-para">Our Evidence:</p>
+        <ul>
+            <li class="project-details_desc-para">Internal Reconnaissance:
+                <ul>
+                    <li class="project-details_desc-para">Execution of <code>whoami.exe</code> and <code>systeminfo.exe</code> (<code>06/04/2025 1:00:49.540 PM</code> and <code>1:00:41.540 PM</code>).</li>
+                    <li class="project-details_desc-para">Download (<code>06/04/2025 1:01:36.540 PM</code>) and execution of <code>PowerView.ps1</code> (<code>06/04/2025 1:01:57.540 PM</code> and <code>1:02:25.540 PM</code>), along with the <code>ExecutionPolicy Bypass</code> (<code>06/04/2025 1:01:49.540 PM</code>).</li>
+                </ul>
+            </li>
+            <li class="project-details_desc-para">Data Staging:
+                <ul>
+                    <li class="project-details_desc-para">Creation of <code>C:\Users\michael.ascot\Downloads\exfiltration</code> directory (<code>06/04/2025 1:03:24.540 PM</code>).</li>
+                    <li class="project-details_desc-para">Mapping of network share <code>\\FILESRV-01\SSF-FinancialRecords</code> as <code>Z:</code> (<code>06/04/2025 1:03:31.540 PM</code>).</li>
+                    <li class="project-details_desc-para">Copying of <code>ClientPortfolioSummary.xlsx</code> and <code>InvestorPresentation_2023.pptx</code> using <code>Robocopy.exe</code> (<code>06/04/2025 1:04:18.540 PM</code>).</li>
+                    <li class="project-details_desc-para">Compression of files into <code>exfilt8me.zip</code> (<code>06/04/2025 1:04:47.540 PM</code>).</li>
+                </ul>
+            </li>
+            <li class="project-details_desc-para">Data Exfiltration:
+                <ul>
+                    <li class="project-details_desc-para">Sending <code>exfilt8me.zip</code> data via <code>DNS tunneling</code> using <code>nslookup.exe</code> to <code>haz4rdw4re.io</code> (<code>06/04/2025 1:05:16.540 PM</code> and <code>06/04/2025 1:05:32.540 PM</code>).</li>
+                </ul>
+            </li>
+            <li class="project-details_desc-para">Defense Evasion/Cleanup:
+                <ul>
+                    <li class="project-details_desc-para">Disconnecting the network share (<code>06/04/2025 1:04:29.540 PM</code>).</li>
+                    <li class="project-details_desc-para">Attempting to terminate the <code>PowerShell</code> session (<code>Stop-Process</code> at <code>06/04/2025 1:05:41.540 PM</code>).</li>
+                </ul>
+            </li>
+            <li class="project-details_desc-para">Persistence:
+                <ul>
+                    <li class="project-details_desc-para">The attempted re-execution of the <code>powermac.ps1 reverse shell</code> (<code>06/04/2025 1:05:41.540 PM</code> and later reactivation per the incident report) signifies the establishment of a persistence mechanism.</li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+</ol>
+              
+              
+<!--- ********************************* --->
+
+              
   
             </div>
             <div class="project-details__tools-used">

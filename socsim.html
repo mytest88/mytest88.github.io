@@ -363,6 +363,62 @@ After investigating SIEM, i can clearly say that user has attempted to reach out
 <br>Malicious URL: https://m1microsoftsupport.co/login (fraudulent login page).
 <br>User Compromise Indicator: User c.allen clicked the malicious link from SourceIP: 10.20.2.25, and the connection was allowed by the firewall.</p>
 
+
+              <h3 class="project-details__content-title">Investigating the Fifth Alert: Suspicious PowerShell Script Attached in Email</h3>
+              <p class="project-details__desc-para">
+Here we have an alert that an internal email with a <code>.ps1</code> (<code>PowerShell script</code>) attachment which is highly suspicious, especially with a generic subject like "Force update fix." <code>PowerShell</code> scripts can execute arbitrary commands on a system, making them a common vector for <code>malware</code> and malicious actions. So, my goal is going to be see for the content of the <code>forceupdate.ps1</code> file to decide if it's executing legitimate commands or not.</p>              
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/SocSim/12-fifth.png"
+                  alt="Installing Active Directory Domain Services Screenshot"
+                  class="constrained-image"
+                  id="image-30"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+
+               <p class="project-details__desc-para">
+I am going back to the analyst <code>VM</code> to investigate <code>forceupdate.ps1</code></p>             
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/SocSim/13-edit.png"
+                  alt="Installing Active Directory Domain Services Screenshot"
+                  class="constrained-image"
+                  id="image-31"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+
+               <p class="project-details__desc-para">
+After the investigation, we can clearly see that this script is definitely coming from the <code>IT</code> team and only includes legitimate <code>PowerShell</code> commands for a <code>Windows</code> update. So, it's a <code>False Positive</code>.</p>             
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/SocSim/14-sc1.png"
+                  alt="Installing Active Directory Domain Services Screenshot"
+                  class="constrained-image"
+                  id="image-32"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/SocSim/14-sc2.png"
+                  alt="Installing Active Directory Domain Services Screenshot"
+                  class="constrained-image"
+                  id="image-33"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+
+              <h3 class="project-details__content-title">The 'False Positive' Report</h3>
+<p class="project-details__desc-para">Who: Sender <code>yani.zubair@tryhatme.com</code> to recipient <code>michelle.smith@tryhatme.com</code>. Both users and the <code>tryhatme.com</code> domain are confirmed legitimate internal entities.</p>
+<p class="project-details__desc-para">What: An internal email with the subject "Force update fix" containing a <code>PowerShell</code> script attachment named <code>forceupdate.ps1</code>.</p>
+<p class="project-details__desc-para">When: Email received at <code>06/04/2025 13:35:26.540 UTC</code>.</p>
+<p class="project-details__desc-para">Where: Internal email system.</p>
+<p class="project-details__desc-para">Why: The alert was triggered due to the presence of a <code>.ps1</code> (<code>PowerShell script</code>) attachment, which is a file type commonly used in malicious attacks. However, investigation into the <code>forceupdate.ps1</code> script content confirmed it contains only legitimate <code>Windows</code> update and system diagnostic commands. The sender and recipient are confirmed legitimate internal users, and the <code>tryhatme.com</code> domain is a verified legitimate internal domain. Therefore, this is a <code>False Positive</code> as the attachment is benign and part of legitimate internal <code>IT</code> operations.</p>
+
+
+              
               <p class="project-details__desc-para">
 There we go!              </p>
               <div class="project-details__img-cont">

@@ -179,7 +179,7 @@ Here we can see the <code>SIEM</code> alert for a suspicious email. It includes 
               </div>
               <h3 class="project-details__content-title">Checking the Attachment</h3>
               <p class="project-details__desc-para">
-After opening the <code>ImportantInvoice-February.zip</code> on the analyst VM, I saw was the <code>invoice.pdf.lnk</code> file. Knowing that these shortcut files can be tricky and often hide malicious commands, my immediate thought was to grab its file hashes. I used <code>PowerShell</code> to get the <code>SHA256</code> and <code>MD5</code> hashes of <code>invoice.pdf.lnk</code>. This way, I can quickly check these hashes against threat intelligence platforms to see if anyone else has seen this file before and if it's known to be bad. It's a quick way to get some initial context.</p>              <div class="project-details__img-cont">
+After opening the <code>ImportantInvoice-February.zip</code> on the analyst VM, I saw the <code>invoice.pdf.lnk</code> file. Knowing that these shortcut files can be tricky and often hide malicious commands, my immediate thought was to grab its file hashes. I used <code>PowerShell</code> to get the <code>SHA256</code> and <code>MD5</code> hashes of <code>invoice.pdf.lnk</code>. This way, I can quickly check these hashes against threat intelligence platforms to see if anyone else has seen this file before and if it's known to be bad. It's a quick way to get some initial context.</p>              <div class="project-details__img-cont">
                 <img
                   src="./assets/SocSim2/2-att.png"
                   alt="Netplan Apply Screenshot"
@@ -190,7 +190,7 @@ After opening the <code>ImportantInvoice-February.zip</code> on the analyst VM, 
               </div>
               <h3 class="project-details__content-title">Initial Threat Intelligence Check</h3>
               <p class="project-details__desc-para">
-So, after getting the hashes for <code>invoice.pdf.lnk</code>, I immediately popped these hashes into a threat intelligence platforms. As you can see in the screenshot, it came back with no results in every search, meaning no one had reported this specific hash before. Now, it's really important to remember that just because a hash isn't found doesn't mean the file isn't malicious. This could just mean it's a very new variant, or perhaps it's highly targeted and hasn't been widely seen. It actually makes me even more suspicious, as attackers often try to generate unique hashes to evade detection. So, while this was a quick check, it certainly wasn't the end of my investigation.</p>
+So, after getting the hashes for <code>invoice.pdf.lnk</code>, I immediately popped these hashes into threat intelligence platforms. As you can see in the screenshot, it came back with no results in every search, meaning no one had reported this specific hash before. Now, it's really important to remember that just because a hash isn't found doesn't mean the file isn't malicious. This could just mean it's a very new variant, or perhaps it's highly targeted and hasn't been widely seen. It actually makes me even more suspicious, as attackers often try to generate unique hashes to evade detection. So, while this was a quick check, it certainly wasn't the end of my investigation.</p>
               <div class="project-details__img-cont">
                 <img
                   src="./assets/SocSim2/3-vt.png"
@@ -241,7 +241,7 @@ Given the critical alerts coming from <code>win-3450</code> and the clear indica
               </div>
       
  
-              <h3 class="project-details__content-title">Splunk Investigation: 06/04/2025 01:00:13.540 PM - Phishing Attachment Detected</h3>
+              <h3 class="project-details__content-title">Phishing Attachment Detected</h3>
               <p class="project-details__desc-para">
       Okay, so the first interesting log I pulled from <code>Splunk</code> after filtering for <code>win-3450</code> really ties back to the very beginning of the incident. This <code>sysmon</code> event, specifically <code>event.action: File created (rule: Filecreate)</code>, shows that the <code>ImportantInvoice-February.zip</code> file landed in <code>Michael Ascot</code>'s Outlook temporary internet cache.</p>
               <p class="project-details__desc-para">
@@ -257,7 +257,7 @@ Given the critical alerts coming from <code>win-3450</code> and the clear indica
                 />
               </div>
   
-              <h3 class="project-details__content-title">Splunk Investigation: 06/04/2025 1:00:24.540 PM - The LNK File is Extracted</h3>
+              <h3 class="project-details__content-title">The LNK File is Extracted</h3>
               <p class="project-details__desc-para">
 Following the initial email attachment, this <code>sysmon</code> event at <code>1:00:24.540 PM</code> tells me that <code>explorer.exe</code> (PID <code>3180</code>) created a file stream for <code>invoice.pdf.lnk</code>. This is a pretty significant step because it means the <code>invoice.pdf.lnk</code> file, which was inside that malicious <code>ZIP</code>, has now been extracted to a temporary folder: <code>C:\Users\michael.ascot\AppData\Local\Temp\5\Temp\_ImportantInvoice-Febrary.zip\ImportantInvoice-Febrary\invoice.pdf.lnk</code>. This extraction, initiated by <code>explorer.exe</code>, is very likely what happened right after <code>Michael Ascot</code> clicked on or opened the <code>ZIP</code> file. This is the moment the malicious <code>.lnk</code> file is actually on the file system and ready to be executed. This is the point where the initial payload is about to run!</p>
               <div class="project-details__img-cont">
@@ -270,7 +270,7 @@ Following the initial email attachment, this <code>sysmon</code> event at <code>
                 />
               </div>
               
-                <h3 class="project-details__content-title">Splunk Investigation: 06/04/2025 1:00:25.540 PM - Initial Payload Execution and Reverse Shell Attempt!</h3>
+                <h3 class="project-details__content-title">Initial Payload Execution and Reverse Shell Attempt!</h3>
               <p class="project-details__desc-para">
 This log entry, just seconds after the <code>.lnk</code> file was extracted at <code>1:00:25.540 PM</code>, is exactly what I was looking for. It's a <code>sysmon Process Create</code> event, showing <code>explorer.exe</code> (PID <code>3180</code>) spawning <code>powershell.exe</code> (PID <code>3880</code>). This confirms that clicking the <code>invoice.pdf.lnk</code> file directly led to <code>PowerShell</code> being executed.</p>
               <p class="project-details__desc-para">
@@ -285,7 +285,7 @@ But the real kicker is the <code>process.command_line</code>. It's a classic mal
                 />
               </div>
 
-                <h3 class="project-details__content-title">Splunk Investigation: 06/04/2025 1:00:49.540 PM and 1:00:41.540 PM - Initial Reconnaissance</h3>
+                <h3 class="project-details__content-title">Initial Reconnaissance</h3>
               <p class="project-details__desc-para">
 These next couple of <code>sysmon Process Create</code> events tell me the attacker is starting their reconnaissance. Both of these processes are spawned by <code>powershell.exe</code> (PID <code>9060</code>), which is the attacker's initial shell on the system.</p>
               <p class="project-details__desc-para">
@@ -305,7 +305,7 @@ Combined, these two commands clearly indicate the attacker is actively gathering
                 />
               </div>
 
-              <h3 class="project-details__content-title">Splunk Investigation: 06/04/2025 1:01:36.540 PM - PowerView.ps1 Downloaded</h3>
+              <h3 class="project-details__content-title">PowerView.ps1 Downloaded</h3>
               <p class="project-details__desc-para">
 At <code>1:01:36.540 PM</code>, I found a <code>sysmon FileCreate</code> event showing <code>PowerView.ps1</code> being downloaded to <code>C:\Users\michael.ascot\Downloads\PowerView.ps1</code>. This file was created by <code>powershell.exe</code> (PID <code>9060</code>), which we know is the attacker's reverse shell session.</p>
               <p class="project-details__desc-para">
@@ -320,7 +320,7 @@ At <code>1:01:36.540 PM</code>, I found a <code>sysmon FileCreate</code> event s
                 />
               </div>
 
-              <h3 class="project-details__content-title">Splunk Investigation: 06/04/2025 1:01:49.540 PM - PowerShell Execution Policy Bypass</h3>
+              <h3 class="project-details__content-title">PowerShell Execution Policy Bypass</h3>
               <p class="project-details__desc-para">
 Here the attacker is attempting to bypass <code>PowerShell</code>'s execution policy. Normally, <code>PowerShell</code> has security policies in place to prevent unsigned or untrusted scripts from running. By setting <code>ExecutionPolicy Bypass</code>, they're essentially telling <code>PowerShell</code>, "just run whatever I give you, don't worry about the security checks." This is a common tactic for attackers to ensure their malicious scripts, like <code>PowerView.ps1</code> or the <code>reverse shell</code>, can execute freely on the compromised system without being blocked by these built-in security features. It's a clear sign of malicious intent and preparatory steps for further actions.</p>
               <div class="project-details__img-cont">
@@ -333,7 +333,7 @@ Here the attacker is attempting to bypass <code>PowerShell</code>'s execution po
                 />
               </div>
 
-              <h3 class="project-details__content-title">Splunk Investigation: 06/04/2025 1:01:57.540 PM - PowerView.ps1 Execution</h3>
+              <h3 class="project-details__content-title">PowerView.ps1 Execution</h3>
               <p class="project-details__desc-para">
 Here I see that the <code>PowerView.ps1</code> script, which the attacker downloaded earlier, is now being executed on <code>win-3450</code>. The <code>message</code> and <code>powershell.file.script_block_text</code> might look a bit obfuscated with the <code>Reflection.Emit.ModuleBuilder</code> and <code>Reflection.Assembly</code> calls, but this is a common way <code>PowerShell</code> scripts, especially sophisticated ones like <code>PowerView</code>, are invoked. It's essentially running the script in memory to avoid leaving direct command-line traces. The <code>winlog.process.pid: 3728</code> indicates the <code>PowerShell</code> process that's running it. This is the attacker actively performing network reconnaissance, likely enumerating <code>Active Directory</code> to find valuable targets like file servers or domain controllers. They're mapping out the environment and looking for the data they want to steal.</p>
               <div class="project-details__img-cont">
@@ -346,7 +346,7 @@ Here I see that the <code>PowerView.ps1</code> script, which the attacker downlo
                 />
               </div>
 
-              <h3 class="project-details__content-title">Splunk Investigation: 06/04/2025 1:02:25.540 PM - PowerView's Reconnaissance Actions</h3>
+              <h3 class="project-details__content-title">PowerView's Reconnaissance Actions</h3>
               <p class="project-details__desc-para">
 This <code>powershell</code> event is still showing <code>PowerView.ps1</code> in action. While the previous log confirmed its execution, this one gives us a glimpse into the actual code or script block it's running. The <code>message</code> and <code>powershell.file.script_block_text</code> show functions like <code>Test-Connection</code> (which is like pinging) and <code>LDAPProperty</code>.</p>
               <p class="project-details__desc-para">
@@ -361,7 +361,7 @@ This confirms that <code>PowerView.ps1</code> isn't just sitting there; it's act
                 />
               </div>
 
-              <h3 class="project-details__content-title">Splunk Investigation: 06/04/2025 1:03:31.540 PM - Network Share Mapped: Accessing Financial Records!</h3>
+              <h3 class="project-details__content-title">Network Share Mapped: Accessing Financial Records!</h3>
               <p class="project-details__desc-para">
 Here we see that the attacker, still using the same <code>powershell.exe</code> process (PID <code>3728</code>) that was running <code>PowerView</code>, has just created a new directory named <code>exfiltration</code> within <code>Michael Ascot</code>'s Downloads folder. This is a classic staging area. Attackers often create a dedicated folder to collect all the sensitive data they plan to steal before they actually send it out. This confirms that the attacker has completed their reconnaissance and is now moving into the data staging (the attacker prepares the data for exfiltration) phase, getting ready for exfiltration. This is a very critical step in the attack chain.</p>
               <div class="project-details__img-cont">
@@ -374,7 +374,7 @@ Here we see that the attacker, still using the same <code>powershell.exe</code> 
                 />
               </div>
 
-              <h3 class="project-details__content-title">Splunk Investigation: 06/04/2025 1:04:18.540 PM - Data Copied to Exfiltration Folder via Robocopy</h3>
+              <h3 class="project-details__content-title">Data Copied to Exfiltration Folder via Robocopy</h3>
               <p class="project-details__desc-para">
 These two <code>sysmon FileCreate</code> events are the definitive proof of data theft to the staging directory. We can see two files being created within our previously identified <code>exfiltration</code> folder:</p>
               <p class="project-details__desc-para">
@@ -497,14 +497,14 @@ However, the message also contains <code>Stop-Process</code>. This indicates tha
         <p class="project-details__desc-para">Our Evidence: The identification of <code>invoice.pdf.lnk</code> within the <code>ZIP</code>, and its subsequent analysis showing the embedded <code>PowerShell</code>.</p>
     </li>
     <li>
-        <h4>Delivery:</h4>
+        <h4 class="project-details__content-title">3. Delivery:</h4>
         <p class="project-details__desc-para">What Happened: The weaponized <code>ImportantInvoice-February.zip</code> was delivered to <code>michael.ascot@tryhatme.com</code> via an email.</p>
         <p class="project-details__desc-para">Our Evidence: The initial <code>SIEM</code> email alert (<code>06/04/2025 13:40:06.540</code>) and the <code>Splunk</code> log showing the <code>ZIP</code> file landing in <code>michael.ascot</code>'s <code>Outlook</code> cache (<code>06/04/2025 14:00:13.540</code>).</p>
     </li>
     <li>
-        <h4>Exploitation:</h4>
+        <h4 class="project-details__content-title"> 4. Exploitation:</h4>
         <p class="project-details__desc-para">What Happened: <code>Michael Ascot</code> interacted with the malicious attachment, causing <code>invoice.pdf.lnk</code> to be extracted and executed, which then launched a <code>PowerShell</code> process.</p>
-        <p class="project-details__desc-para">Our Evidence:</p>
+        <p class="project-details__desc-para">Our Evidence: <code>invoice.pdf.lnk</code>'s presence after opening the <code>ZIP</code> (my analyst <code>VM</code> observation and hash check).</p>
         <ul>
             <li class="project-details__desc-para"><code>invoice.pdf.lnk</code>'s presence after opening the <code>ZIP</code> (my analyst <code>VM</code> observation and hash check).</li>
             <li class="project-details__desc-para"><code>Splunk</code> log: <code>File Stream Created</code> for <code>invoice.pdf.lnk</code> (<code>06/04/2025 1:00:24.540 PM</code>).</li>
@@ -512,12 +512,12 @@ However, the message also contains <code>Stop-Process</code>. This indicates tha
         </ul>
     </li>
     <li>
-        <h4>Installation:</h4>
+        <h4 class="project-details__content-title">5. Installation:</h4>
         <p class="project-details__desc-para">What Happened: The attacker installed a backdoor, attempting to establish a persistent <code>reverse shell</code> connection to <code>2.tcp.ngrok.io</code> by downloading and executing <code>powermac.ps1</code> (<code>Powercat</code>).</p>
         <p class="project-details__desc-para">Our Evidence: <code>Splunk</code> log: The <code>Process Create</code> for <code>PowerShell</code> showing the <code>IEX</code> command to download <code>powermac.ps1</code> and initiate the <code>powercat</code> connection (<code>06/04/2025 1:00:25.540 PM</code>).</p>
     </li>
     <li>
-        <h4>Command and Control (C2):</h4>
+        <h4 class="project-details__content-title">6. Command and Control (C2):</h4>
         <p class="project-details__desc-para">What Happened: The attacker maintained remote access and control over <code>win-3450</code> endpoint through the established <code>reverse shell</code> connection to <code>2.tcp.ngrok.io</code>.</p>
         <p class="project-details__desc-para">Our Evidence:</p>
         <ul>
@@ -526,7 +526,7 @@ However, the message also contains <code>Stop-Process</code>. This indicates tha
         </ul>
     </li>
     <li>
-        <h4>Actions on Objectives:</h4>
+        <h4 class="project-details__content-title">7. Actions on Objectives:</h4>
         <p class="project-details__desc-para">What Happened: This is where the attacker achieved their primary goals: internal reconnaissance, data staging, and data exfiltration.</p>
         <p class="project-details__desc-para">Our Evidence:</p>
         <ul>

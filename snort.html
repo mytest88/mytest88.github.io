@@ -203,37 +203,198 @@ Here we can see the <code>SIEM</code> alert for a suspicious email. It includes 
     <li class="project-details__desc-para">Host-based Intrusion Prevention System (<code>HIPS</code>)</li>
 </ul>
 <p class="project-details__desc-para"><code>HIPS</code> working mechanism is similar to <code>HIDS</code>. The difference between them is that while <code>HIDS</code> creates alerts for threats, <code>HIPS</code> stops the threats by terminating the connection.</p>
-
+              <div class="project-details__img-cont">
+                <img
+                  src="./assets/Snort/0-ids-ips.png"
+                  alt="Network Configuration Screenshot"
+                  class="constrained-image"
+                  id="image-0"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              
 <h4 class="project-details__content-title">Detection and Prevention Techniques</h4>
-
+                <div class="project-details__img-cont">
+                <img
+                  src="./assets/Snort/1-ddt.png"
+                  alt="Network Configuration Screenshot"
+                  class="constrained-image"
+                  id="image-1"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              
 <h4 class="project-details__content-title">Basic Parameters for Snort</h4>
-
+                <div class="project-details__img-cont">
+                <img
+                  src="./assets/Snort/2-param.png"
+                  alt="Network Configuration Screenshot"
+                  class="constrained-image"
+                  id="image-2"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              
 <h4 class="project-details__content-title">Run the Snort instance and check the build number?</h4>
+                <div class="project-details__img-cont">
+                <img
+                  src="./assets/Snort/3-run.png"
+                  alt="Network Configuration Screenshot"
+                  class="constrained-image"
+                  id="image-3"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              
 <p class="project-details__desc-para">Here "<code>-T</code>" is used for testing configuration, and "<code>-c</code>" is identifying the configuration file (<code>snort.conf</code>). Note that it is possible to use an additional configuration file by pointing it with "<code>-c</code>". After running the command we can see that the build number is <code>149</code></p>
-
+                <div class="project-details__img-cont">
+                <img
+                  src="./assets/Snort/4-bn.png"
+                  alt="Network Configuration Screenshot"
+                  class="constrained-image"
+                  id="image-4"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              
 <h4 class="project-details__content-title">Test the current instance with "<code>/etc/snort/snort.conf</code>" file and check how many rules are loaded with the current build?</h4>
 <p class="project-details__desc-para">In the same output it can be seen.</p>
-
+                <div class="project-details__img-cont">
+                <img
+                  src="./assets/Snort/5-test.png"
+                  alt="Network Configuration Screenshot"
+                  class="constrained-image"
+                  id="image-5"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              
 <h4 class="project-details__content-title">Test the current instance with "<code>/etc/snort/snortv2.conf</code>" file and check how many rules are loaded with the current build?</h4>
-
+                <div class="project-details__img-cont">
+                <img
+                  src="./assets/Snort/6-aaa.png"
+                  alt="Network Configuration Screenshot"
+                  class="constrained-image"
+                  id="image-6"
+                  onclick="showOriginal(this)"
+                />
+              </div>
 <h4 class="project-details__content-title">All answers for this task</h4>
-
+                <div class="project-details__img-cont">
+                <img
+                  src="./assets/Snort/7-task.png"
+                  alt="Network Configuration Screenshot"
+                  class="constrained-image"
+                  id="image-7"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              
 <h4 class="project-details__content-title">Operation Mode 1: Sniffer Mode</h4>
-
+                <div class="project-details__img-cont">
+                <img
+                  src="./assets/Snort/8-opmode1.png"
+                  alt="Network Configuration Screenshot"
+                  class="constrained-image"
+                  id="image-8"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              
 <h4 class="project-details__content-title">Operation Mode 2: Packet Logger Mode</h4>
 
+                <div class="project-details__img-cont">
+                <img
+                  src="./assets/Snort/9-opmode2.png"
+                  alt="Network Configuration Screenshot"
+                  class="constrained-image"
+                  id="image9"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+
+                <div class="project-details__img-cont">
+                <img
+                  src="./assets/Snort/10-opmde2.png"
+                  alt="Network Configuration Screenshot"
+                  class="constrained-image"
+                  id="image-10"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              
 <p class="project-details__desc-para">Now, you should have the logs in the current directory. Navigate to folder "<code>145.254.160.237</code>". What is the source port used to connect port <code>53</code>?</p>
 
+                <div class="project-details__img-cont">
+                <img
+                  src="./assets/Snort/11-udp.png"
+                  alt="Network Configuration Screenshot"
+                  class="constrained-image"
+                  id="image-11"
+                  onclick="showOriginal(this)"
+                />
+              </div>
+              
 <h4 class="project-details__content-title">Use <code>snort.log.1640048004</code> to read the <code>snort.log</code> file with <code>Snort</code>; what is the <code>IP ID</code> of the 10th packet? (<code>snort -r snort.log.1640048004 -n 10</code>)</h4>
 
+                <div class="project-details__img-cont">
+                <img
+                  src="./assets/Snort/12-read.png"
+                  alt="Network Configuration Screenshot"
+                  class="constrained-image"
+                  id="image-12"
+                  onclick="showOriginal(this)"
+                />
+               </div>
+              
 <h4 class="project-details__content-title">Read the "<code>snort.log.1640048004</code>" file with <code>Snort</code>; what is the <code>referer</code> of the 4th packet? (<code>sudo snort -r snort.log.1640048004 -n 4 -X</code>)</h4>
 
+                <div class="project-details__img-cont">
+                <img
+                  src="./assets/Snort/13-referrer.png"
+                  alt="Network Configuration Screenshot"
+                  class="constrained-image"
+                  id="image-13"
+                  onclick="showOriginal(this)"
+                />
+               </div>
+              
 <h4 class="project-details__content-title">Read the "<code>snort.log.1640048004</code>" file with <code>Snort</code>; what is the <code>Ack number</code> of the 8th packet? (<code>sudo snort -r snort.log.1640048004 -n 8 -e</code>)</h4>
 
+                <div class="project-details__img-cont">
+                <img
+                  src="./assets/Snort/14-ack.png"
+                  alt="Network Configuration Screenshot"
+                  class="constrained-image"
+                  id="image-14"
+                  onclick="showOriginal(this)"
+                />
+               </div>
+              
 <h4 class="project-details__content-title">Read the "<code>snort.log.1640048004</code>" file with <code>Snort</code>; what is the number of the "<code>TCP port 80</code>" packets? (<code>sudo snort -r snort.log.1640048004 tcp</code>)</h4>
 
+                <div class="project-details__img-cont">
+                <img
+                  src="./assets/Snort/15-tcp.png"
+                  alt="Network Configuration Screenshot"
+                  class="constrained-image"
+                  id="image-15"
+                  onclick="showOriginal(this)"
+                />
+               </div>
+              
 <h4 class="project-details__content-title">All answers for this task</h4>
 
+                <div class="project-details__img-cont">
+                <img
+                  src="./assets/Snort/16-task.png"
+                  alt="Network Configuration Screenshot"
+                  class="constrained-image"
+                  id="image-16"
+                  onclick="showOriginal(this)"
+                />
+               </div>
+              
 <h4 class="project-details__content-title">Operation Mode 3: IDS/IPS</h4>
 
 <h4 class="project-details__content-title">IPS mode and dropping packets</h4>

@@ -504,7 +504,7 @@ However, the message also contains <code>Stop-Process</code>. This indicates tha
     <li>
         <h4 class="project-details__content-title"> 4. Exploitation:</h4>
         <p class="project-details__desc-para">What Happened: <code>Michael Ascot</code> interacted with the malicious attachment, causing <code>invoice.pdf.lnk</code> to be extracted and executed, which then launched a <code>PowerShell</code> process.</p>
-        <p class="project-details__desc-para">Our Evidence: <code>invoice.pdf.lnk</code>'s presence after opening the <code>ZIP</code> (my analyst <code>VM</code> observation and hash check).</p>
+        <p class="project-details__desc-para">Our Evidence:</p>
         <ul>
             <li class="project-details__desc-para"><code>invoice.pdf.lnk</code>'s presence after opening the <code>ZIP</code> (my analyst <code>VM</code> observation and hash check).</li>
             <li class="project-details__desc-para"><code>Splunk</code> log: <code>File Stream Created</code> for <code>invoice.pdf.lnk</code> (<code>06/04/2025 1:00:24.540 PM</code>).</li>
@@ -572,7 +572,7 @@ However, the message also contains <code>Stop-Process</code>. This indicates tha
 
 <ol>
     <li>
-        <h4>Immediate Containment</h4>
+        <h4 class="project-details__content-title">Immediate Containment</h4>
         <p class="project-details__desc-para">The very first priority is to stop the bleeding and prevent any further damage or exfiltration.</p>
         <ul>
             <li class="project-details__desc-para">Isolate <code>win-3450</code>: I will immediately isolate the compromised host (<code>win-3450</code>) from the network. This will prevent the attacker from maintaining control, launching further attacks internally, or exfiltrating more data.</li>
@@ -580,7 +580,7 @@ However, the message also contains <code>Stop-Process</code>. This indicates tha
         </ul>
     </li>
     <li>
-        <h4>Eradication & System Hardening</h4>
+        <h4 class="project-details__content-title">Eradication & System Hardening</h4>
         <p class="project-details__desc-para">Once contained, the next step is to remove the adversary's presence and secure the affected systems.</p>
         <ul>
             <li class="project-details__desc-para">Credential Reset: The <code>michael.ascot@tryhatme.com</code> account was compromised. I will reset <code>Michael Ascot</code>'s password immediately and enforce <code>multi-factor authentication (MFA)</code> on his account, and ideally for all users, to prevent future credential-based attacks.</li>
@@ -589,7 +589,7 @@ However, the message also contains <code>Stop-Process</code>. This indicates tha
         </ul>
     </li>
     <li>
-        <h4>Persistence Investigation & Removal</h4>
+        <h4 class="project-details__content-title">Persistence Investigation & Removal</h4>
         <p class="project-details__desc-para">It's crucial to ensure the attacker cannot regain access.</p>
         <ul>
             <li class="project-details__desc-para">Identify Persistence Mechanisms: A thorough <code>forensic investigation</code> on <code>win-3450</code> should be performed.</li>
@@ -598,7 +598,7 @@ However, the message also contains <code>Stop-Process</code>. This indicates tha
         </ul>
     </li>
     <li>
-        <h4>Prevent Future Attacks</h4>
+        <h4 class="project-details__content-title">Prevent Future Attacks</h4>
         <p class="project-details__desc-para">Learning from this incident is key to strengthening our defenses.</p>
         <ul>
             <li class="project-details__desc-para">Email Filter Enhancement: Our <code>email security gateway</code> needs immediate updates to block <code>.zip</code> files containing <code>.lnk</code> files, or at least flag them with extreme suspicion. Stricter attachment policies should be considered.</li>
@@ -607,7 +607,7 @@ However, the message also contains <code>Stop-Process</code>. This indicates tha
         </ul>
     </li>
     <li>
-        <h4>Reporting & Communication</h4>
+        <h4 class="project-details__content-title">Reporting & Communication</h4>
         <p class="project-details__desc-para">Transparency and legal obligations must be met.</p>
         <ul>
             <li class="project-details__desc-para">Regulatory Reporting: I will ensure all necessary documentation is prepared for regulatory (e.g., <code>GDPR</code>, <code>CCPA</code>, etc.) reporting to comply with legal obligations regarding data breaches. In Australia, this specifically includes notifying the <code>Office of the Australian Information Commissioner (OAIC)</code> under the <code>Notifiable Data Breaches (NDB)</code> scheme if the breach is likely to result in serious harm to any individual whose personal information is involved.</li>
